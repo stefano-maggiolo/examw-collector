@@ -1,10 +1,10 @@
 package com.examw.collector.service.impl;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.log4j.Logger; 
 import org.springframework.util.DigestUtils;
@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import com.examw.collector.service.IRemoteDataProxy;
 import com.examw.collector.support.HttpUtil;
+import com.examw.utils.StringUtil;
 /**
  * 远程数据代理实现。
  * @author yangyong.
@@ -19,13 +20,20 @@ import com.examw.collector.support.HttpUtil;
  */
 public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	private static Logger logger = Logger.getLogger(RemoteDataProxyImpl.class);
-	private String lessonUrl,sid,key;
+	private String lessonUrl,userUrl,sid,key;
 	/**
 	 * 设置服务器URL。
 	 * @param url
 	 */
 	public void setLessonUrl(String lessonUrl) {
 		this.lessonUrl = lessonUrl;
+	}
+	/**
+	 * 设置用户操作接口URL。
+	 * @param userUrl
+	 */
+	public void setUserUrl(String userUrl) {
+		this.userUrl = userUrl;
 	}
 	/**
 	 * 设置客户ID。
@@ -50,38 +58,110 @@ public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	@Override
 	public String loadLesson(Integer cataId,String lesson_type_code, String lesson_code,String class_code) throws IOException{
 		logger.info("获取课程数据...");
-		String time = this.builderTime(new Date());
-		Map<String, String> parameters = new HashMap<String, String>();
-		parameters.put("Cataid", cataId == null ? "" : cataId.toString());
-		parameters.put("lesson_type_code", StringUtils.isEmpty(lesson_type_code) ? "" : lesson_type_code);
-		parameters.put("lesson_code", StringUtils.isEmpty(lesson_code) ? "" : lesson_code);
-		parameters.put("class_code", StringUtils.isEmpty(class_code) ? "" : class_code);
-		parameters.put("Time", time);
-		StringBuilder post = new StringBuilder(this.buildCheckCode(parameters));
-		post.append("$").append(this.sid)
-		       .append("$").append(cataId == null ? "" : cataId.toString())
-		       .append("$").append(StringUtils.isEmpty(lesson_type_code) ? "" : lesson_type_code)
-		       .append("$").append(StringUtils.isEmpty(class_code) ? "" : class_code)
-		       .append("$").append(time);
-		logger.info("参数：" + post.toString());
-		String url = String.format(this.lessonUrl, java.net.URLEncoder.encode(post.toString(), "UTF-8"));
+		String post = this.buildPostUrl(new String[]{(cataId == null ? "" : cataId.toString()), 
+																			 lesson_type_code, 
+																			 lesson_code, 
+																			 class_code, 
+																			 this.builderTime(new Date())});
+		String url = String.format(this.lessonUrl,post);
 		logger.info("url:" + url);
-		return HttpUtil.httpRequest(url, "GET",null);
+		String xml = HttpUtil.httpRequest(url, "GET", null,"gbk");
+		if(StringUtils.isEmpty(xml)) return null;
+		 int index =	xml.indexOf("?>");
+		 if(index > 0){
+			 xml = xml.substring(index + 2);
+		 }
+		return xml;
+	}
+	/*
+	 * 给合作客户传递用户注册、报名、充值、缴费等信息。
+	 * @see com.examw.collector.service.IRemoteDataProxy#postUsers(java.lang.Integer, java.lang.String, java.lang.String[], java.lang.String[], java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public String postUsers(Integer cataId, String orderCode,
+			String[] lesson_code, String[] discount_code, String part,
+			String money, String card_num, String card_pwd, String username,
+			String password, String name, String email, String province,
+			String tel) throws IOException {
+			logger.info("给合作客户传递用户注册、报名、充值、缴费等信息...");
+			String post = this.buildPostUrl(new String[]{(cataId == null ? "" : cataId.toString()), 
+																				 orderCode, 
+																				 StringUtil.join(lesson_code, ','), 
+																				 StringUtil.join(discount_code, ','),
+																				 part,
+																				 money,
+																				 card_num,
+																				 card_pwd,
+																				 username,
+																				 password,
+																				 name,
+																				 email,
+																				 province,
+																				 tel,
+																				 this.builderTime(new Date())});
+			String url = String.format(this.userUrl,post);
+			logger.info("url:" + url);
+			String xml = HttpUtil.httpRequest(url, "GET", null,"gbk");
+			if(StringUtils.isEmpty(xml)) return null;
+			 int index =	xml.indexOf("?>");
+			 if(index > 0){
+				 xml = xml.substring(index + 2);
+			 }
+			return xml;
+	}
+	/*
+	 * 定制大屏播放器接口。
+	 * @see com.examw.collector.service.IRemoteDataProxy#loadVideo(java.lang.Integer, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public String loadVideo(String videoId,Integer videoType, String userName) throws IOException {
+		logger.info("定制大屏播放器接口...");
+		String post = this.buildPostUrl(new String[]{videoId, 
+																			(videoType == null ? "" : videoType.toString()), 
+																			userName,
+																			 this.builderTime(new Date())});
+		String url = String.format(this.userUrl,post);
+		logger.info("url:" + url);
+		String xml = HttpUtil.httpRequest(url, "GET", null,"gbk");
+		if(StringUtils.isEmpty(xml)) return null;
+		 int index =	xml.indexOf("?>");
+		 if(index > 0){
+			 xml = xml.substring(index + 2);
+		 }
+		return xml;
+	}
+	/**
+	 * 构建提交数据URL。
+	 * @param parameters
+	 * @return
+	 * @throws UnsupportedEncodingException 
+	 */
+	private String buildPostUrl(String[] parameters) throws UnsupportedEncodingException{
+		logger.info("构建提交数据URL...");
+		StringBuilder post = new StringBuilder(this.buildCheckCode(parameters));
+		post.append("$").append(this.sid);
+		for(int i = 0; i < parameters.length; i++){
+			post.append("$").append(StringUtils.isEmpty(parameters[i]) ? "" : parameters[i]);
+		}
+		String postUrl = post.toString();
+		logger.info("post:" + postUrl);
+		postUrl = URLEncoder.encode(postUrl, "UTF-8");
+		return postUrl;
 	}
 	/**
 	 * 构造用于验证的加密字符串。
-	 * @param time
-	 * 时间。
 	 * @param parameters
 	 * 参数集合。
 	 * @return
 	 */
-	private String buildCheckCode(Map<String, String> parameters){
+	private String buildCheckCode(String[] parameters){
 		logger.info("构造用于验证的加密字符串...");
 		StringBuilder builder = new StringBuilder(this.sid);
-		if(parameters != null && parameters.size() > 0){
-			for(String value : parameters.values()){
-				builder.append(StringUtils.isEmpty(value) ? "" : value);
+		if(parameters != null && parameters.length > 0){
+			for(int i = 0; i < parameters.length; i++){
+				if(!StringUtils.isEmpty(parameters[i])){
+					builder.append(parameters[i]);
+				}
 			}
 		}
 		builder.append(this.key);
@@ -96,6 +176,6 @@ public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	 * @return
 	 */
 	private String builderTime(Date time){
-		return new SimpleDateFormat("YYYY MM dd HH mm ss").format(time);
+		return new SimpleDateFormat("YYYYMMddHHmmss").format(time);
 	}
 }

@@ -24,7 +24,7 @@ public final class HttpUtil {
 	 * 	请求方式(GET,POST)。
 	 * @param data
 	 *  提交数据。
-	 *  @return 反馈结果(通过JSONObject.get(key)的方式获取json对象的属性值)。
+	 *  @return 反馈结果。
 	 * */
 	public static String httpsRequest(X509TrustManager mgr, String requestUrl, String requestMethod, String data){
 		try {
@@ -52,7 +52,7 @@ public final class HttpUtil {
 	 * 	请求方式(GET,POST)。
 	 * @param data
 	 *  提交数据。
-	 *  @return 反馈结果(通过JSONObject.get(key)的方式获取json对象的属性值)。
+	 *  @return 反馈结果。
 	 * */
 	public static String httpsRequest(String requestUrl, String requestMethod, String data){
 		return httpsRequest(new X509TrustManager(){
@@ -72,16 +72,18 @@ public final class HttpUtil {
 	 * 	请求方式(GET,POST)。
 	 * @param data
 	 *  提交数据。
-	 *  @return 反馈结果(通过JSONObject.get(key)的方式获取json对象的属性值)。
+	 * @param charsetName
+	 * 字符集。
+	 *  @return 反馈结果.
 	 * @throws IOException 
 	 * */
-	public static String httpRequest(String requestUrl, String requestMethod, String data) throws IOException{
+	public static String httpRequest(String requestUrl, String requestMethod, String data,String charsetName) throws IOException{
 		try {
 			logger.info("url:\r\n"+ requestUrl);
 			logger.info("method:\r\n" + requestMethod);
 			logger.info("data:\r\n"+ data);
 			
-			String result = com.examw.utils.HttpUtil.sendRequest(requestUrl, requestMethod, data);
+			String result = com.examw.utils.HttpUtil.sendRequest(requestUrl, requestMethod, data, charsetName);
 			 
 			logger.info("callback:\r\n" + result);
 			return result;
@@ -89,5 +91,19 @@ public final class HttpUtil {
 			logger.error("连接服务器["+ requestUrl +"]异常：", e);
 		}
 		return null;
+	}
+	/**
+	 * 发起http请求并获取结果。
+	 * @param requestUrl
+	 * 	请求地址。
+	 * @param requestMethod
+	 * 	请求方式(GET,POST)。
+	 * @param data
+	 *  提交数据。
+	 *  @return 反馈结果.
+	 * @throws IOException 
+	 * */
+	public static String httpRequest(String requestUrl, String requestMethod, String data) throws IOException{
+		return httpRequest(requestUrl, requestMethod, data, null);
 	}
 }

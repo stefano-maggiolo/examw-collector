@@ -25,4 +25,59 @@ public interface IRemoteDataProxy {
 	 * @return
 	 */
 	String loadLesson(Integer cataId,String lesson_type_code, String lesson_code,String class_code)  throws IOException;
+	/**
+	 * 给合作客户传递用户注册、报名、充值、缴费等信息。
+	 * @param cataId
+	 * 验证内容：
+	 * 1-注册
+	 * 2-登录
+	 * 3-选课
+	 * 4-充值
+	 * 5-扣费
+	 * 6-学习
+	 * @param orderCode
+	 * 订单编号。
+	 * @param lesson_code
+	 * 课程编号。
+	 * @param discount_code
+	 * 套餐编号。
+	 * @param part
+	 * 讲。
+	 * @param money
+	 * 消费金额。
+	 * @param card_num
+	 * 学习卡号。
+	 * @param card_pwd
+	 * 学习卡密码。
+	 * @param username
+	 * 注册的用户名。
+	 * @param password
+	 * 注册的密码。
+	 * @param name
+	 * 姓名。
+	 * @param email
+	 * 注册邮件。
+	 * @param province
+	 * 所属地区。
+	 * @param tel
+	 * 注册手机和电话。
+	 * @return
+	 */
+	String postUsers(Integer cataId,String orderCode, String[] lesson_code, String[] discount_code,String part, 
+			String money,String card_num, String card_pwd,String username,String password, String name,String email,
+			String province,String tel) throws IOException;
+	/**
+	 * 定制大屏播放器接口。
+	 * @param videoId
+	 * 课件ID（讲标示）。
+	 * @param videoType
+	 * 视频类别：
+	 * 1-宣传片
+	 * 2-试听
+	 * 3-正式课件（默认）
+	 * @param userName
+	 * 注册的用户名。
+	 * @return
+	 */
+	String loadVideo(String videoId, Integer videoType,String userName) throws IOException;
 }
