@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class SubClass implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,code,name,teacherName,demo,start,end;
+	private String code,name,teacherName,demo,start,end;
 	private Boolean isLive,isShow;
 	private Integer longDay,sourcePrice,salePrice,total;
 	private AdVideo adVideo;
@@ -27,21 +27,6 @@ public class SubClass implements Serializable {
 	 */
 	public void setSubject(Subject subject) {
 		this.subject = subject;
-	}
-	/**
-	 * 获取班级ID。
-	 * @return 班级ID。
-	 */
-	public String getId() {
-		return id;
-	}
-	/**
-	 * 设置班级ID。
-	 * @param id
-	 * 班级ID。
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 	/**
 	 * 获取班级代码。

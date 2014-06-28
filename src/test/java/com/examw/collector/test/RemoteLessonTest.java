@@ -11,6 +11,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.Pack;
+import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.service.IDataServer;
 import com.thoughtworks.xstream.XStream;
@@ -38,9 +40,23 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	@Test
+	//@Test
 	public void loadClasses(){
 		List<SubClass>  list = this.dataServer.loadClasses("700", "659");
+		XStream xStream = new XStream();
+		String xml = xStream.toXML(list);
+		System.out.print(xml);
+	}
+	//@Test
+	public void loadRelates(){
+		List<Relate> list = this.dataServer.loadRelates("491");
+		XStream xStream = new XStream();
+		String xml = xStream.toXML(list);
+		System.out.print(xml);
+	}
+	@Test
+	public void loadPacks(){
+		List<Pack> list = this.dataServer.loadPacks("700", "700");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);

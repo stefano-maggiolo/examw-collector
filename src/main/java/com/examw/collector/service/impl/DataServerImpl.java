@@ -19,6 +19,8 @@ import org.xml.sax.SAXException;
 
 import com.examw.collector.domain.AdVideo;
 import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.Pack;
+import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
 import com.examw.collector.service.IDataServer;
@@ -172,6 +174,74 @@ public class DataServerImpl  implements IDataServer {
 			}
 			return subClasses;
 		}catch(IOException | XPathExpressionException | SAXException | ParserConfigurationException e){
+			logger.error(e);
+			e.printStackTrace(); 
+		}
+		return null;
+	}
+	/*
+	 * 获取课时（讲）集合。
+	 * @see com.examw.collector.service.IDataServer#loadRelates(java.lang.String)
+	 */
+	@Override
+	public List<Relate> loadRelates(String class_code) {
+		try{
+			logger.info("获取课时（讲）集合...");
+			if(StringUtils.isEmpty(class_code)) return null;
+			String xml = this.remoteDataProxy.loadLesson(3, null, null, class_code);
+			if(StringUtils.isEmpty(xml)) return null;
+			Document document = XmlUtil.loadDocument(xml);
+			Element root = document.getDocumentElement();
+			NodeList list = XmlUtil.selectNodes(root, "//relate");
+			if(list == null || list.getLength() == 0) return null;
+			List<Relate> relates = new ArrayList<>();
+			for(int i = 0; i < list.getLength(); i++){
+				if(list.item(i) == null) continue;
+				Relate data = new Relate();
+				data.setNum(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./relate_num")));
+				data.setName(XmlUtil.getNodeStringValue(list.item(i), "./relate_name"));
+				data.setDemo((XmlUtil.getNodeStringValue(list.item(i), "./relate_demo")).equalsIgnoreCase("1"));
+				data.setUpdate(XmlUtil.getNodeStringValue(list.item(i), "./update_date"));
+				data.setNew((XmlUtil.getNodeStringValue(list.item(i), "./relate_demo")).equalsIgnoreCase("1"));
+				data.setAddress(XmlUtil.getNodeStringValue(list.item(i), "./listen_address"));
+				relates.add(data);
+			}
+			return relates;
+		}catch(IOException | SAXException | ParserConfigurationException | XPathExpressionException e){
+			logger.error(e);
+			e.printStackTrace(); 
+		}  
+		return null;
+	}
+	/*
+	 * 获取单个科目中套餐的信息接口。
+	 * @see com.examw.collector.service.IDataServer#loadPacks(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public List<Pack> loadPacks(String lesson_type_code, String lesson_code) {
+		try{
+			logger.info("获取单个科目中套餐的信息接口...");
+			if(StringUtils.isEmpty(lesson_type_code) || StringUtils.isEmpty(lesson_code)) return null;
+			String xml = this.remoteDataProxy.loadLesson(4, lesson_type_code, lesson_code, null);
+			if(StringUtils.isEmpty(xml)) return null;
+			Document document = XmlUtil.loadDocument(xml);
+			Element root = document.getDocumentElement();
+			NodeList list = XmlUtil.selectNodes(root, ".//lesson[lesson_code='"+ lesson_code+"']//discount");
+			if(list == null || list.getLength() == 0) return null;
+			List<Pack> packs = new ArrayList<>();
+			for(int i = 0; i < list.getLength(); i++){
+				if(list.item(i) == null) continue;
+				Pack data = new Pack();
+				data.setCode(XmlUtil.getNodeStringValue(list.item(i), "./discount_code"));
+				data.setName(XmlUtil.getNodeStringValue(list.item(i), "./discount_name"));
+				data.setSource(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./source_amount")));
+				data.setDiscount(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./discount_amount")));
+				data.setShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_show")));
+				data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i), "./class_code").split(","));
+				packs.add(data);
+			}
+			return packs;
+		}catch(IOException | SAXException | ParserConfigurationException | XPathExpressionException e){
 			logger.error(e);
 			e.printStackTrace(); 
 		}

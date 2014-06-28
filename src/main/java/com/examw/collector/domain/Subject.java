@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class Subject implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,code,name;
+	private String code,name;
 	private Integer classTotal;
 	private Catalog catalog;
 	/**
@@ -25,21 +25,6 @@ public class Subject implements Serializable {
 	 */
 	public void setCatalog(Catalog catalog) {
 		this.catalog = catalog;
-	}
-	/**
-	 * 获取科目ID。
-	 * @return 科目ID。
-	 */
-	public String getId() {
-		return id;
-	}
-	/**
-	 * 设置科目ID。
-	 * @param id
-	 * 科目ID。
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 	/**
 	 * 获取科目代码。

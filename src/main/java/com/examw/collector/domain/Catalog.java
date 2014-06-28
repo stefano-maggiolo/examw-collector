@@ -10,7 +10,7 @@ import java.util.Set;
  */
 public class Catalog implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,code,name;
+	private String code,name;
 	private Integer classTotal;
 	private Catalog parent;
 	private Set<Subject> subjects;
@@ -29,21 +29,6 @@ public class Catalog implements Serializable {
 	 */
 	public void setParent(Catalog parent) {
 		this.parent = parent;
-	}
-	/**
-	 * 获取课程类别ID。
-	 * @return 课程类别ID。
-	 */
-	public String getId() {
-		return id;
-	}
-	/**
-	 * 设置课程类别ID。
-	 * @param id
-	 * 课程类别ID。
-	 */
-	public void setId(String id) {
-		this.id = id;
 	}
 	/**
 	 * 获取课程类别代码。
