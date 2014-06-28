@@ -247,5 +247,263 @@ public class DataServerImpl  implements IDataServer {
 		}
 		return null;
 	}
-	
+	/*
+	 * 注册。
+	 * @see com.examw.collector.service.IDataServer#register(java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean register(String userName, String password, String name,String email, String province, String tel) throws Exception {
+		logger.info("注册...");
+		if(StringUtils.isEmpty(userName)) throw new Exception("注册的用户名不能为空！");
+		if(StringUtils.isEmpty(password)) throw new Exception("注册的密码不能为空！");
+		if(StringUtils.isEmpty(name)) throw new Exception("姓名不能为空！");
+		String xml = this.remoteDataProxy.postUsers(1, null, null, null, null, null, null, null, userName, password, name, email, province, tel);
+		if(StringUtils.isEmpty(xml)) throw new Exception("未获取服务端反馈！");
+		Integer result = this.checkCallbackCode(xml);
+		String err = null;
+		if(result == -1){
+			logger.info(err = "反馈数据校验失败！");
+			throw new Exception(err);
+		}
+		if(result == 2){
+			logger.info(err = "用户已存在！");
+			throw new Exception(err);
+		}
+		if(result == 3){
+			logger.info(err = "用户名、密码字符串不合法！");
+			throw new Exception(err);
+		}
+		if(result == 4){
+			logger.info(err = "失败！");
+			return false;
+		}
+		return result == 1;
+	}
+	/*
+	 * 用户登录。
+	 * @see com.examw.collector.service.IDataServer#login(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean login(String userName, String password) throws Exception {
+		if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) throw new Exception("用户名或密码不能为空！");
+		String xml = this.remoteDataProxy.postUsers(2, null, null, null, null, null, null, null, userName, password, null, null, null, null);
+		if(StringUtils.isEmpty(xml)) throw new Exception("未获取服务端反馈！");
+		Integer result = this.checkCallbackCode(xml);
+		String err = null;
+		if(result == 2){
+			logger.info(err = "用户名、密码错误！");
+			throw new Exception(err);
+		}
+		if(result == 3){
+			logger.info(err = "用户已禁用！");
+			throw new Exception(err);
+		}
+		if(result == 4){
+			logger.info(err = "失败！");
+			return false;
+		}
+		return result == 1;
+	}
+	/*
+	 * 用户选课。
+	 * @see com.examw.collector.service.IDataServer#choiceCourse(java.lang.String, java.lang.String, java.lang.Integer, java.lang.String[])
+	 */
+	@Override
+	public boolean choiceCourse(String userName, String password, Integer type,String[] codes) throws Exception {
+		if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) throw new Exception("用户名或密码不能为空！");
+		String[] lesson_code = (type == 1) ? codes : null,
+				   discount_code = (type == 2) ? codes : null;
+		String xml = this.remoteDataProxy.postUsers(3, null, lesson_code, discount_code,null, null, null, null, userName, password, null, null, null, null);
+		if(StringUtils.isEmpty(xml)) throw new Exception("未获取服务端反馈！");
+		Integer result = this.checkCallbackCode(xml);
+		String err = null;
+		if(result == 2){
+			logger.info(err = "用户名、密码错误！");
+			throw new Exception(err);
+		}
+		if(result == 3){
+			logger.info(err = "用户已禁用！");
+			throw new Exception(err);
+		}
+		if(result == 4){
+			logger.info(err = "课程已过期！");
+			throw new Exception(err);
+		}
+		if(result == 5){
+			logger.info(err = "套餐已过期！");
+			throw new Exception(err);
+		}
+		if(result == 6){
+			logger.info(err = "课程或套餐参数不正确！");
+			throw new Exception(err);
+		}
+		if(result == 7){
+			logger.info(err = "失败！");
+			return false;
+		}
+		if(result == 9){
+			logger.info(err = "重复选课！");
+			throw new Exception(err);
+		}
+		if(result == 99){
+			logger.info(err = "不能重复提交订单请求！");
+			throw new Exception(err);
+		}
+		return result == 1;
+	}
+	/*
+	 * 充值。
+	 * @see com.examw.collector.service.IDataServer#recharge(java.lang.String, java.lang.String, java.lang.Integer, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean recharge(String userName, String password, Integer money, String cardnum, String cardpwd) throws Exception {
+		if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) throw new Exception("用户名或密码不能为空！");
+		if(StringUtils.isEmpty(cardnum) || StringUtils.isEmpty(cardpwd)) throw new Exception("学习卡或密码为不能为空！");
+		String xml = this.remoteDataProxy.postUsers(4, null, null, null, null, money.toString(), cardnum, cardpwd, userName, password, null, null, null, null);
+		if(StringUtils.isEmpty(xml)) throw new Exception("未获取服务端反馈！");
+		Integer result = this.checkCallbackCode(xml);
+		String err = null;
+		if(result == 2){
+			logger.info(err = "用户名、密码错误！");
+			throw new Exception(err);
+		}
+		if(result == 3){
+			logger.info(err = "学习卡未激活或已冻结！");
+			throw new Exception(err);
+		}
+		if(result == 4){
+			logger.info(err = "学习卡已过期！");
+			throw new Exception(err);
+		}
+		if(result == 5){
+			logger.info(err = "学习卡余额不足！");
+			throw new Exception(err);
+		}
+		if(result == 6){
+			logger.info(err = "用户名、密码错误！");
+			throw new Exception(err);
+		}
+		if(result == 7){
+			logger.info(err = "学习卡账号或密码校验失败！");
+			throw new Exception(err);
+		}
+		if(result == 8){
+			logger.info(err = "失败！");
+			return false;
+		}
+		if(result == 9){
+			logger.info(err = "用户已经使用过优惠卡充值！");
+			throw new Exception(err);
+		}
+		return result == 1;
+	}
+	/*
+	 * 扣费。
+	 * @see com.examw.collector.service.IDataServer#payment(java.lang.String, java.lang.String, java.lang.String, java.lang.Integer)
+	 */
+	@Override
+	public boolean payment(String userName, String password, String orderCode, Integer money) throws Exception {
+		if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) throw new Exception("用户名或密码不能为空！");
+		String xml = this.remoteDataProxy.postUsers(5, orderCode, null, null, null, money.toString(), null, null, userName, password, null, null, null, null);
+		if(StringUtils.isEmpty(xml)) throw new Exception("未获取服务端反馈！");
+		Integer result = this.checkCallbackCode(xml);
+		String err = null;
+		if(result == 2){
+			logger.info(err = "定单号不存在！");
+			throw new Exception(err);
+		}
+		if(result == 3){
+			logger.info(err = "用户余额不足！");
+			throw new Exception(err);
+		}
+		if(result == 4){
+			logger.info(err = "扣款的金额不正确！");
+			throw new Exception(err);
+		}
+		if(result == 5){
+			logger.info(err = "此订单已支付！");
+			throw new Exception(err);
+		}
+		if(result == 6){
+			logger.info(err = "用户名、密码错误！");
+			throw new Exception(err);
+		}
+		if(result == 7){
+			logger.info(err = "订单状态转化失败！");
+			throw new Exception(err);
+		}
+		if(result == 8){
+			logger.info("失败！");
+			return false;
+		}
+		return result == 1;
+	}
+	/*
+	 * 学习。
+	 * @see com.examw.collector.service.IDataServer#study(java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+	 */
+	@Override
+	public boolean study(String userName, String password, String lesson_code,String part) throws Exception {
+		if(StringUtils.isEmpty(userName) || StringUtils.isEmpty(password)) throw new Exception("用户名或密码不能为空！");
+		String xml = this.remoteDataProxy.postUsers(6, null,new String[]{ lesson_code }, null, part, null, null, null, null, password, null, null, null, null);
+		if(StringUtils.isEmpty(xml)) throw new Exception("未获取服务端反馈！");
+		Integer result = this.checkCallbackCode(xml);
+		String err = null;
+		if(result == 2){
+			logger.info(err = "用户名、密码错误！");
+			throw new Exception(err);
+		}
+		if(result == 3){
+			logger.info(err = "课程状态异常！");
+			throw new Exception(err);
+		}
+		if(result == 4){
+			logger.info(err = "课程参数信息有误！");
+			throw new Exception(err);
+		}
+		if(result == 5){
+			logger.info(err = "失败！");
+			return false;
+		}
+		return result == 1;
+	}
+	/**
+	 * 校验反馈数据。
+	 * @param xml
+	 * @return 状态参数。
+	 */
+	private Integer checkCallbackCode(String xml){
+		try {
+			Document  document = XmlUtil.loadDocument(xml);
+			Element root = document.getDocumentElement();
+			String  state = XmlUtil.getNodeStringValue(root, "./state");
+			String checkCode = this.remoteDataProxy.buildCheckCode(new String[]{
+					XmlUtil.getNodeStringValue(root, "./cataid"),
+					XmlUtil.getNodeStringValue(root, "./ordercode"),
+					XmlUtil.getNodeStringValue(root, "./money"),
+					XmlUtil.getNodeStringValue(root, "./username"),
+					XmlUtil.getNodeStringValue(root, "./password"),
+					XmlUtil.getNodeStringValue(root, "./time"),
+					XmlUtil.getNodeStringValue(root, "./playurl"),
+					state
+			});
+			if(checkCode.equalsIgnoreCase(XmlUtil.getNodeStringValue(root, "./md5Str"))){
+				return Integer.parseInt(state);
+			}
+		} catch (SAXException | IOException | ParserConfigurationException | XPathExpressionException e) {
+			logger.error(e);
+			e.printStackTrace();
+		}
+		return -1; 
+	}
+	/*
+	 * 定制大屏播放器.
+	 * @see com.examw.collector.service.IDataServer#loadVideo(java.lang.String, java.lang.Integer, java.lang.String)
+	 */
+	@Override
+	public String loadVideo(String userName, Integer type, String videoId) throws Exception {
+		if(StringUtils.isEmpty(userName)) throw new Exception("用户名不能为空！");
+		if(type == null) type = 3;
+		return this.remoteDataProxy.loadVideo(videoId, type, userName);
+	}
 }

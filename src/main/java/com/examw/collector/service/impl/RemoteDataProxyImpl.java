@@ -152,9 +152,9 @@ public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	 * 构造用于验证的加密字符串。
 	 * @param parameters
 	 * 参数集合。
-	 * @return
+	 * @return 加密字符串。
 	 */
-	private String buildCheckCode(String[] parameters){
+	public String buildCheckCode(String[] parameters){
 		logger.info("构造用于验证的加密字符串...");
 		StringBuilder builder = new StringBuilder(this.sid);
 		if(parameters != null && parameters.length > 0){

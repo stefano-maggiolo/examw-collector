@@ -9,6 +9,13 @@ import java.io.IOException;
  */
 public interface IRemoteDataProxy {
 	/**
+	 * 构造用于验证的加密字符串。
+	 * @param parameters
+	 * 参数集合。
+	 * @return 加密字符串。
+	 */
+	String buildCheckCode(String[] parameters);
+	/**
 	 * 加载课程数据。
 	 * @param cataId
 	 * 获取内容：
