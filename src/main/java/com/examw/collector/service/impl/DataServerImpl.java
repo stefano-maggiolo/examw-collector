@@ -64,7 +64,7 @@ public class DataServerImpl  implements IDataServer {
 				catalog.setCode(XmlUtil.getNodeStringValue(node, "./up_type_code"));
 				catalog.setName(XmlUtil.getNodeStringValue(node, "./up_type_name"));
 				catalog.setClassTotal(Integer.parseInt(XmlUtil.getNodeStringValue(node, "./class_num")));
-				
+				catalog.setParent(null);
 				NodeList children = XmlUtil.selectNodes(node, "./lesson_type");
 				if(children != null && children.getLength() > 0){
 					Set<Catalog> sets = new HashSet<>();
@@ -138,7 +138,7 @@ public class DataServerImpl  implements IDataServer {
 	public List<SubClass> loadClasses(String lesson_type_code, String lesson_code) {
 		try{
 			logger.info("单个科目中班级的信息集合...");
-			if(StringUtils.isEmpty(lesson_type_code) || StringUtils.isEmpty(lesson_code)) return null;
+			if(StringUtils.isEmpty(lesson_type_code)) return null;
 			String xml = this.remoteDataProxy.loadLesson(2, lesson_type_code, lesson_code, null);
 			if(StringUtils.isEmpty(xml)) return null;
 			Document document = XmlUtil.loadDocument(xml);
@@ -146,9 +146,25 @@ public class DataServerImpl  implements IDataServer {
 			NodeList list = XmlUtil.selectNodes(root, ".//lesson[lesson_code='"+ lesson_code+"']//class");
 			if(list == null || list.getLength() == 0) return null;
 			List<SubClass> subClasses = new ArrayList<>();
+			//=========增加科目===================
+				Catalog catalog = new Catalog();
+				catalog.setCode(lesson_type_code);
+			//====================================
+			//=========增加科目===================
+				Subject subject = null;
+				if(StringUtils.isEmpty(lesson_code))
+				{
+					subject = new Subject();
+					subject.setCode(lesson_code);
+				}
+			//====================================
 			for(int i = 0; i < list.getLength(); i++){
 				if(list.item(i) == null) continue;
 				SubClass data = new SubClass();
+				//=========增加科目=============
+					data.setCatalog(catalog);
+					data.setSubject(subject);
+				//==============================
 				data.setCode(XmlUtil.getNodeStringValue(list.item(i), "./class_code"));
 				data.setName(XmlUtil.getNodeStringValue(list.item(i), "./class_name"));
 				data.setIsLive(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_live")));
@@ -195,14 +211,21 @@ public class DataServerImpl  implements IDataServer {
 			NodeList list = XmlUtil.selectNodes(root, "//relate");
 			if(list == null || list.getLength() == 0) return null;
 			List<Relate> relates = new ArrayList<>();
+			//==================================================
+				SubClass grade = new SubClass();
+				grade.setCode(class_code);
+			//==================================================
 			for(int i = 0; i < list.getLength(); i++){
 				if(list.item(i) == null) continue;
 				Relate data = new Relate();
+				//==================================================
+					data.setSubclass(grade);
+				//==================================================
 				data.setNum(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./relate_num")));
 				data.setName(XmlUtil.getNodeStringValue(list.item(i), "./relate_name"));
-				data.setDemo((XmlUtil.getNodeStringValue(list.item(i), "./relate_demo")).equalsIgnoreCase("1"));
-				data.setUpdate(XmlUtil.getNodeStringValue(list.item(i), "./update_date"));
-				data.setNew((XmlUtil.getNodeStringValue(list.item(i), "./relate_demo")).equalsIgnoreCase("1"));
+				data.setIsDemo((XmlUtil.getNodeStringValue(list.item(i), "./relate_demo")).equalsIgnoreCase("1"));
+				data.setUpdateDate(XmlUtil.getNodeStringValue(list.item(i), "./update_date"));
+				data.setIsNew((XmlUtil.getNodeStringValue(list.item(i), "./relate_demo")).equalsIgnoreCase("1"));
 				data.setAddress(XmlUtil.getNodeStringValue(list.item(i), "./listen_address"));
 				relates.add(data);
 			}
@@ -220,8 +243,8 @@ public class DataServerImpl  implements IDataServer {
 	@Override
 	public List<Pack> loadPacks(String lesson_type_code, String lesson_code) {
 		try{
-			logger.info("获取单个科目中套餐的信息接口...");
-			if(StringUtils.isEmpty(lesson_type_code) || StringUtils.isEmpty(lesson_code)) return null;
+			logger.info("获取单个科目中套餐的信息接口...	lesson_code非必需[修改了下]");
+			if(StringUtils.isEmpty(lesson_type_code)) return null;		
 			String xml = this.remoteDataProxy.loadLesson(4, lesson_type_code, lesson_code, null);
 			if(StringUtils.isEmpty(xml)) return null;
 			Document document = XmlUtil.loadDocument(xml);
@@ -229,14 +252,29 @@ public class DataServerImpl  implements IDataServer {
 			NodeList list = XmlUtil.selectNodes(root, ".//lesson[lesson_code='"+ lesson_code+"']//discount");
 			if(list == null || list.getLength() == 0) return null;
 			List<Pack> packs = new ArrayList<>();
+			//==================================================
+				Catalog catalog = new Catalog();
+				catalog.setCode(lesson_type_code);
+			//==================================================
+			//==================================================
+				Subject subject = null;
+				if(StringUtils.isEmpty(lesson_code)){
+					subject = new Subject();
+					subject.setCode(lesson_code);
+				}
+			//==================================================
 			for(int i = 0; i < list.getLength(); i++){
 				if(list.item(i) == null) continue;
 				Pack data = new Pack();
+				//==================================================
+					data.setCatalog(catalog);
+					data.setSubject(subject);
+				//==================================================
 				data.setCode(XmlUtil.getNodeStringValue(list.item(i), "./discount_code"));
 				data.setName(XmlUtil.getNodeStringValue(list.item(i), "./discount_name"));
 				data.setSource(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./source_amount")));
 				data.setDiscount(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./discount_amount")));
-				data.setShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_show")));
+				data.setIsShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_show")));
 				data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i), "./class_code").split(","));
 				packs.add(data);
 			}

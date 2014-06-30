@@ -1,6 +1,7 @@
 package com.examw.collector.domain;
 
 import java.io.Serializable;
+import java.util.Set;
 
 /**
  * 套餐。
@@ -77,7 +78,7 @@ public class Pack implements Serializable {
 	 * 获取是否显示。
 	 * @return 是否显示。
 	 */
-	public boolean isShow() {
+	public boolean getIsShow() {
 		return isShow;
 	}
 	/**
@@ -85,7 +86,7 @@ public class Pack implements Serializable {
 	 * @param isShow
 	 * 是否显示。
 	 */
-	public void setShow(boolean isShow) {
+	public void setIsShow(boolean isShow) {
 		this.isShow = isShow;
 	}
 	/**
@@ -103,4 +104,60 @@ public class Pack implements Serializable {
 	public void setClassCodes(String[] classCodes) {
 		this.classCodes = classCodes;
 	}
+	
+	//科目
+	private Subject subject;
+	/**
+	 * 获取 科目
+	 * @return subject
+	 * 
+	 */
+	public Subject getSubject() {
+		return subject;
+	}
+	/**
+	 * 设置 科目
+	 * @param subject
+	 * 
+	 */
+	public void setSubject(Subject subject) {
+		this.subject = subject;
+	}
+	//分类
+	private Catalog catalog;
+	/**
+	 * 获取 分类
+	 * @return catalog
+	 * 分类
+	 */
+	public Catalog getCatalog() {
+		return catalog;
+	}
+	/**
+	 * 设置 分类
+	 * @param catalog
+	 * 分类
+	 */
+	public void setCatalog(Catalog catalog) {
+		this.catalog = catalog;
+	}
+	//包含班级
+	private Set<SubClass> subClasses;
+	/**
+	 * 获取 包含班级
+	 * @return subClasses
+	 * 包含班级
+	 */
+	public Set<SubClass> getSubClasses() {
+		return subClasses;
+	}
+	/**
+	 * 设置 包含班级
+	 * @param subClasses
+	 * 包含班级
+	 */
+	public void setSubClasses(Set<SubClass> subClasses) {
+		this.subClasses = subClasses;
+	}
+	
 }

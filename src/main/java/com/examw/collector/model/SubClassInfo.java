@@ -1,33 +1,21 @@
-package com.examw.collector.domain;
+package com.examw.collector.model;
 
 import java.io.Serializable;
+
+import com.examw.model.Paging;
+
 /**
- * 科目班级。
- * @author yangyong.
- * @since 2014-06-27.
+ * 
+ * @author fengwei.
+ * @since 2014年6月30日 上午11:28:52.
  */
-public class SubClass implements Serializable {
+public class SubClassInfo  extends Paging implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name,teacherName,demo,start,end;
 	private Boolean isLive,isShow;
 	private Integer longDay,sourcePrice,salePrice,total;
-	private AdVideo adVideo;
-	private Subject subject;
-	/**
-	 * 获取所属科目。
-	 * @return 所属科目。
-	 */
-	public Subject getSubject() {
-		return subject;
-	}
-	/**
-	 * 设置所属科目。
-	 * @param subject
-	 * 所属科目。
-	 */
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
+	private String adVideoId,adVideoName;
+	private String subjectId,subjectName,catalogId,catalogName;
 	/**
 	 * 获取班级代码。
 	 * @return 班级代码。
@@ -209,37 +197,100 @@ public class SubClass implements Serializable {
 		this.end = end;
 	}
 	/**
-	 * 获取广告视频。
-	 * @return 广告视频。
+	 * 获取 广告ID
+	 * @return adVideoId
+	 * 
 	 */
-	public AdVideo getAdVideo() {
-		return adVideo;
+	public String getAdVideoId() {
+		return adVideoId;
 	}
 	/**
-	 * 设置广告视频集合。
-	 * @param adVideo
-	 * 广告视频集合。
+	 * 设置 广告ID
+	 * @param adVideoId
+	 * 
 	 */
-	public void setAdVideo(AdVideo adVideo) {
-		this.adVideo = adVideo;
+	public void setAdVideoId(String adVideoId) {
+		this.adVideoId = adVideoId;
+	}
+	/**
+	 * 获取 广告名字
+	 * @return adVideoName
+	 * 
+	 */
+	public String getAdVideoName() {
+		return adVideoName;
+	}
+	/**
+	 * 设置 广告名字
+	 * @param adVideoName
+	 * 
+	 */
+	public void setAdVideoName(String adVideoName) {
+		this.adVideoName = adVideoName;
+	}
+	/**
+	 * 获取 科目ID
+	 * @return subjectId
+	 * 
+	 */
+	public String getSubjectId() {
+		return subjectId;
+	}
+	/**
+	 * 设置 科目ID
+	 * @param subjectId
+	 * 
+	 */
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+	/**
+	 * 获取 科目名称
+	 * @return subjectName
+	 * 
+	 */
+	public String getSubjectName() {
+		return subjectName;
+	}
+	/**
+	 * 设置 科目名称
+	 * @param subjectName
+	 * 
+	 */
+	public void setSubjectName(String subjectName) {
+		this.subjectName = subjectName;
+	}
+	/**
+	 * 获取 分类ID
+	 * @return catalogId
+	 * 
+	 */
+	public String getCatalogId() {
+		return catalogId;
+	}
+	/**
+	 * 设置  分类ID
+	 * @param catalogId
+	 * 
+	 */
+	public void setCatalogId(String catalogId) {
+		this.catalogId = catalogId;
+	}
+	/**
+	 * 获取 分类名称 
+	 * @return catalogName
+	 * 
+	 */
+	public String getCatalogName() {
+		return catalogName;
+	}
+	/**
+	 * 设置 分类名称
+	 * @param catalogName
+	 * 
+	 */
+	public void setCatalogName(String catalogName) {
+		this.catalogName = catalogName;
 	}
 	
-	//所属考试
-	private Catalog catalog;
-	/**
-	 * 获取 考试分类(小类)
-	 * @return catalog
-	 * 考试分类
-	 */
-	public Catalog getCatalog() {
-		return catalog;
-	}
-	/**
-	 * 设置 考试分类
-	 * @param catalog
-	 * 考试分类
-	 */
-	public void setCatalog(Catalog catalog) {
-		this.catalog = catalog;
-	}
 }

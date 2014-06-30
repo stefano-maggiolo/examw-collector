@@ -1,0 +1,75 @@
+<#--菜单设置列表-->
+<#include "ftl/comm.ftl"/>
+<#assign module="edu24_catalog"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	//dg
+	var dg = $("#${dg}").treegrid({
+		url:"<@s.url '/admin/edu24/catalog/datagrid'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		idField:"id",
+		treeField:"name",
+		singleSelect:false,
+		animate:true,
+		border:true,
+		striped:true,
+		columns:[[{
+			field:"children",
+			checkbox:true
+		},{
+			title:"类别名称",
+			field:"name",
+			width:25
+		},{
+			title:"类别代码",
+			field:"id",
+			width:15
+		},{
+			title:"课程数",
+			field:"classTotal",
+			width:35
+		}]],
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+		toolbar:[
+		{
+			iconCls:"icon-add",
+			text:"初始化课程类别数据",
+			handler:function(){
+				$.messager.confirm("确认","您是否确认初始化课程类别数据?",function(r){
+					if(!r)return;
+					$.messager.progress();
+					$.ajax({
+						url:"<@s.url '/admin/edu24/catalog/init'/>",
+						type:"POST",
+						dataType:"json",
+						error:function(e){
+							$.messager.progress("close");
+							<@error_dialog "e"/>
+						},
+						success:function(data,textStatus){
+							$.messager.progress("close");
+							if(data.success){
+								dg.treegrid("load");
+								dg.treegrid("unselectAll");
+							}else{
+								$.messager.show({
+									title:"提示",
+									msg:data.msg
+								});
+							}
+						}
+					});
+				});
+			}
+		}]
+	});
+});
+//-->
+</script>
+<table id="${dg}"></table>

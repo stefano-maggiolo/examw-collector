@@ -9,6 +9,13 @@
 		是否共享
 		<property name="shared" value="true"/>
 	</bean> -->
+	<!-- 菜单服务 -->
+	<bean id="menuService" class="com.examw.collector.service.impl.MenuServiceImpl">
+		<!-- 菜单文件 -->
+		<property name="menuFile" value="${menuFile}"/>
+		<!-- 系统ID -->
+		<property name="systemId" value="${systemId}"/>
+	</bean>
 	<!-- 远程数据代理服务 -->
 	<bean id="remoteDataProxy" class="com.examw.collector.service.impl.RemoteDataProxyImpl">
 		<!-- 合作ID号 -->
@@ -24,5 +31,14 @@
 	<bean id="dataServer" class="com.examw.collector.service.impl.DataServerImpl">
 		<!-- 远程数据代理 -->
 		<property name="remoteDataProxy" ref="remoteDataProxy" />
+	</bean>
+	<!-- 课程分类服务 -->
+	<bean id="catalogService" class="com.examw.collector.service.impl.CatalogServiceImpl">
+	    <property name="catalogDao" ref="catalogDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
+	    <property name="dataServer" ref="dataServer"/>
+	</bean>
+	<bean id="subjectService" class="com.examw.collector.service.impl.SubjectServiceImpl">
+	    <property name="subjectDao" ref="subjectDao"/>
 	</bean>
 </beans>

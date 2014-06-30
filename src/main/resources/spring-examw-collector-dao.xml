@@ -2,5 +2,12 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<!-- dao -->
-	
+	<!-- 考试类别Dao -->
+	<bean id="catalogDao" class="com.examw.collector.dao.impl.CatalogDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 科目Dao -->
+	<bean id="subjectDao" class="com.examw.collector.dao.impl.SubjectDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
 </beans>

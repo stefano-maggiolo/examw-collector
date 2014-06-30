@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class Relate implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String name,update,address;
+	private String name,updateDate,address;
 	private Integer num;
 	private boolean isDemo,isNew;
 	/**
@@ -46,7 +46,7 @@ public class Relate implements Serializable {
 	 * 获取是否试听。
 	 * @return 是否试听。
 	 */
-	public boolean isDemo() {
+	public boolean getIsDemo() {
 		return isDemo;
 	}
 	/**
@@ -54,29 +54,29 @@ public class Relate implements Serializable {
 	 * @param isDemo
 	 * 是否试听。
 	 */
-	public void setDemo(boolean isDemo) {
+	public void setIsDemo(boolean isDemo) {
 		this.isDemo = isDemo;
 	}
 	/**
 	 * 获取更新日期。
 	 * @return 更新日期。
 	 */
-	public String getUpdate() {
-		return update;
+	public String getUpdateDate() {
+		return updateDate;
 	}
 	/**
 	 * 设置更新日期。
 	 * @param update
 	 * 更新日期。
 	 */
-	public void setUpdate(String update) {
-		this.update = update;
+	public void setUpdateDate(String update) {
+		this.updateDate = update;
 	}
 	/**
 	 * 获取是否最新课程。
 	 * @return 是否最新课程。
 	 */
-	public boolean isNew() {
+	public boolean getIsNew() {
 		return isNew;
 	}
 	/**
@@ -84,7 +84,7 @@ public class Relate implements Serializable {
 	 * @param isNew
 	 * 是否最新课程。
 	 */
-	public void setNew(boolean isNew) {
+	public void setIsNew(boolean isNew) {
 		this.isNew = isNew;
 	}
 	/**
@@ -101,5 +101,42 @@ public class Relate implements Serializable {
 	 */
 	public void setAddress(String address) {
 		this.address = address;
-	}	
+	}
+	
+	//所在班级
+	private SubClass subclass;
+	/**
+	 * 获取 所在班级
+	 * @return subclass
+	 * 
+	 */
+	public SubClass getSubclass() {
+		return subclass;
+	}
+	/**
+	 * 设置 所在班级
+	 * @param subclass
+	 * 
+	 */
+	public void setSubclass(SubClass subclass) {
+		this.subclass = subclass;
+	}
+	private Integer id;
+	/**
+	 * 获取 
+	 * @return id
+	 * 
+	 */
+	public Integer getId() {
+		return id;
+	}
+	/**
+	 * 设置 
+	 * @param id
+	 * 
+	 */
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	
 }

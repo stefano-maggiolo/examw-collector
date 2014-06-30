@@ -7,7 +7,7 @@
 		<!--引入参数属性文件 -->
 		<context:property-placeholder location="classpath:config.properties" />
 		<!-- hibernate 配置 -->
-		<!-- <import resource="spring-examw-collector-hibernate.xml" /> -->
+		<import resource="spring-examw-collector-hibernate.xml" />
 		<!-- dao -->
 		<import resource="spring-examw-collector-dao.xml" />
 		<!-- service -->
