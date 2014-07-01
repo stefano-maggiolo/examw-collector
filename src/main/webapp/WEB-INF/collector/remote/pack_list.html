@@ -75,12 +75,12 @@ $(function(){
 			title:"所属科目",
 			field:"subjectName",
 			width:10,
-			align:"left",
+			align:"left"
 		},{
 			title:"所属课程分类",
 			field:"catalogName",
 			width:10,
-			align:"right",
+			align:"right"
 		},{
 			title:"原价",
 			field:"source",
@@ -98,11 +98,18 @@ $(function(){
 			field:"isShow",
 			width:10,
 			align:"right",
+			formatter: function(value,row,index){
+				if (value){
+					return "是";
+				} else {
+					return "否";
+				}
+			}
 		},{
 			title:"包含班级",
 			field:"classCodes",
 			width:30,
-			align:"left",
+			align:"left"
 		}]],
 		toolbar:"#${dg}_toobar",
 		onLoadError:function(e){

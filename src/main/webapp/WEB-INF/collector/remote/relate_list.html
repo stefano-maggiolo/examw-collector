@@ -44,22 +44,36 @@ $(function(){
 			title:"所在班级",
 			field:"className",
 			width:20,
-			align:"right",
+			align:"right"
 		},{
 			title:"更新时间",
 			field:"updateDate",
 			width:20,
-			align:"left",
+			align:"left"
 		},{
 			title:"是否试听",
 			field:"isDemo",
 			width:10,
 			align:"left",
+			formatter: function(value,row,index){
+				if (value){
+					return "是";
+				} else {
+					return "否";
+				}
+			}
 		},{
 			title:"是否最新",
 			field:"isNew",
 			width:10,
 			align:"left",
+			formatter: function(value,row,index){
+				if (value){
+					return "是";
+				} else {
+					return "否";
+				}
+			}
 		},{
 			title:"地址",
 			field:"address",

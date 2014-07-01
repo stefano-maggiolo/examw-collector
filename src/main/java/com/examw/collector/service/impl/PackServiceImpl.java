@@ -67,12 +67,12 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(),
 				info.getSubjectId());
 		if (data != null && data.size() > 0) {
-			setSubClassRelationShip(data);
+			//setSubClassRelationShip(data);
 			this.packDao.batchSave(data);
 		}
 		logger.info("初始化完成！");
 	}
-
+	// 不这么弄,里面有些的班级没有
 	private void setSubClassRelationShip(List<Pack> data) {
 		Set<SubClass> classes = new HashSet<SubClass>();
 		for (Pack p : data) {
