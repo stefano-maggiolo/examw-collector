@@ -9,37 +9,37 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.examw.collector.model.SubClassInfo;
-import com.examw.collector.service.ISubClassService;
+import com.examw.collector.model.PackInfo;
+import com.examw.collector.service.IPackService;
 import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
  * 
  * @author fengwei.
- * @since 2014年6月30日 下午5:32:33.
+ * @since 2014年7月1日 上午10:50:03.
  */
 @Controller
-@RequestMapping("/admin/edu24/subclass")
-public class SubClassController {
-	private static Logger logger  = Logger.getLogger(CatalogController.class);
+@RequestMapping("/admin/edu24/pack")
+public class PackController {
+	private static Logger logger  = Logger.getLogger(PackController.class);
 	@Resource
-	private ISubClassService subClassService;
+	private IPackService packService;
 	@RequestMapping(value={"","/list"}, method = RequestMethod.GET)
 	public String list(Model model){
-		return "remote/subclass_list";
+		return "remote/pack_list";
 	}
 	@RequestMapping(value="/datagrid", method = RequestMethod.POST)
 	@ResponseBody
-	public DataGrid<SubClassInfo> datagrid(SubClassInfo info){
-		return this.subClassService.datagrid(info);
+	public DataGrid<PackInfo> datagrid(PackInfo info){
+		return this.packService.datagrid(info);
 	}
 	@RequestMapping(value = "/init", method = RequestMethod.POST)
 	@ResponseBody
-	public Json init(SubClassInfo info){
+	public Json init(PackInfo info){
 		Json result = new Json();
 		try {
-			this.subClassService.init(info);
+			this.packService.init(info);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);
@@ -48,5 +48,4 @@ public class SubClassController {
 		}
 		return result;
 	}
-	
 }

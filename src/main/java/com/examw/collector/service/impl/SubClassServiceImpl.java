@@ -106,6 +106,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 				data.add(s.getAdVideo());
 			}
 		}
+		logger.info("AdVideo的个数是:"+data.size());
 		return data;
 	}
 }

@@ -12,7 +12,7 @@ import com.examw.model.Paging;
 public class PackInfo extends Paging implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name;
-	private String[] classCodes;
+	private String classCodes;
 	private Integer source,discount;
 	private boolean isShow;
 	private String catalogId,catalogName,subjectId,subjectName;
@@ -53,7 +53,7 @@ public class PackInfo extends Paging implements Serializable {
 	 * @return classCodes
 	 * 
 	 */
-	public String[] getClassCodes() {
+	public String getClassCodes() {
 		return classCodes;
 	}
 	/**
@@ -61,7 +61,7 @@ public class PackInfo extends Paging implements Serializable {
 	 * @param classCodes
 	 * 
 	 */
-	public void setClassCodes(String[] classCodes) {
+	public void setClassCodes(String classCodes) {
 		this.classCodes = classCodes;
 	}
 	/**
@@ -101,7 +101,7 @@ public class PackInfo extends Paging implements Serializable {
 	 * @return isShow
 	 * 
 	 */
-	public boolean isShow() {
+	public boolean getIsShow() {
 		return isShow;
 	}
 	/**
@@ -109,7 +109,7 @@ public class PackInfo extends Paging implements Serializable {
 	 * @param isShow
 	 * 
 	 */
-	public void setShow(boolean isShow) {
+	public void setIsShow(boolean isShow) {
 		this.isShow = isShow;
 	}
 	/**

@@ -38,7 +38,29 @@
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	</bean>
+	<!-- 科目服务 -->
 	<bean id="subjectService" class="com.examw.collector.service.impl.SubjectServiceImpl">
 	    <property name="subjectDao" ref="subjectDao"/>
+	</bean>
+	<!-- 班级服务 -->
+	<bean id="subClassService" class="com.examw.collector.service.impl.SubClassServiceImpl">
+	    <property name="subClassDao" ref="subClassDao"/>
+	    <property name="adVideoDao" ref="adVideoDao"/>
+	    <property name="dataServer" ref="dataServer"/>
+	</bean>
+	<!-- 课节服务 -->
+	<bean id="relateService" class="com.examw.collector.service.impl.RelateServiceImpl">
+	    <property name="relateDao" ref="relateDao"/>
+	    <property name="dataServer" ref="dataServer"/>
+	</bean>
+	<!-- 广告服务 -->
+	<bean id="adVideoService" class="com.examw.collector.service.impl.AdVideoServiceImpl">
+	    <property name="adVideoDao" ref="adVideoDao"/>
+	</bean>
+	<!-- 广告服务 -->
+	<bean id="packService" class="com.examw.collector.service.impl.PackServiceImpl">
+	    <property name="subClassDao" ref="subClassDao"/>
+	    <property name="packDao" ref="packDao"/>
+	    <property name="dataServer" ref="dataServer"/>
 	</bean>
 </beans>

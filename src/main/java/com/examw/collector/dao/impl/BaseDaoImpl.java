@@ -139,7 +139,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 			}
 		}
 		//是否启用缓存。
-		query.setCacheable(true);
+		//query.setCacheable(true);
 	}
 	/**
 	 * 统计数据总数。
@@ -167,7 +167,7 @@ public class BaseDaoImpl<T> implements IBaseDao<T> {
 	public void batchSave(List<T> entitys) {
 		Session session = this.getCurrentSession();
 		for (int i=0; i<entitys.size();i++) {
-			session.save(entitys.get(i));
+			session.saveOrUpdate(entitys.get(i));
 			if (i % 20 == 0) {
 				//20个对象后才清理缓存，写入数据库
 				session.flush();

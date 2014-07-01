@@ -21,7 +21,7 @@
 	    <!-- 上级考试类别 -->
 		<many-to-one name="parent"  column="pid"  class="Catalog"/>
 		<!-- 下级考试类别集合 -->
-		<set name="children"  inverse="true"  cascade="save-update" >
+		<set name="children"  inverse="true"  cascade="save-update" order-by="code asc">
 				<!-- <cache usage="read-write"/> -->
 				<key  column="pid"/>
 				<one-to-many class="Catalog"/>
@@ -122,6 +122,8 @@
 		<many-to-one name="subject"  column="subject_id"  class="Subject" />
 		<!-- 所属小类 -->
 		<many-to-one name="catalog"  column="catalog_id"  class="Catalog" />
+		<!-- 包含班级代码 -->
+		<property name="classCodes" type="text" column="class_codes"/>
 		<!-- 包含班级的集合 -->
 		<set name="subClasses"  inverse="false"  cascade="save-update"  table="tbl_Collector_Remote_PackClasses">
 			<key  column="pack_id"/>
@@ -137,7 +139,10 @@
 	 <class name="Relate"  table="tbl_Collector_Remote_Relate">
 		<!-- <cache usage="read-write"/> -->
 		<!-- 课时ID -->
-		<id name="id" type="integer"></id>
+		<id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="native"/>
+		</id>
 		<!-- 课时名称 -->
 		<property name="name"  type="string"  length="128"  not-null="true" />
 		<!-- 更新时间 -->
@@ -148,6 +153,8 @@
 		<property name="isDemo"  type="true_false" column="is_demo"/>
 		<!-- 是否新 -->
 		<property name="isNew"  type="true_false" column="is_new"/>
+		<!-- 广告代码 -->
+		<property name="address"  type="string" length="255" />
 		<!-- 所属科目 -->
 		<many-to-one name="subclass"  column="class_id"  class="SubClass" />
 	</class>

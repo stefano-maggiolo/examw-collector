@@ -152,7 +152,7 @@ public class DataServerImpl  implements IDataServer {
 			//====================================
 			//=========增加科目===================
 				Subject subject = null;
-				if(StringUtils.isEmpty(lesson_code))
+				if(!StringUtils.isEmpty(lesson_code))
 				{
 					subject = new Subject();
 					subject.setCode(lesson_code);
@@ -258,7 +258,7 @@ public class DataServerImpl  implements IDataServer {
 			//==================================================
 			//==================================================
 				Subject subject = null;
-				if(StringUtils.isEmpty(lesson_code)){
+				if(!StringUtils.isEmpty(lesson_code)){
 					subject = new Subject();
 					subject.setCode(lesson_code);
 				}
@@ -275,7 +275,8 @@ public class DataServerImpl  implements IDataServer {
 				data.setSource(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./source_amount")));
 				data.setDiscount(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./discount_amount")));
 				data.setIsShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_show")));
-				data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i), "./class_code").split(","));
+				//data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i), "./class_code").split(","));
+				data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i), "./class_code"));
 				packs.add(data);
 			}
 			return packs;

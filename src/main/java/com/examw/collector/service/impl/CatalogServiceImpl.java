@@ -168,7 +168,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 		if(data == null) return null;
 		TreeNode node = new TreeNode();
 		node.setId(data.getCode());
-		node.setText(data.getName());
+		node.setText(data.getName()+"("+data.getCode()+")");
 		if(data.getChildren() != null && data.getChildren().size() > 0){
 			List<TreeNode> children = new ArrayList<>();
 			for(Catalog m : data.getChildren()){

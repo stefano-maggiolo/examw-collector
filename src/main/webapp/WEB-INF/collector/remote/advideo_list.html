@@ -1,0 +1,68 @@
+<#--考试类别列表-->
+<#include "ftl/comm.ftl"/>
+<#assign module="edu24_advideo"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	//dg
+	var dg=$("#${dg}").datagrid({
+		url:"<@s.url '/admin/edu24/advideo/datagrid'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		pagination:true,
+		pagePosition:"bottom",
+		pageSize:20,
+		pageList:[20,30,40],
+		border:true,
+		striped:true,
+		idField:"code",
+		sortName:"code",
+		columns:[[{
+			field:"check",
+			checkbox:true
+		},{
+			title:"代码",
+			field:"code",
+			width:10,
+			align:"left",
+			sortable:true
+		},{
+			title:"名称",
+			field:"name",
+			width:20,
+			align:"left",
+			sortable:true
+		},{
+			title:"类型",
+			field:"type",
+			width:10,
+			align:"left",
+		},{
+			title:"地址",
+			field:"address",
+			width:30,
+			align:"left",
+		}]],
+		toolbar:"#${dg}_toobar",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		}
+	});
+	//search
+	${dg}_search = function(){
+		dg.datagrid("load",{
+			  name:$("#${dg}_toobar input[name='name']").val()
+		});
+	};
+});
+//-->
+</script>
+<table id="${dg}"></table>
+<div id="${dg}_toobar">
+	
+	<label>名称：<input name="name" type="text" style="width:198px;"/></label>
+	
+	<a href="#" class="easyui-linkbutton" style="margin-left:10px;"  onclick="${dg}_search()" data-options="iconCls:'icon-search',plain:true">查询</a>
+</div>

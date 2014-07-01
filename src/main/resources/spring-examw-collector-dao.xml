@@ -10,4 +10,20 @@
 	<bean id="subjectDao" class="com.examw.collector.dao.impl.SubjectDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
+	<!-- 班级Dao -->
+	<bean id="subClassDao" class="com.examw.collector.dao.impl.SubClassDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 广告Dao -->
+	<bean id="adVideoDao" class="com.examw.collector.dao.impl.AdVideoDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 课节Dao -->
+	<bean id="relateDao" class="com.examw.collector.dao.impl.RelateDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 套餐Dao -->
+	<bean id="packDao" class="com.examw.collector.dao.impl.PackDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
 </beans>

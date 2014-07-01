@@ -6,38 +6,31 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-import com.examw.collector.dao.ISubClassDao;
-import com.examw.collector.domain.SubClass;
-import com.examw.collector.model.SubClassInfo;
+import com.examw.collector.dao.IPackDao;
+import com.examw.collector.domain.Pack;
+import com.examw.collector.model.PackInfo;
 
 /**
  * 
  * @author fengwei.
- * @since 2014年6月30日 下午4:21:44.
+ * @since 2014年7月1日 上午9:56:37.
  */
-public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassDao{
+public class PackDaoImpl extends BaseDaoImpl<Pack> implements IPackDao{
 
-	/*
-	 * 查询数据
-	 * @see com.examw.netplatform.dao.admin.IClassTypeDao#findClassTypes(com.examw.netplatform.model.admin.ClassTypeInfo)
-	 */
 	@Override
-	public List<SubClass> findSubClasses(SubClassInfo info) {
-		String hql = "from SubClass sc where 1=1 ";
+	public List<Pack> findPacks(PackInfo info) {
+		String hql = "from Pack p where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		if(info.getSort() != null && !info.getSort().trim().isEmpty()){
-			hql += " order by sc." + info.getSort() + " " + info.getOrder();
+			hql += " order by p." + info.getSort() + " " + info.getOrder();
 		}
 		return this.find(hql, parameters, info.getPage(), info.getRows());
 	}
-	/*
-	 * 查询数据统计。
-	 * @see com.examw.netplatform.dao.admin.IClassTypeDao#total(com.examw.netplatform.model.admin.ClassTypeInfo)
-	 */
+
 	@Override
-	public Long total(SubClassInfo info) {
-		String hql = "select count(*) from SubClass sc where 1=1 ";
+	public Long total(PackInfo info) {
+		String hql = "select count(*) from Pack p where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.count(hql, parameters);
@@ -53,18 +46,18 @@ public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassD
 	 * @return
 	 * HQL
 	 */
-	protected String addWhere(SubClassInfo info, String hql, Map<String, Object> parameters){
+	protected String addWhere(PackInfo info, String hql, Map<String, Object> parameters){
 		if(info.getName() != null && !info.getName().trim().isEmpty()){
-			hql += "  and (sc.name like :name)";
+			hql += "  and (p.name like :name)";
 			parameters.put("name", "%" + info.getName()+ "%");
 		}
 		if(info.getSubjectId() != null && !info.getSubjectId().trim().isEmpty()){
-			hql += "  and (sc.subject.id = :subjectId)";
+			hql += "  and (p.subject.id = :subjectId)";
 			parameters.put("subjectId", info.getSubjectId());
 		}
 		if(StringUtils.isEmpty(info.getCatalogId()))
 		{
-			hql += "  and (sc.catalog.id = :catalogId)";
+			hql += "  and (p.catalog.id = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		return hql;

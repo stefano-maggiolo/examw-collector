@@ -57,6 +57,11 @@ $(function(){
 							if(data.success){
 								dg.treegrid("load");
 								dg.treegrid("unselectAll");
+								$.messager.show({
+									title:'提示',
+									msg:'课程类别导入成功',
+									showType:'show'
+								});
 							}else{
 								$.messager.show({
 									title:"提示",

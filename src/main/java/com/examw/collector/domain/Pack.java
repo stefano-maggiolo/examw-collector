@@ -11,7 +11,7 @@ import java.util.Set;
 public class Pack implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name;
-	private String[] classCodes;
+	private String classCodes;
 	private Integer source,discount;
 	private boolean isShow;
 	/**
@@ -93,7 +93,7 @@ public class Pack implements Serializable {
 	 * 获取套餐所包含的班别编码数组。
 	 * @return 套餐所包含的班别编码数组。
 	 */
-	public String[] getClassCodes() {
+	public String getClassCodes() {
 		return classCodes;
 	}
 	/**
@@ -101,7 +101,7 @@ public class Pack implements Serializable {
 	 * @param classCodes
 	 * 套餐所包含的班别编码数组。
 	 */
-	public void setClassCodes(String[] classCodes) {
+	public void setClassCodes(String classCodes) {
 		this.classCodes = classCodes;
 	}
 	

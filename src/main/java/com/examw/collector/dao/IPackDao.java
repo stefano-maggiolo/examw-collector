@@ -2,21 +2,21 @@ package com.examw.collector.dao;
 
 import java.util.List;
 
-import com.examw.collector.domain.AdVideo;
-import com.examw.collector.model.AdVideoInfo;
+import com.examw.collector.domain.Pack;
+import com.examw.collector.model.PackInfo;
 
 /**
  * 
  * @author fengwei.
- * @since 2014年6月30日 下午4:37:03.
+ * @since 2014年7月1日 上午9:55:58.
  */
-public interface IAdVideoDao extends IBaseDao<AdVideo>{
+public interface IPackDao extends IBaseDao<Pack>{
 	/**
 	 * 查询分类数据。
 	 * @return
 	 * 结果数据。
 	 */
-	List<AdVideo> findAdVideos(AdVideoInfo info);
+	List<Pack> findPacks(PackInfo info);
 	
 	/**
 	 * 查询数据总数。
@@ -25,5 +25,5 @@ public interface IAdVideoDao extends IBaseDao<AdVideo>{
 	 * @return
 	 * 数据总数。
 	 */
-	Long total(AdVideoInfo info);
+	Long total(PackInfo info);
 }

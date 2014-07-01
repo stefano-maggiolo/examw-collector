@@ -11,17 +11,17 @@ import com.examw.model.Paging;
  */
 public class RelateInfo extends Paging implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,name,update,address;
+	private String name,updateDate,address;
 	private Integer num;
 	private boolean isDemo,isNew;
 	private String classId,className;
-	
+	private Integer id;
 	/**
 	 * 获取 ID
 	 * @return id
 	 * 
 	 */
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 	/**
@@ -29,7 +29,7 @@ public class RelateInfo extends Paging implements Serializable {
 	 * @param id
 	 * 
 	 */
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	/**
@@ -53,16 +53,16 @@ public class RelateInfo extends Paging implements Serializable {
 	 * @return update
 	 * 
 	 */
-	public String getUpdate() {
-		return update;
+	public String getUpdateDate() {
+		return updateDate;
 	}
 	/**
 	 * 设置 更新时间
 	 * @param update
 	 * 
 	 */
-	public void setUpdate(String update) {
-		this.update = update;
+	public void setUpdateDate(String update) {
+		this.updateDate = update;
 	}
 	/**
 	 * 获取 试听地址
@@ -101,7 +101,7 @@ public class RelateInfo extends Paging implements Serializable {
 	 * @return isDemo
 	 * 
 	 */
-	public boolean isDemo() {
+	public boolean getIsDemo() {
 		return isDemo;
 	}
 	/**
@@ -109,7 +109,7 @@ public class RelateInfo extends Paging implements Serializable {
 	 * @param isDemo
 	 * 
 	 */
-	public void setDemo(boolean isDemo) {
+	public void setIsDemo(boolean isDemo) {
 		this.isDemo = isDemo;
 	}
 	/**
@@ -117,7 +117,7 @@ public class RelateInfo extends Paging implements Serializable {
 	 * @return isNew
 	 * 
 	 */
-	public boolean isNew() {
+	public boolean getIsNew() {
 		return isNew;
 	}
 	/**
@@ -125,7 +125,7 @@ public class RelateInfo extends Paging implements Serializable {
 	 * @param isNew
 	 * 
 	 */
-	public void setNew(boolean isNew) {
+	public void setIsNew(boolean isNew) {
 		this.isNew = isNew;
 	}
 	/**
