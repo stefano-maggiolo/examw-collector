@@ -1,4 +1,4 @@
-package com.examw.collector.entity;
+package com.examw.collector.domain.local;
 
 import java.io.Serializable;
 
@@ -9,23 +9,23 @@ import java.io.Serializable;
  */
 public class ListenEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,name,update,address;
-	private Integer num;
+	private String id,name,updateDate,address;
+	private Integer orderNum;
 	private GradeEntity grade;
 	/**
 	 * 获取序号。
 	 * @return 序号。
 	 */
-	public Integer getNum() {
-		return num;
+	public Integer getOrderNum() {
+		return orderNum;
 	}
 	/**
 	 * 设置序号。
 	 * @param num
 	 * 序号。
 	 */
-	public void setNum(Integer num) {
-		this.num = num;
+	public void setOrderNum(Integer num) {
+		this.orderNum = num;
 	}
 	/**
 	 * 获取标题。
@@ -46,16 +46,16 @@ public class ListenEntity implements Serializable {
 	 * 获取更新日期。
 	 * @return 更新日期。
 	 */
-	public String getUpdate() {
-		return update;
+	public String getUpdateDate() {
+		return updateDate;
 	}
 	/**
 	 * 设置更新日期。
 	 * @param update
 	 * 更新日期。
 	 */
-	public void setUpdate(String update) {
-		this.update = update;
+	public void setUpdateDate(String update) {
+		this.updateDate = update;
 	}
 	/**
 	 * 获取试听地址。

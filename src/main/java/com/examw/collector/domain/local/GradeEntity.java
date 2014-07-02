@@ -1,8 +1,6 @@
-package com.examw.collector.entity;
+package com.examw.collector.domain.local;
 
 import java.io.Serializable;
-
-import com.examw.collector.domain.AdVideo;
 
 /**
  * 
@@ -12,23 +10,22 @@ import com.examw.collector.domain.AdVideo;
 public class GradeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id,name,teacherName,start,end;
-	private Integer longDay,sourcePrice,salePrice,total;
-	private AdVideo adVideo;
-	private SubjectEntity subject;
+	private Integer sourcePrice,salePrice,total;
+	private SubjectEntity subjectEntity;
 	/**
 	 * 获取所属科目。
 	 * @return 所属科目。
 	 */
-	public SubjectEntity getSubject() {
-		return subject;
+	public SubjectEntity getSubjectEntity() {
+		return subjectEntity;
 	}
 	/**
 	 * 设置所属科目。
 	 * @param subject
 	 * 所属科目。
 	 */
-	public void setSubject(SubjectEntity subject) {
-		this.subject = subject;
+	public void setSubjectEntity(SubjectEntity subject) {
+		this.subjectEntity = subject;
 	}
 	/**
 	 * 获取班级代码。
@@ -74,21 +71,6 @@ public class GradeEntity implements Serializable {
 	 */
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
-	}
-	/**
-	 * 获取课程时长。
-	 * @return 课程时长。
-	 */
-	public Integer getLongDay() {
-		return longDay;
-	}
-	/**
-	 * 设置课程时长。
-	 * @param longDay
-	 * 课程时长。
-	 */
-	public void setLongDay(Integer longDay) {
-		this.longDay = longDay;
 	}
 	/**
 	 * 获取班级的原售价。
@@ -164,20 +146,5 @@ public class GradeEntity implements Serializable {
 	 */
 	public void setEnd(String end) {
 		this.end = end;
-	}
-	/**
-	 * 获取广告视频。
-	 * @return 广告视频。
-	 */
-	public AdVideo getAdVideo() {
-		return adVideo;
-	}
-	/**
-	 * 设置广告视频集合。
-	 * @param adVideo
-	 * 广告视频集合。
-	 */
-	public void setAdVideo(AdVideo adVideo) {
-		this.adVideo = adVideo;
 	}
 }

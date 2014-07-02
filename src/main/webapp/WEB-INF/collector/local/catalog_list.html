@@ -1,0 +1,115 @@
+<#--菜单设置列表-->
+<#include "ftl/comm.ftl"/>
+<#assign module="local_catalog"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	var current_catalog_id = "";
+	//catalog-exam-tree
+	var t = $("#${module}_list_catalog_exam_tree").tree({
+		url:"<@s.url '/admin/edu24/catalog/tree'/>",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+		onBeforeLoad:function(){
+			current_catalog_id = "";
+		},
+		onClick:function(node){
+			current_catalog_id = node.id;
+		}
+	});
+	//dg
+	var editingId,currentCode;
+	var dg = $("#${dg}").treegrid({
+		url:"<@s.url '/admin/local/catalog/datagrid'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		idField:"id",
+		treeField:"cname",
+		singleSelect:true,
+		animate:true,
+		border:true,
+		striped:true,
+		columns:[[{
+			field:"id",
+			checkbox:true
+		},{
+			title:"类别名称",
+			field:"cname",
+			width:25
+		},{
+			title:"网校代码",
+			field:"schoolId",
+			width:15
+		},{
+			title:"环球CODE",
+			field:"code",
+			width:15,
+			editor:'text'
+		}]],
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+		onDblClickRow:function(row)
+		{
+			if(row.schoolId != "1")
+			{
+				return;
+			}
+			if (editingId != undefined){
+				dg.treegrid('select', editingId);
+				return;
+			}
+			var row = dg.treegrid('getSelected');
+			if (row){
+				editingId = row.id;
+				currentCode = row.code;
+				dg.treegrid('beginEdit', editingId);
+			}
+		},
+		onClickRow:function(row){
+			if (editingId != undefined){
+				dg.treegrid('endEdit', editingId);
+				var row = dg.treegrid('find',editingId);
+				console.info(currentCode + "----" + row.code);
+				if((currentCode == undefined && row.code=="")||(currentCode != undefined && currentCode == row.code)){
+					dg.treegrid('endEdit',editingId);
+					editingId = undefined;
+					currentCode = undefined;
+					return;
+				}
+				$.ajax({
+					url:"<@s.url '/admin/local/catalog/update'/>",
+					type:"POST",
+					data:{"id":editingId,"code":row.code},
+					dataType:"json",
+					success:function(data){
+						if(data.success){
+							editingId = undefined;
+							dg.treegrid('reloadFooter');
+						}
+					}
+					
+				});
+			}
+		}
+	});
+});
+//-->
+</script>
+<div class="easyui-layout" data-options="fit:true" id="${dg}_layout">
+	 <div data-options="region:'west',title:'环球考试分类',split:true,tools: [{
+		 	iconCls:'icon-reload',
+		 	handler:function(){
+			 		$('#${module}_list_catalog_exam_tree').tree('reload');
+			 		${dg}_search();
+		 	}
+	 	}]" style="padding:5px;width:300px;">
+	 	<ul id="${module}_list_catalog_exam_tree"></ul>
+	 </div>
+	 <div data-options="region:'center',title:'本地考试分类'">
+		<table id="${dg}"></table>
+	</div>
+</div>

@@ -63,4 +63,10 @@
 	    <property name="packDao" ref="packDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	</bean>
+	
+	<!-- 本地数据服务Start -->
+	<bean id="catalogEntityService" class="com.examw.collector.service.impl.CatalogEntityServiceImpl">
+	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	</bean>
+	<!-- 本地数据服务end -->
 </beans>

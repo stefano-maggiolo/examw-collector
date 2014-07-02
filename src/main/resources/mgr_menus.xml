@@ -9,5 +9,12 @@
   		<module id="DC000501" icon="" name="课时管理" uri="/admin/edu24/relate" order="5"/>
   		<module id="DC000601" icon="" name="广告管理" uri="/admin/edu24/advideo" order="6"/>
   	</module>
+  	<module id="DC000002"  icon="" name="本地课程数据" uri="" order="1">
+  		<module id="DC000102" icon="" name="课程分类比对" uri="/admin/local/catalog" order="1"/>
+  		<module id="DC000202" icon="" name="科目管理" uri="/admin/local/subject" order="2"/>
+  		<module id="DC000302" icon="" name="班级管理" uri="/admin/local/grade" order="3"/>
+  		<module id="DC000402" icon="" name="套餐管理" uri="/admin/local/pack" order="4"/>
+  		<module id="DC000502" icon="" name="课时管理" uri="/admin/local/listen" order="5"/>
+  	</module>
   </system>
 </ipower>

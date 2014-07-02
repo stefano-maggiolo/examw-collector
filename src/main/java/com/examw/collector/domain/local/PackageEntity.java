@@ -1,4 +1,4 @@
-package com.examw.collector.entity;
+package com.examw.collector.domain.local;
 
 import java.io.Serializable;
 
@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class PackageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id,name;
-	private String classIds;
+	private String classCodes;
 	private Integer source,discount;
 	/**
 	 * 获取套餐编码。
@@ -77,16 +77,16 @@ public class PackageEntity implements Serializable {
 	 * @return classIds
 	 * 包含班级ID
 	 */
-	public String getClassIds() {
-		return classIds;
+	public String getClassCodes() {
+		return classCodes;
 	}
 	/**
 	 * 设置 包含班级ID
 	 * @param classIds
 	 * 包含班级ID
 	 */
-	public void setClassIds(String classIds) {
-		this.classIds = classIds;
+	public void setClassCodes(String classIds) {
+		this.classCodes = classIds;
 	}
 	
 }

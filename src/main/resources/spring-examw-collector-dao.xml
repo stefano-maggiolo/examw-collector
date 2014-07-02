@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<!-- dao -->
+	<!-- 环球数据接口start -->
 	<!-- 考试类别Dao -->
 	<bean id="catalogDao" class="com.examw.collector.dao.impl.CatalogDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
@@ -26,4 +27,11 @@
 	<bean id="packDao" class="com.examw.collector.dao.impl.PackDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
+	<!-- 环球数据接口end -->
+	
+	<!-- 本地数据接口start -->
+	<bean id="catalogEntityDao" class="com.examw.collector.dao.impl.CatalogEntityDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 本地数据接口end -->
 </beans>
