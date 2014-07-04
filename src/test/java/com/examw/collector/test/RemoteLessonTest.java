@@ -40,9 +40,12 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	//@Test
+	@Test
 	public void loadClasses(){
-		List<SubClass>  list = this.dataServer.loadClasses("700", "659");
+		List<SubClass>  list = this.dataServer.loadClasses("1905", null);
+		for(SubClass s:list){
+			System.out.println(s.getSubject().getCode());
+		}
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
@@ -54,7 +57,7 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	@Test
+	//@Test
 	public void loadPacks(){
 		List<Pack> list = this.dataServer.loadPacks("700", "700");
 		XStream xStream = new XStream();

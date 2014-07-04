@@ -1,0 +1,83 @@
+[INFO ] 2014-07-02 10:47:47,750 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector.xml]
+[INFO ] 2014-07-02 10:47:48,093 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-hibernate.xml]
+[INFO ] 2014-07-02 10:47:48,203 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-dao.xml]
+[INFO ] 2014-07-02 10:47:48,218 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-service.xml]
+[INFO ] 2014-07-02 10:47:48,250 org.springframework.context.support.GenericApplicationContext     - Refreshing org.springframework.context.support.GenericApplicationContext@19a12ee: startup date [Wed Jul 02 10:47:48 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-02 10:47:48,671 org.springframework.beans.factory.config.PropertyPlaceholderConfigurer     - Loading properties file from class path resource [config.properties]
+[INFO ] 2014-07-02 10:47:48,718 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@102c2f1: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[ERROR] 2014-07-02 10:47:49,015 com.alibaba.druid.pool.DruidAbstractDataSource     - maxIdle is deprecated
+[INFO ] 2014-07-02 10:47:49,125 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} inited
+[INFO ] 2014-07-02 10:47:49,343 org.hibernate.annotations.common.Version     - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+[INFO ] 2014-07-02 10:47:49,359                 org.hibernate.Version     - HHH000412: Hibernate Core {4.2.12.Final}
+[INFO ] 2014-07-02 10:47:49,359         org.hibernate.cfg.Environment     - HHH000206: hibernate.properties not found
+[INFO ] 2014-07-02 10:47:49,359         org.hibernate.cfg.Environment     - HHH000021: Bytecode provider name : javassist
+[INFO ] 2014-07-02 10:47:49,781         org.hibernate.dialect.Dialect     - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2008Dialect
+[INFO ] 2014-07-02 10:47:49,796 org.hibernate.engine.jdbc.internal.LobCreatorBuilder     - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO ] 2014-07-02 10:47:49,890 org.hibernate.engine.transaction.internal.TransactionFactoryInitiator     - HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO ] 2014-07-02 10:47:49,890 org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory     - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2014-07-02 10:47:49,953 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - Creating EhCacheRegionFactory from a specified resource: spring-examw-collector-ehcache-hibernate.xml.  Resolved to URL: file:/D:/coller/examw-collector/target/classes/spring-examw-collector-ehcache-hibernate.xml
+[INFO ] 2014-07-02 10:47:50,125 org.hibernate.cache.spi.UpdateTimestampsCache     - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+[WARN ] 2014-07-02 10:47:50,125 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+[DEBUG] 2014-07-02 10:47:50,125 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.spi.UpdateTimestampsCache
+[INFO ] 2014-07-02 10:47:50,156 org.hibernate.cache.internal.StandardQueryCache     - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+[WARN ] 2014-07-02 10:47:50,156 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+[DEBUG] 2014-07-02 10:47:50,156 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.internal.StandardQueryCache
+[INFO ] 2014-07-02 10:47:50,171  org.hibernate.validator.util.Version     - Hibernate Validator 4.2.0.Final
+[INFO ] 2014-07-02 10:47:50,640 org.springframework.orm.hibernate4.HibernateTransactionManager     - Using DataSource [{
+	CreateTime:"2014-07-02 10:47:48",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:1,
+	ConnectCount:1,
+	Connections:[
+		{ID:15130888, ConnectTime:"2014-07-02 10:47:49", UseCount:1, LastActiveTime:"2014-07-02 10:47:49"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ] 2014-07-02 10:47:51,015 org.springframework.context.support.GenericApplicationContext     - Closing org.springframework.context.support.GenericApplicationContext@19a12ee: startup date [Wed Jul 02 10:47:48 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-02 10:47:51,015 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@102c2f1: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-02 10:47:51,078 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} closed
+[INFO ] 2014-07-02 10:52:11,515 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector.xml]
+[INFO ] 2014-07-02 10:52:11,687 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-hibernate.xml]
+[INFO ] 2014-07-02 10:52:11,765 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-dao.xml]
+[INFO ] 2014-07-02 10:52:11,781 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-service.xml]
+[INFO ] 2014-07-02 10:52:11,812 org.springframework.context.support.GenericApplicationContext     - Refreshing org.springframework.context.support.GenericApplicationContext@19a12ee: startup date [Wed Jul 02 10:52:11 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-02 10:52:12,000 org.springframework.beans.factory.config.PropertyPlaceholderConfigurer     - Loading properties file from class path resource [config.properties]
+[INFO ] 2014-07-02 10:52:12,046 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1c6849: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[ERROR] 2014-07-02 10:52:12,328 com.alibaba.druid.pool.DruidAbstractDataSource     - maxIdle is deprecated
+[INFO ] 2014-07-02 10:52:12,421 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} inited
+[INFO ] 2014-07-02 10:52:12,640 org.hibernate.annotations.common.Version     - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+[INFO ] 2014-07-02 10:52:12,656                 org.hibernate.Version     - HHH000412: Hibernate Core {4.2.12.Final}
+[INFO ] 2014-07-02 10:52:12,656         org.hibernate.cfg.Environment     - HHH000206: hibernate.properties not found
+[INFO ] 2014-07-02 10:52:12,656         org.hibernate.cfg.Environment     - HHH000021: Bytecode provider name : javassist
+[INFO ] 2014-07-02 10:52:13,000         org.hibernate.dialect.Dialect     - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2008Dialect
+[INFO ] 2014-07-02 10:52:13,015 org.hibernate.engine.jdbc.internal.LobCreatorBuilder     - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO ] 2014-07-02 10:52:13,093 org.hibernate.engine.transaction.internal.TransactionFactoryInitiator     - HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO ] 2014-07-02 10:52:13,109 org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory     - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2014-07-02 10:52:13,140 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - Creating EhCacheRegionFactory from a specified resource: spring-examw-collector-ehcache-hibernate.xml.  Resolved to URL: file:/D:/coller/examw-collector/target/classes/spring-examw-collector-ehcache-hibernate.xml
+[WARN ] 2014-07-02 10:52:13,281   net.sf.ehcache.DiskStorePathManager     - diskStorePath 'C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp' is already used by an existing CacheManager either in the same VM or in a different process.
+The diskStore path for this CacheManager will be set to C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ehcache_auto_created2707139067528993759diskstore.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+[INFO ] 2014-07-02 10:52:13,312 org.hibernate.cache.spi.UpdateTimestampsCache     - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+[WARN ] 2014-07-02 10:52:13,312 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+[DEBUG] 2014-07-02 10:52:13,312 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.spi.UpdateTimestampsCache
+[INFO ] 2014-07-02 10:52:13,312 org.hibernate.cache.internal.StandardQueryCache     - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+[WARN ] 2014-07-02 10:52:13,312 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+[DEBUG] 2014-07-02 10:52:13,343 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.internal.StandardQueryCache
+[INFO ] 2014-07-02 10:52:13,375  org.hibernate.validator.util.Version     - Hibernate Validator 4.2.0.Final
+[INFO ] 2014-07-02 10:52:13,843 org.springframework.orm.hibernate4.HibernateTransactionManager     - Using DataSource [{
+	CreateTime:"2014-07-02 10:52:12",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:1,
+	ConnectCount:1,
+	Connections:[
+		{ID:12927049, ConnectTime:"2014-07-02 10:52:12", UseCount:1, LastActiveTime:"2014-07-02 10:52:13"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ] 2014-07-02 10:52:14,093 org.springframework.context.support.GenericApplicationContext     - Closing org.springframework.context.support.GenericApplicationContext@19a12ee: startup date [Wed Jul 02 10:52:11 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-02 10:52:14,093 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@1c6849: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-02 10:52:14,125 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} closed

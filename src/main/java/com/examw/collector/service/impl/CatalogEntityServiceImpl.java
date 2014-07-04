@@ -1,7 +1,9 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -107,6 +109,12 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 		TreeNode node = new TreeNode();
 		node.setId(data.getId());
 		node.setText(data.getCname()+"(环球code:"+data.getCode()+")");
+		if(!StringUtils.isEmpty(data.getCode()))
+		{
+			Map<String, Object> attributes = new HashMap<>();
+			attributes.put("code", data.getCode());
+			node.setAttributes(attributes);
+		}
 		if(data.getChildren() != null && data.getChildren().size() > 0){
 			List<TreeNode> children = new ArrayList<>();
 			for(CatalogEntity m : data.getChildren()){

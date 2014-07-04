@@ -33,5 +33,21 @@
 	<bean id="catalogEntityDao" class="com.examw.collector.dao.impl.CatalogEntityDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
+	<!-- 科目Dao -->
+	<bean id="subjectEntityDao" class="com.examw.collector.dao.impl.SubjectEntityDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 班级Dao -->
+	<bean id="gradeEntityDao" class="com.examw.collector.dao.impl.GradeEntityDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 试听Dao -->
+	<bean id="listenEntityDao" class="com.examw.collector.dao.impl.ListenEntityDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 套餐Dao -->
+	<bean id="packageEntityDao" class="com.examw.collector.dao.impl.PackageEntityDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
 	<!-- 本地数据接口end -->
 </beans>

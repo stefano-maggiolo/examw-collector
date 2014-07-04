@@ -34,7 +34,7 @@
 		<!--科目ID -->
 		<id name="id" column="CourseID" type="string"  length="64" />
 		<!-- 科目名称 -->
-		<property name="name" column="CourseName" type="string"  length="50"/>
+		<property name="name" column="CourseName" type="string"  length="128"/>
 		<!-- 包含班级数量 -->
 		<property name="fudao"  type="string" length="64" />
 		<!-- 所属考试  关联CODE而非主键 -->

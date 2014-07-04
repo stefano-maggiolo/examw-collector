@@ -1,6 +1,6 @@
 <#--考试类别列表-->
 <#include "ftl/comm.ftl"/>
-<#assign module="edu24_subclass"/>
+<#assign module="local_grade"/>
 <#assign dg="${module}_list_dg"/>
 <script type="text/javascript">
 <!--
@@ -8,7 +8,7 @@ $(function(){
 	var current_catalog_id = "",current_subject_id="";
 	//catalog-exam-tree
 	var t = $("#${module}_list_catalog_exam_tree").tree({
-		url:"<@s.url '/admin/edu24/catalog/tree'/>",
+		url:"<@s.url '/admin/local/catalog/tree'/>",
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
@@ -18,9 +18,10 @@ $(function(){
 		onClick:function(node){
 			if(t.tree("isLeaf",node.target))
 			{
-				current_catalog_id = node.id;
+				if(node.attributes && node.attributes.code)
+				current_catalog_id = node.attributes.code;
 				if(s){
-					s.tree({url:"<@s.url '/admin/edu24/subject/tree'/>?catalogId="+node.id});
+					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
 				}
 				//search;
 				${dg}_search();
@@ -29,7 +30,7 @@ $(function(){
 	});
 	//subject-tree
 	var s =  $("#${module}_list_subject_tree").tree({
-		url:"<@s.url '/admin/edu24/subject/tree'/>",
+		url:"<@s.url '/admin/local/subject/tree'/>",
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
@@ -44,7 +45,7 @@ $(function(){
 	});
 	//dg
 	var dg=$("#${dg}").datagrid({
-		url:"<@s.url '/admin/edu24/subclass/datagrid'/>",
+		url:"<@s.url '/admin/local/grade/datagrid'/>",
 		fit:true,
 		fitColumns:true,
 		rownumbers:true,
@@ -54,7 +55,7 @@ $(function(){
 		pageList:[20,30,40],
 		border:true,
 		striped:true,
-		sortName:"code",
+		sortName:"id",
 		idField:"code",
 		columns:[[{
 			field:"check",
@@ -93,11 +94,6 @@ $(function(){
 			width:10,
 			align:"right",
 			sortable:true
-		},{
-			title:"天数",
-			field:"longDay",
-			width:8,
-			align:"right"
 		},{
 			title:"原价",
 			field:"sourcePrice",
@@ -140,11 +136,15 @@ $(function(){
 	};
 	//导入班级数据
 	${dg}_add = function(){
+		if(!current_subject_id){
+			$.messager.alert("提示","请先选择环球的分类");
+			return;
+		}
 		$.messager.confirm("确认","您是否确认初始化班级数据?",function(r){
 			if(!r)return;
 			$.messager.progress();
 			$.ajax({
-				url:"<@s.url '/admin/edu24/subclass/init'/>",
+				url:"<@s.url '/admin/local/grade/init'/>",
 				type:"POST",
 				data:{"catalogId":current_catalog_id,"subjectId":current_subject_id},
 				dataType:"json",
@@ -179,7 +179,7 @@ $(function(){
 			if(!r)return;
 			$.messager.progress();
 			$.ajax({
-				url:"<@s.url '/admin/edu24/relate/init'/>",
+				url:"<@s.url '/admin/local/listen/init'/>",
 				type:"POST",
 				data:{"classId":classId},
 				dataType:"json",
@@ -222,7 +222,7 @@ $(function(){
 	 </div>
 	 <div data-options="region:'center',title:'班级列表'">
 		<div class="easyui-layout" data-options="fit:true" id="${dg}_layout_2">
-	 		<div data-options="region:'west',title:'所属科目',split:true" style="padding:5px;width:190px;">
+	 		<div data-options="region:'west',title:'所属考试',split:true" style="padding:5px;width:190px;">
 	 			<ul id="${module}_list_subject_tree"></ul>
 	 		</div>
 	 		<div data-options="region:'center',title:'班级列表'">

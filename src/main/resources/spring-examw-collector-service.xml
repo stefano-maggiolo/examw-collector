@@ -68,5 +68,25 @@
 	<bean id="catalogEntityService" class="com.examw.collector.service.impl.CatalogEntityServiceImpl">
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	</bean>
+	<bean id="subjectEntityService" class="com.examw.collector.service.impl.SubjectEntityServiceImpl">
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
+	</bean>
+	<!-- 班级服务 -->
+	<bean id="gradeEntityService" class="com.examw.collector.service.impl.GradeEntityServiceImpl">
+	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
+	    <property name="subClassDao" ref="subClassDao"/>
+	    <!-- <property name="dataServer" ref="dataServer"/> -->
+	</bean>
+	<!-- 课节服务 -->
+	<bean id="listenEntityService" class="com.examw.collector.service.impl.ListenEntityServiceImpl">
+	    <property name="listenEntityDao" ref="listenEntityDao"/>
+	    <!-- <property name="dataServer" ref="dataServer"/> -->
+	</bean>
+	<!-- 广告服务 -->
+	<bean id="packageEntityService" class="com.examw.collector.service.impl.PackageEntityServiceImpl">
+	    <property name="packageEntityDao" ref="packageEntityDao"/>
+	    <property name="dataServer" ref="dataServer"/>
+	</bean>
 	<!-- 本地数据服务end -->
 </beans>

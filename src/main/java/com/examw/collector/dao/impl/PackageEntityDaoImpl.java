@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-import com.examw.collector.dao.IPackDao;
-import com.examw.collector.domain.Pack;
+import com.examw.collector.dao.IPackageEntityDao;
+import com.examw.collector.domain.local.PackageEntity;
 import com.examw.collector.model.PackInfo;
 
 /**
@@ -15,11 +15,11 @@ import com.examw.collector.model.PackInfo;
  * @author fengwei.
  * @since 2014年7月1日 上午9:56:37.
  */
-public class PackDaoImpl extends BaseDaoImpl<Pack> implements IPackDao{
+public class PackageEntityDaoImpl extends BaseDaoImpl<PackageEntity> implements IPackageEntityDao{
 
 	@Override
-	public List<Pack> findPacks(PackInfo info) {
-		String hql = "from Pack p where 1=1 ";
+	public List<PackageEntity> findPacks(PackInfo info) {
+		String hql = "from PackageEntity p where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		if(info.getSort() != null && !info.getSort().trim().isEmpty()){
@@ -30,7 +30,7 @@ public class PackDaoImpl extends BaseDaoImpl<Pack> implements IPackDao{
 
 	@Override
 	public Long total(PackInfo info) {
-		String hql = "select count(*) from Pack p where 1=1 ";
+		String hql = "select count(*) from PackageEntity p where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.count(hql, parameters);
@@ -55,7 +55,7 @@ public class PackDaoImpl extends BaseDaoImpl<Pack> implements IPackDao{
 			hql += "  and (p.subject.id = :subjectId)";
 			parameters.put("subjectId", info.getSubjectId());
 		}
-		if(!StringUtils.isEmpty(info.getCatalogId()))
+		if(StringUtils.isEmpty(info.getCatalogId()))
 		{
 			hql += "  and (p.catalog.id = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());

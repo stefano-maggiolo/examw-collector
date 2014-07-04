@@ -6,8 +6,8 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-import com.examw.collector.dao.ISubClassDao;
-import com.examw.collector.domain.SubClass;
+import com.examw.collector.dao.IGradeEntityDao;
+import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.model.SubClassInfo;
 
 /**
@@ -15,15 +15,15 @@ import com.examw.collector.model.SubClassInfo;
  * @author fengwei.
  * @since 2014年6月30日 下午4:21:44.
  */
-public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassDao{
+public class GradeEntityDaoImpl extends BaseDaoImpl<GradeEntity> implements IGradeEntityDao{
 
 	/*
 	 * 查询数据
 	 * @see com.examw.netplatform.dao.admin.IClassTypeDao#findClassTypes(com.examw.netplatform.model.admin.ClassTypeInfo)
 	 */
 	@Override
-	public List<SubClass> findSubClasses(SubClassInfo info) {
-		String hql = "from SubClass sc where 1=1 ";
+	public List<GradeEntity> findSubClasses(SubClassInfo info) {
+		String hql = "from GradeEntity sc where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		if(info.getSort() != null && !info.getSort().trim().isEmpty()){
@@ -37,7 +37,7 @@ public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassD
 	 */
 	@Override
 	public Long total(SubClassInfo info) {
-		String hql = "select count(*) from SubClass sc where 1=1 ";
+		String hql = "select count(*) from GradeEntity sc where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.count(hql, parameters);
@@ -59,12 +59,12 @@ public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassD
 			parameters.put("name", "%" + info.getName()+ "%");
 		}
 		if(info.getSubjectId() != null && !info.getSubjectId().trim().isEmpty()){
-			hql += "  and (sc.subject.id = :subjectId)";
+			hql += "  and (sc.subjectEntity.id = :subjectId)";
 			parameters.put("subjectId", info.getSubjectId());
 		}
-		if(!StringUtils.isEmpty(info.getCatalogId()))
+		if(StringUtils.isEmpty(info.getCatalogId()))
 		{
-			hql += "  and (sc.catalog.id = :catalogId)";
+			hql += "  and (sc.subjectEntity.catalogEntity.code = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		return hql;
