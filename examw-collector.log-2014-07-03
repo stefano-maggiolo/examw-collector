@@ -1,0 +1,558 @@
+[INFO ] 2014-07-03 16:29:53,921 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector.xml]
+[INFO ] 2014-07-03 16:29:54,312 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-hibernate.xml]
+[INFO ] 2014-07-03 16:29:54,484 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-dao.xml]
+[INFO ] 2014-07-03 16:29:54,515 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-service.xml]
+[INFO ] 2014-07-03 16:29:54,609 org.springframework.context.support.GenericApplicationContext     - Refreshing org.springframework.context.support.GenericApplicationContext@905272: startup date [Thu Jul 03 16:29:54 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-03 16:29:55,281 org.springframework.beans.factory.config.PropertyPlaceholderConfigurer     - Loading properties file from class path resource [config.properties]
+[INFO ] 2014-07-03 16:29:55,390 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4ee543: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[ERROR] 2014-07-03 16:29:56,015 com.alibaba.druid.pool.DruidAbstractDataSource     - maxIdle is deprecated
+[INFO ] 2014-07-03 16:29:56,171 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} inited
+[INFO ] 2014-07-03 16:29:56,718 org.hibernate.annotations.common.Version     - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+[INFO ] 2014-07-03 16:29:56,750                 org.hibernate.Version     - HHH000412: Hibernate Core {4.2.12.Final}
+[INFO ] 2014-07-03 16:29:56,765         org.hibernate.cfg.Environment     - HHH000206: hibernate.properties not found
+[INFO ] 2014-07-03 16:29:56,765         org.hibernate.cfg.Environment     - HHH000021: Bytecode provider name : javassist
+[INFO ] 2014-07-03 16:29:57,531         org.hibernate.dialect.Dialect     - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2008Dialect
+[INFO ] 2014-07-03 16:29:57,546 org.hibernate.engine.jdbc.internal.LobCreatorBuilder     - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO ] 2014-07-03 16:29:57,734 org.hibernate.engine.transaction.internal.TransactionFactoryInitiator     - HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO ] 2014-07-03 16:29:57,765 org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory     - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2014-07-03 16:29:58,000 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - Creating EhCacheRegionFactory from a specified resource: spring-examw-collector-ehcache-hibernate.xml.  Resolved to URL: file:/D:/coller/examw-collector/target/classes/spring-examw-collector-ehcache-hibernate.xml
+[WARN ] 2014-07-03 16:29:58,343   net.sf.ehcache.DiskStorePathManager     - diskStorePath 'C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp' is already used by an existing CacheManager either in the same VM or in a different process.
+The diskStore path for this CacheManager will be set to C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ehcache_auto_created1499618264498685398diskstore.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+[INFO ] 2014-07-03 16:29:58,375 org.hibernate.cache.spi.UpdateTimestampsCache     - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+[WARN ] 2014-07-03 16:29:58,390 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+[DEBUG] 2014-07-03 16:29:58,390 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.spi.UpdateTimestampsCache
+[INFO ] 2014-07-03 16:29:58,390 org.hibernate.cache.internal.StandardQueryCache     - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+[WARN ] 2014-07-03 16:29:58,390 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+[DEBUG] 2014-07-03 16:29:58,406 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.internal.StandardQueryCache
+[INFO ] 2014-07-03 16:29:58,515  org.hibernate.validator.util.Version     - Hibernate Validator 4.2.0.Final
+[INFO ] 2014-07-03 16:29:59,500 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000228: Running hbm2ddl schema update
+[INFO ] 2014-07-03 16:29:59,500 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000102: Fetching database metadata
+[INFO ] 2014-07-03 16:29:59,500 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000396: Updating schema
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.FS_NewsClass
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [schoolid, kstime, classename, youhui, parentid, gg728_90, gg230_90, softlist, checkcolumn, id, addtime, bookid, edu24_code, classcname, description, childnum, classtemp, classid, keywords, classtitle, menu, classlist, listname, baokaozhinan, daohang, listcontent, orderid, kstgl, delflag, ksmonth]
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_fs_newsclass]
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Course_2
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [fudao, edu24_code, courseid, coursename]
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:29:59,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_course_2__6442e2c9]
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Listen_2
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [title, listenurl, listenid, ordernum, nclassid, adddate]
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_der55xp6lk0l24v5d5kulhypl]
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_listen_2__662b2b3b]
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_NClass_2
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [goodprice, price, adddate, nclassid, endtimes, courseid, coursenum, teachername, banname]
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_jck9cu0ufnpnkeuxh5sjce0gb]
+[INFO ] 2014-07-03 16:29:59,546 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_nclass_2__681373ad]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.TaoCanList_2
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [taocanname, taocanid, pricea, tc_nclassid, priceb]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__taocanlist_2__69fbbc1f]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Catalog
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_total, name, pid]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_17u9hfruc8he44892lg6sq1n4]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4a8310c6]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Pack
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, is_show, class_codes, source, subject_id, name, catalog_id, discount]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_98q0vyhmd8k7qg1g364wvp2ed, fk_5bbp6lr7br5t8tip5o3sblrn9]
+[INFO ] 2014-07-03 16:29:59,562 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4c6b5938]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_PackClasses
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [class_id, pack_id]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_16tw67adxa2k0r6t9rj8sgsgf, fk_70q7b38uk36n12f31op75smyx]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4e53a1aa]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Relate
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_id, is_new, is_demo, num, address, name, update_date]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_8ukqw4s4vki8y85twspwrxhce]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__503bea1c]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_SubClass
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [demo, total, long_day, sale_price, subject_id, source_price, id, is_show, end_time, teacher_name, name, start_time, video_id, is_live, catalog_id]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_dnvqbdie8i525lpxm5dernccf, fk_h8n4j39huyt6ntm1w6i8xui8x, fk_n1s789k4pluoaqgy5beamqay6]
+[INFO ] 2014-07-03 16:29:59,578 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__5224328e]
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Subject
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [classtotal, id, name, catalog_id]
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_d45sm0y89hiedpuj4dp8t6dgv]
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__540c7b00]
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.ttbl_Collector_Remote_AdVideo
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, address, name, type]
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:29:59,593 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ttbl_collector_r__55f4c372]
+[ERROR] 2014-07-03 16:29:59,625 com.alibaba.druid.filter.stat.StatFilter     - merge sql error, dbType jtds, sql : 
+
+    alter table FS_NewsClass 
+        add constraint FK_3urxdhlcnnh2hrp0a3reed5oy 
+        foreign key (ParentID) 
+        references FS_NewsClass
+com.alibaba.druid.sql.parser.ParserException: TODO CONSTRAINT constraint
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseAlter(SQLStatementParser.java:664)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:166)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:108)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:103)
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:53)
+	at com.alibaba.druid.filter.stat.StatFilter.mergeSql(StatFilter.java:145)
+	at com.alibaba.druid.filter.stat.StatFilter.createSqlStat(StatFilter.java:629)
+	at com.alibaba.druid.filter.stat.StatFilter.internalBeforeStatementExecute(StatFilter.java:397)
+	at com.alibaba.druid.filter.stat.StatFilter.statementExecuteUpdateBefore(StatFilter.java:325)
+	at com.alibaba.druid.filter.FilterEventAdapter.statement_executeUpdate(FilterEventAdapter.java:324)
+	at com.alibaba.druid.filter.FilterChainImpl.statement_executeUpdate(FilterChainImpl.java:2375)
+	at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeUpdate(StatementProxyImpl.java:225)
+	at com.alibaba.druid.pool.DruidPooledStatement.executeUpdate(DruidPooledStatement.java:169)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:227)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:178)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:509)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1797)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1868)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBuilder.buildSessionFactory(LocalSessionFactoryBuilder.java:247)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:373)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.afterPropertiesSet(LocalSessionFactoryBean.java:358)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1479)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:610)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:120)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:248)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContextInternal(CacheAwareContextLoaderDelegate.java:64)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:91)
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:122)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:105)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:74)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:312)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:211)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:288)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:284)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:88)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+[ERROR] 2014-07-03 16:29:59,625 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table FS_NewsClass add constraint FK_3urxdhlcnnh2hrp0a3reed5oy foreign key (ParentID) references FS_NewsClass
+[ERROR] 2014-07-03 16:29:59,625 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'FS_NewsClass.ID' 的数据类型与外键 'FK_3urxdhlcnnh2hrp0a3reed5oy' 中的引用列 'FS_NewsClass.ParentID' 的数据类型不同。
+[ERROR] 2014-07-03 16:29:59,640 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_Course_2 add constraint FK_b1yu69b2tl1mb6j23me8d0kj2 foreign key (edu24_code) references FS_NewsClass (edu24_code)
+[ERROR] 2014-07-03 16:29:59,640 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 在被引用表 'FS_NewsClass' 中没有与外键 'FK_b1yu69b2tl1mb6j23me8d0kj2' 中的引用列列表匹配的主键或候选键。
+[INFO ] 2014-07-03 16:29:59,640 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000232: Schema update complete
+[INFO ] 2014-07-03 16:29:59,718 org.springframework.orm.hibernate4.HibernateTransactionManager     - Using DataSource [{
+	CreateTime:"2014-07-03 16:29:55",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:32285481, ConnectTime:"2014-07-03 16:29:57", UseCount:2, LastActiveTime:"2014-07-03 16:29:59"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.DataServerImpl     - 单个科目中班级的信息集合...
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.DataServerImpl     - 整个类别下的班级的信息集合...
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - 获取课程数据...
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - 构建提交数据URL...
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - 构造用于验证的加密字符串...
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - 加密前字符串:1025210952014070316300045gfjelkhjsdop
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - 加密字符串:a42069e87b0c108315974931359faa7f
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - post:a42069e87b0c108315974931359faa7f$1025$2$1095$$$20140703163000
+[INFO ] 2014-07-03 16:30:00,218 com.examw.collector.service.impl.RemoteDataProxyImpl     - url:http://www.edu24ol.com/interface/public/Lesson.asp?en=a42069e87b0c108315974931359faa7f%241025%242%241095%24%24%2420140703163000
+[INFO ] 2014-07-03 16:30:00,234  com.examw.collector.support.HttpUtil     - url:
+http://www.edu24ol.com/interface/public/Lesson.asp?en=a42069e87b0c108315974931359faa7f%241025%242%241095%24%24%2420140703163000
+[INFO ] 2014-07-03 16:30:00,234  com.examw.collector.support.HttpUtil     - method:
+GET
+[INFO ] 2014-07-03 16:30:00,234  com.examw.collector.support.HttpUtil     - data:
+null
+[INFO ] 2014-07-03 16:30:00,328  com.examw.collector.support.HttpUtil     - callback:
+<?xml version='1.0' encoding='gb2312' ?><root></root>
+[INFO ] 2014-07-03 16:30:00,406 org.springframework.context.support.GenericApplicationContext     - Closing org.springframework.context.support.GenericApplicationContext@905272: startup date [Thu Jul 03 16:29:54 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-03 16:30:00,406 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4ee543: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-03 16:30:00,500 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} closed
+[INFO ] 2014-07-03 16:32:34,546 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector.xml]
+[INFO ] 2014-07-03 16:32:34,718 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-hibernate.xml]
+[INFO ] 2014-07-03 16:32:34,796 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-dao.xml]
+[INFO ] 2014-07-03 16:32:34,812 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-service.xml]
+[INFO ] 2014-07-03 16:32:34,875 org.springframework.context.support.GenericApplicationContext     - Refreshing org.springframework.context.support.GenericApplicationContext@905272: startup date [Thu Jul 03 16:32:34 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-03 16:32:35,109 org.springframework.beans.factory.config.PropertyPlaceholderConfigurer     - Loading properties file from class path resource [config.properties]
+[INFO ] 2014-07-03 16:32:35,156 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4ee543: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[ERROR] 2014-07-03 16:32:35,421 com.alibaba.druid.pool.DruidAbstractDataSource     - maxIdle is deprecated
+[INFO ] 2014-07-03 16:32:35,515 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} inited
+[INFO ] 2014-07-03 16:32:35,765 org.hibernate.annotations.common.Version     - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+[INFO ] 2014-07-03 16:32:35,765                 org.hibernate.Version     - HHH000412: Hibernate Core {4.2.12.Final}
+[INFO ] 2014-07-03 16:32:35,765         org.hibernate.cfg.Environment     - HHH000206: hibernate.properties not found
+[INFO ] 2014-07-03 16:32:35,765         org.hibernate.cfg.Environment     - HHH000021: Bytecode provider name : javassist
+[INFO ] 2014-07-03 16:32:36,140         org.hibernate.dialect.Dialect     - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2008Dialect
+[INFO ] 2014-07-03 16:32:36,187 org.hibernate.engine.jdbc.internal.LobCreatorBuilder     - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO ] 2014-07-03 16:32:36,250 org.hibernate.engine.transaction.internal.TransactionFactoryInitiator     - HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO ] 2014-07-03 16:32:36,250 org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory     - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2014-07-03 16:32:36,296 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - Creating EhCacheRegionFactory from a specified resource: spring-examw-collector-ehcache-hibernate.xml.  Resolved to URL: file:/D:/coller/examw-collector/target/classes/spring-examw-collector-ehcache-hibernate.xml
+[WARN ] 2014-07-03 16:32:36,453   net.sf.ehcache.DiskStorePathManager     - diskStorePath 'C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp' is already used by an existing CacheManager either in the same VM or in a different process.
+The diskStore path for this CacheManager will be set to C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ehcache_auto_created7047469590635687535diskstore.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+[INFO ] 2014-07-03 16:32:36,468 org.hibernate.cache.spi.UpdateTimestampsCache     - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+[WARN ] 2014-07-03 16:32:36,468 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+[DEBUG] 2014-07-03 16:32:36,484 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.spi.UpdateTimestampsCache
+[INFO ] 2014-07-03 16:32:36,484 org.hibernate.cache.internal.StandardQueryCache     - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+[WARN ] 2014-07-03 16:32:36,484 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+[DEBUG] 2014-07-03 16:32:36,484 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.internal.StandardQueryCache
+[INFO ] 2014-07-03 16:32:36,515  org.hibernate.validator.util.Version     - Hibernate Validator 4.2.0.Final
+[INFO ] 2014-07-03 16:32:36,937 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000228: Running hbm2ddl schema update
+[INFO ] 2014-07-03 16:32:36,937 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000102: Fetching database metadata
+[INFO ] 2014-07-03 16:32:36,937 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000396: Updating schema
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.FS_NewsClass
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [schoolid, kstime, classename, youhui, parentid, gg728_90, gg230_90, softlist, checkcolumn, id, addtime, bookid, edu24_code, classcname, description, childnum, classtemp, classid, keywords, classtitle, menu, classlist, listname, baokaozhinan, daohang, listcontent, orderid, kstgl, delflag, ksmonth]
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_fs_newsclass]
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Course_2
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [fudao, edu24_code, courseid, coursename]
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:32:37,015 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_course_2__6442e2c9]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Listen_2
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [title, listenurl, listenid, ordernum, nclassid, adddate]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_der55xp6lk0l24v5d5kulhypl]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_listen_2__662b2b3b]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_NClass_2
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [goodprice, price, adddate, nclassid, endtimes, courseid, coursenum, teachername, banname]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_jck9cu0ufnpnkeuxh5sjce0gb]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_nclass_2__681373ad]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.TaoCanList_2
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [taocanname, taocanid, pricea, tc_nclassid, priceb]
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:32:37,031 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__taocanlist_2__69fbbc1f]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Catalog
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_total, name, pid]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_17u9hfruc8he44892lg6sq1n4]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4a8310c6]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Pack
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, is_show, class_codes, source, subject_id, name, catalog_id, discount]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_98q0vyhmd8k7qg1g364wvp2ed, fk_5bbp6lr7br5t8tip5o3sblrn9]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4c6b5938]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_PackClasses
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [class_id, pack_id]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_16tw67adxa2k0r6t9rj8sgsgf, fk_70q7b38uk36n12f31op75smyx]
+[INFO ] 2014-07-03 16:32:37,046 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4e53a1aa]
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Relate
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_id, is_new, is_demo, num, address, name, update_date]
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_8ukqw4s4vki8y85twspwrxhce]
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__503bea1c]
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_SubClass
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [demo, total, long_day, sale_price, subject_id, source_price, id, is_show, end_time, teacher_name, name, start_time, video_id, is_live, catalog_id]
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_dnvqbdie8i525lpxm5dernccf, fk_h8n4j39huyt6ntm1w6i8xui8x, fk_n1s789k4pluoaqgy5beamqay6]
+[INFO ] 2014-07-03 16:32:37,062 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__5224328e]
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Subject
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [classtotal, id, name, catalog_id]
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_d45sm0y89hiedpuj4dp8t6dgv]
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__540c7b00]
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.ttbl_Collector_Remote_AdVideo
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, address, name, type]
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:32:37,078 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ttbl_collector_r__55f4c372]
+[ERROR] 2014-07-03 16:32:37,078 com.alibaba.druid.filter.stat.StatFilter     - merge sql error, dbType jtds, sql : 
+
+    alter table FS_NewsClass 
+        add constraint FK_3urxdhlcnnh2hrp0a3reed5oy 
+        foreign key (ParentID) 
+        references FS_NewsClass
+com.alibaba.druid.sql.parser.ParserException: TODO CONSTRAINT constraint
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseAlter(SQLStatementParser.java:664)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:166)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:108)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:103)
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:53)
+	at com.alibaba.druid.filter.stat.StatFilter.mergeSql(StatFilter.java:145)
+	at com.alibaba.druid.filter.stat.StatFilter.createSqlStat(StatFilter.java:629)
+	at com.alibaba.druid.filter.stat.StatFilter.internalBeforeStatementExecute(StatFilter.java:397)
+	at com.alibaba.druid.filter.stat.StatFilter.statementExecuteUpdateBefore(StatFilter.java:325)
+	at com.alibaba.druid.filter.FilterEventAdapter.statement_executeUpdate(FilterEventAdapter.java:324)
+	at com.alibaba.druid.filter.FilterChainImpl.statement_executeUpdate(FilterChainImpl.java:2375)
+	at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeUpdate(StatementProxyImpl.java:225)
+	at com.alibaba.druid.pool.DruidPooledStatement.executeUpdate(DruidPooledStatement.java:169)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:227)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:178)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:509)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1797)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1868)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBuilder.buildSessionFactory(LocalSessionFactoryBuilder.java:247)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:373)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.afterPropertiesSet(LocalSessionFactoryBean.java:358)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1479)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:610)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:120)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:248)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContextInternal(CacheAwareContextLoaderDelegate.java:64)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:91)
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:122)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:105)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:74)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:312)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:211)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:288)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:284)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:88)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+[ERROR] 2014-07-03 16:32:37,093 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table FS_NewsClass add constraint FK_3urxdhlcnnh2hrp0a3reed5oy foreign key (ParentID) references FS_NewsClass
+[ERROR] 2014-07-03 16:32:37,093 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'FS_NewsClass.ID' 的数据类型与外键 'FK_3urxdhlcnnh2hrp0a3reed5oy' 中的引用列 'FS_NewsClass.ParentID' 的数据类型不同。
+[ERROR] 2014-07-03 16:32:37,093 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_Course_2 add constraint FK_b1yu69b2tl1mb6j23me8d0kj2 foreign key (edu24_code) references FS_NewsClass (edu24_code)
+[ERROR] 2014-07-03 16:32:37,093 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 在被引用表 'FS_NewsClass' 中没有与外键 'FK_b1yu69b2tl1mb6j23me8d0kj2' 中的引用列列表匹配的主键或候选键。
+[INFO ] 2014-07-03 16:32:37,093 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000232: Schema update complete
+[INFO ] 2014-07-03 16:32:37,140 org.springframework.orm.hibernate4.HibernateTransactionManager     - Using DataSource [{
+	CreateTime:"2014-07-03 16:32:35",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:32773223, ConnectTime:"2014-07-03 16:32:36", UseCount:2, LastActiveTime:"2014-07-03 16:32:37"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.DataServerImpl     - 单个科目中班级的信息集合...
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.DataServerImpl     - 整个类别下的班级的信息集合...
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - 获取课程数据...
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - 构建提交数据URL...
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - 构造用于验证的加密字符串...
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - 加密前字符串:1025210952014070316323745gfjelkhjsdop
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - 加密字符串:14196b08d0fe52f105decc81ed15699e
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - post:14196b08d0fe52f105decc81ed15699e$1025$2$1095$$$20140703163237
+[INFO ] 2014-07-03 16:32:37,453 com.examw.collector.service.impl.RemoteDataProxyImpl     - url:http://www.edu24ol.com/interface/public/Lesson.asp?en=14196b08d0fe52f105decc81ed15699e%241025%242%241095%24%24%2420140703163237
+[INFO ] 2014-07-03 16:32:37,453  com.examw.collector.support.HttpUtil     - url:
+http://www.edu24ol.com/interface/public/Lesson.asp?en=14196b08d0fe52f105decc81ed15699e%241025%242%241095%24%24%2420140703163237
+[INFO ] 2014-07-03 16:32:37,453  com.examw.collector.support.HttpUtil     - method:
+GET
+[INFO ] 2014-07-03 16:32:37,453  com.examw.collector.support.HttpUtil     - data:
+null
+[INFO ] 2014-07-03 16:32:37,578  com.examw.collector.support.HttpUtil     - callback:
+<?xml version='1.0' encoding='gb2312' ?><root></root>
+[INFO ] 2014-07-03 16:32:37,609 org.springframework.context.support.GenericApplicationContext     - Closing org.springframework.context.support.GenericApplicationContext@905272: startup date [Thu Jul 03 16:32:34 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-03 16:32:37,609 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4ee543: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-03 16:32:37,656 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} closed
+[INFO ] 2014-07-03 16:33:05,453 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector.xml]
+[INFO ] 2014-07-03 16:33:05,640 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-hibernate.xml]
+[INFO ] 2014-07-03 16:33:05,750 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-dao.xml]
+[INFO ] 2014-07-03 16:33:05,796 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-service.xml]
+[INFO ] 2014-07-03 16:33:05,828 org.springframework.context.support.GenericApplicationContext     - Refreshing org.springframework.context.support.GenericApplicationContext@114f313: startup date [Thu Jul 03 16:33:05 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-03 16:33:06,046 org.springframework.beans.factory.config.PropertyPlaceholderConfigurer     - Loading properties file from class path resource [config.properties]
+[INFO ] 2014-07-03 16:33:06,109 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4ee543: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[ERROR] 2014-07-03 16:33:06,437 com.alibaba.druid.pool.DruidAbstractDataSource     - maxIdle is deprecated
+[INFO ] 2014-07-03 16:33:06,531 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} inited
+[INFO ] 2014-07-03 16:33:06,781 org.hibernate.annotations.common.Version     - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+[INFO ] 2014-07-03 16:33:06,781                 org.hibernate.Version     - HHH000412: Hibernate Core {4.2.12.Final}
+[INFO ] 2014-07-03 16:33:06,781         org.hibernate.cfg.Environment     - HHH000206: hibernate.properties not found
+[INFO ] 2014-07-03 16:33:06,812         org.hibernate.cfg.Environment     - HHH000021: Bytecode provider name : javassist
+[INFO ] 2014-07-03 16:33:07,218         org.hibernate.dialect.Dialect     - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2008Dialect
+[INFO ] 2014-07-03 16:33:07,234 org.hibernate.engine.jdbc.internal.LobCreatorBuilder     - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO ] 2014-07-03 16:33:07,328 org.hibernate.engine.transaction.internal.TransactionFactoryInitiator     - HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO ] 2014-07-03 16:33:07,328 org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory     - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2014-07-03 16:33:07,375 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - Creating EhCacheRegionFactory from a specified resource: spring-examw-collector-ehcache-hibernate.xml.  Resolved to URL: file:/D:/coller/examw-collector/target/classes/spring-examw-collector-ehcache-hibernate.xml
+[WARN ] 2014-07-03 16:33:07,531   net.sf.ehcache.DiskStorePathManager     - diskStorePath 'C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp' is already used by an existing CacheManager either in the same VM or in a different process.
+The diskStore path for this CacheManager will be set to C:\DOCUME~1\ADMINI~1\LOCALS~1\Temp\ehcache_auto_created7188739587194130391diskstore.
+To avoid this warning consider using the CacheManager factory methods to create a singleton CacheManager or specifying a separate ehcache configuration (ehcache.xml) for each CacheManager instance.
+[INFO ] 2014-07-03 16:33:07,546 org.hibernate.cache.spi.UpdateTimestampsCache     - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+[WARN ] 2014-07-03 16:33:07,546 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+[DEBUG] 2014-07-03 16:33:07,546 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.spi.UpdateTimestampsCache
+[INFO ] 2014-07-03 16:33:07,562 org.hibernate.cache.internal.StandardQueryCache     - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+[WARN ] 2014-07-03 16:33:07,562 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+[DEBUG] 2014-07-03 16:33:07,562 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.internal.StandardQueryCache
+[INFO ] 2014-07-03 16:33:07,593  org.hibernate.validator.util.Version     - Hibernate Validator 4.2.0.Final
+[INFO ] 2014-07-03 16:33:08,015 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000228: Running hbm2ddl schema update
+[INFO ] 2014-07-03 16:33:08,015 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000102: Fetching database metadata
+[INFO ] 2014-07-03 16:33:08,015 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000396: Updating schema
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.FS_NewsClass
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [schoolid, kstime, classename, youhui, parentid, gg728_90, gg230_90, softlist, checkcolumn, id, addtime, bookid, edu24_code, classcname, description, childnum, classtemp, classid, keywords, classtitle, menu, classlist, listname, baokaozhinan, daohang, listcontent, orderid, kstgl, delflag, ksmonth]
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_fs_newsclass]
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Course_2
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [fudao, edu24_code, courseid, coursename]
+[INFO ] 2014-07-03 16:33:08,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:33:08,125 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_course_2__6442e2c9]
+[INFO ] 2014-07-03 16:33:08,125 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Listen_2
+[INFO ] 2014-07-03 16:33:08,125 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [title, listenurl, listenid, ordernum, nclassid, adddate]
+[INFO ] 2014-07-03 16:33:08,125 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_der55xp6lk0l24v5d5kulhypl]
+[INFO ] 2014-07-03 16:33:08,125 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_listen_2__662b2b3b]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_NClass_2
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [goodprice, price, adddate, nclassid, endtimes, courseid, coursenum, teachername, banname]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_jck9cu0ufnpnkeuxh5sjce0gb]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ns_nclass_2__681373ad]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.TaoCanList_2
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [taocanname, taocanid, pricea, tc_nclassid, priceb]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__taocanlist_2__69fbbc1f]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Catalog
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_total, name, pid]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_17u9hfruc8he44892lg6sq1n4]
+[INFO ] 2014-07-03 16:33:08,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4a8310c6]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Pack
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, is_show, class_codes, source, subject_id, name, catalog_id, discount]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_98q0vyhmd8k7qg1g364wvp2ed, fk_5bbp6lr7br5t8tip5o3sblrn9]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4c6b5938]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_PackClasses
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [class_id, pack_id]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_16tw67adxa2k0r6t9rj8sgsgf, fk_70q7b38uk36n12f31op75smyx]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4e53a1aa]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Relate
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_id, is_new, is_demo, num, address, name, update_date]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_8ukqw4s4vki8y85twspwrxhce]
+[INFO ] 2014-07-03 16:33:08,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__503bea1c]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_SubClass
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [demo, total, long_day, sale_price, subject_id, source_price, id, is_show, end_time, teacher_name, name, start_time, video_id, is_live, catalog_id]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_dnvqbdie8i525lpxm5dernccf, fk_h8n4j39huyt6ntm1w6i8xui8x, fk_n1s789k4pluoaqgy5beamqay6]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__5224328e]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Subject
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [classtotal, id, name, catalog_id]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_d45sm0y89hiedpuj4dp8t6dgv]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__540c7b00]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.ttbl_Collector_Remote_AdVideo
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, address, name, type]
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-03 16:33:08,171 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ttbl_collector_r__55f4c372]
+[ERROR] 2014-07-03 16:33:08,187 com.alibaba.druid.filter.stat.StatFilter     - merge sql error, dbType jtds, sql : 
+
+    alter table FS_NewsClass 
+        add constraint FK_3urxdhlcnnh2hrp0a3reed5oy 
+        foreign key (ParentID) 
+        references FS_NewsClass
+com.alibaba.druid.sql.parser.ParserException: TODO CONSTRAINT constraint
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseAlter(SQLStatementParser.java:664)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:166)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:108)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:103)
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:53)
+	at com.alibaba.druid.filter.stat.StatFilter.mergeSql(StatFilter.java:145)
+	at com.alibaba.druid.filter.stat.StatFilter.createSqlStat(StatFilter.java:629)
+	at com.alibaba.druid.filter.stat.StatFilter.internalBeforeStatementExecute(StatFilter.java:397)
+	at com.alibaba.druid.filter.stat.StatFilter.statementExecuteUpdateBefore(StatFilter.java:325)
+	at com.alibaba.druid.filter.FilterEventAdapter.statement_executeUpdate(FilterEventAdapter.java:324)
+	at com.alibaba.druid.filter.FilterChainImpl.statement_executeUpdate(FilterChainImpl.java:2375)
+	at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeUpdate(StatementProxyImpl.java:225)
+	at com.alibaba.druid.pool.DruidPooledStatement.executeUpdate(DruidPooledStatement.java:169)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:227)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:178)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:509)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1797)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1868)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBuilder.buildSessionFactory(LocalSessionFactoryBuilder.java:247)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:373)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.afterPropertiesSet(LocalSessionFactoryBean.java:358)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1479)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.preInstantiateSingletons(DefaultListableBeanFactory.java:610)
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:932)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:479)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:120)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:248)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContextInternal(CacheAwareContextLoaderDelegate.java:64)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:91)
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:122)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:105)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:74)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:312)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:211)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:288)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:284)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:88)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+[ERROR] 2014-07-03 16:33:08,187 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table FS_NewsClass add constraint FK_3urxdhlcnnh2hrp0a3reed5oy foreign key (ParentID) references FS_NewsClass
+[ERROR] 2014-07-03 16:33:08,187 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'FS_NewsClass.ID' 的数据类型与外键 'FK_3urxdhlcnnh2hrp0a3reed5oy' 中的引用列 'FS_NewsClass.ParentID' 的数据类型不同。
+[ERROR] 2014-07-03 16:33:08,187 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_Course_2 add constraint FK_b1yu69b2tl1mb6j23me8d0kj2 foreign key (edu24_code) references FS_NewsClass (edu24_code)
+[ERROR] 2014-07-03 16:33:08,187 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 在被引用表 'FS_NewsClass' 中没有与外键 'FK_b1yu69b2tl1mb6j23me8d0kj2' 中的引用列列表匹配的主键或候选键。
+[INFO ] 2014-07-03 16:33:08,187 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000232: Schema update complete
+[INFO ] 2014-07-03 16:33:08,250 org.springframework.orm.hibernate4.HibernateTransactionManager     - Using DataSource [{
+	CreateTime:"2014-07-03 16:33:06",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:32773223, ConnectTime:"2014-07-03 16:33:07", UseCount:2, LastActiveTime:"2014-07-03 16:33:08"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.DataServerImpl     - 单个科目中班级的信息集合...
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.DataServerImpl     - 整个类别下的班级的信息集合...
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - 获取课程数据...
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - 构建提交数据URL...
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - 构造用于验证的加密字符串...
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - 加密前字符串:1025219052014070316330845gfjelkhjsdop
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - 加密字符串:fe8037f5a3a5fcf38517fade43c43351
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - post:fe8037f5a3a5fcf38517fade43c43351$1025$2$1905$$$20140703163308
+[INFO ] 2014-07-03 16:33:08,562 com.examw.collector.service.impl.RemoteDataProxyImpl     - url:http://www.edu24ol.com/interface/public/Lesson.asp?en=fe8037f5a3a5fcf38517fade43c43351%241025%242%241905%24%24%2420140703163308
+[INFO ] 2014-07-03 16:33:08,562  com.examw.collector.support.HttpUtil     - url:
+http://www.edu24ol.com/interface/public/Lesson.asp?en=fe8037f5a3a5fcf38517fade43c43351%241025%242%241905%24%24%2420140703163308
+[INFO ] 2014-07-03 16:33:08,562  com.examw.collector.support.HttpUtil     - method:
+GET
+[INFO ] 2014-07-03 16:33:08,562  com.examw.collector.support.HttpUtil     - data:
+null
+[INFO ] 2014-07-03 16:33:09,906  com.examw.collector.support.HttpUtil     - callback:
+<?xml version='1.0' encoding='gb2312' ?><root><lesson><lesson_code>993</lesson_code><lesson_name><![CDATA[建设工程施工管理(二建)]]></lesson_name><class><class_code>771</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>成丽芹</teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>58</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show><ad_video><video_type>0</video_type><video_code>479</video_code><video_name>2014二建-管理成丽芹1</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/993-1-1-2014-0.10-9.01-92117438.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>480</video_code><video_name>2014二建-管理成丽芹2</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/993-1-2-2014-0.10-10.21-63098680.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>489</video_code><video_name>2014二建-管理成丽芹3</video_name><video_address><![CDATA[ http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/gc-20140303-erjian-jianshegongchengshigongguanli-clq-19750879.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>512</video_code><video_name>2014施工管理宣传片</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/shigong-15111895.flv]]></video_address></ad_video></class><class><class_code>8507</class_code><class_name><![CDATA[真题解析班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1980</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>成丽芹</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>1</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>8085</class_code><class_name><![CDATA[内部资料班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>500</source_price><sale_price>500</sale_price><relate_sum>1</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1979</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>唐建生</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>19</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show></class><class><class_code>8261</class_code><class_name><![CDATA[案例密训]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>994</lesson_code><lesson_name><![CDATA[建设工程法规及相关知识(二建)]]></lesson_name><class><class_code>8508</class_code><class_name><![CDATA[真题解析班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1985</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>蔡恒</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>8086</class_code><class_name><![CDATA[内部资料班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>500</source_price><sale_price>500</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1984</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>蔡恒</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>12</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show></class></lesson><lesson><lesson_code>1004</lesson_code><lesson_name><![CDATA[专业工程管理与实务(公路工程)(二建)]]></lesson_name><class><class_code>787</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>宋卫东</teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>55</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show><ad_video><video_type>0</video_type><video_code>476</video_code><video_name>2014二建-公路1</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/1004-1-2-2014-0.00-12.01-42593244.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>477</video_code><video_name>2014二建-公路2</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/1004-1-2-2014-12.02-18.15-88875325.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>517</video_code><video_name>2014公路宣传片</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/gonglu-12202926.flv]]></video_address></ad_video></class><class><class_code>8509</class_code><class_name><![CDATA[真题解析班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1987</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>宋卫东</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1986</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>宋卫东</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>15</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show></class><class><class_code>7790</class_code><class_name><![CDATA[1V1直播教室]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>1007</lesson_code><lesson_name><![CDATA[专业工程管理与实务(市政公用工程)(二建)]]></lesson_name><class><class_code>793</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>曹明铭</teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>45</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show><ad_video><video_type>0</video_type><video_code>483</video_code><video_name>2014二建-市政曹明铭1</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/1007-1-2-2014-0.08-10.53-16145453.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>484</video_code><video_name>2014二建-市政曹明铭2</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/1007-1-2-2014-10.56-24.55-17438877.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>515</video_code><video_name>2014市政宣传片</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/shizheng-16725928.flv]]></video_address></ad_video></class><class><class_code>1989</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>曹明铭</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1988</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>宋卫东</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>17</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>1164</lesson_code><lesson_name><![CDATA[专业工程管理与实务(建筑工程)(二建)]]></lesson_name><class><class_code>968</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>李佳升</teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>52</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show><ad_video><video_type>0</video_type><video_code>486</video_code><video_name>2014二建-建筑李佳升11</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/gc-20140226-erjianxuanjiang-ljs1-20994779.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>487</video_code><video_name>2014二建-建筑李佳升12</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/gc-20140226-erjianxuanjiang-ljs2-37212087.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>488</video_code><video_name>2014二建-建筑李佳升13</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/gc-20140226-erjianxuanjiang-ljs3-13849199.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>514</video_code><video_name>2014建筑宣传片</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/jianzhu-18032451.flv]]></video_address></ad_video></class><class><class_code>8511</class_code><class_name><![CDATA[真题解析班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>5</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1991</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>李佳升</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>3</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>8088</class_code><class_name><![CDATA[内部资料班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>500</source_price><sale_price>500</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1990</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>李佳升</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>15</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>8537</class_code><class_name><![CDATA[现场实操]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>1168</lesson_code><lesson_name><![CDATA[专业工程管理与实务(机电工程)(二建)]]></lesson_name><class><class_code>976</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>黄民德</teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>82</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show><ad_video><video_type>0</video_type><video_code>474</video_code><video_name>2014二建-机电1</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/1168-1-2-2014-0.10-10.00-18924552.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>475</video_code><video_name>2014二建-机电2</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/1168-1-2-2014-10.05-22.00-38135816.flv ]]></video_address></ad_video><ad_video><video_type>0</video_type><video_code>516</video_code><video_name>2014机电宣传片</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/jidian-21332301.flv]]></video_address></ad_video></class><class><class_code>8512</class_code><class_name><![CDATA[真题解析班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>5</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1993</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>黄民德</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>4</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>8089</class_code><class_name><![CDATA[内部资料班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>500</source_price><sale_price>500</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1992</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>黄民德</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>15</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>8538</class_code><class_name><![CDATA[现场实操]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>2140</lesson_code><lesson_name><![CDATA[专业工程管理与实务(水利水电)(二建)]]></lesson_name><class><class_code>1976</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>戚蓝</teacher_name><source_price>300</source_price><sale_price>300</sale_price><relate_sum>42</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show><ad_video><video_type>0</video_type><video_code>490</video_code><video_name>2014二建-水利2</video_name><video_address><![CDATA[http://ws-hf.edu24ol.com/stxc/flv/jzgc/2014/shengsongtaoshiting-20802623.flv]]></video_address></ad_video></class><class><class_code>8513</class_code><class_name><![CDATA[真题解析班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1995</class_code><class_name><![CDATA[应试技巧班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>戚蓝</teacher_name><source_price>50</source_price><sale_price>50</sale_price><relate_sum>2</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class><class><class_code>1994</class_code><class_name><![CDATA[模考试题班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-25</start_date><end_date>2015-6-18</end_date><teacher_name>盛松涛</teacher_name><source_price>200</source_price><sale_price>200</sale_price><relate_sum>10</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>2417</lesson_code><lesson_name><![CDATA[替代课程]]></lesson_name><class><class_code>3115</class_code><class_name><![CDATA[面授替代课程]]></class_name><is_live></is_live><long_day>1</long_day><start_date></start_date><end_date></end_date><teacher_name></teacher_name><source_price>5000</source_price><sale_price>5000</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>1</is_show></class></lesson><lesson><lesson_code>5020</lesson_code><lesson_name><![CDATA[二级建造师天猫]]></lesson_name><class><class_code>8370</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2014-5-26</start_date><end_date>2015-6-18</end_date><teacher_name></teacher_name><source_price>500000</source_price><sale_price>500000</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>5209</lesson_code><lesson_name><![CDATA[二级建造师淘宝]]></lesson_name><class><class_code>8680</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2013-9-22</start_date><end_date>2014-9-25</end_date><teacher_name></teacher_name><source_price>500000</source_price><sale_price>500000</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson><lesson><lesson_code>5223</lesson_code><lesson_name><![CDATA[二级建造师面授合作]]></lesson_name><class><class_code>8696</class_code><class_name><![CDATA[精讲班]]></class_name><is_live></is_live><long_day>0</long_day><start_date>2013-9-22</start_date><end_date>2014-9-25</end_date><teacher_name></teacher_name><source_price>500000</source_price><sale_price>500000</sale_price><relate_sum>0</relate_sum><relate_demo>0</relate_demo><is_show>0</is_show></class></lesson></root>
+[INFO ] 2014-07-03 16:33:10,906 org.springframework.context.support.GenericApplicationContext     - Closing org.springframework.context.support.GenericApplicationContext@114f313: startup date [Thu Jul 03 16:33:05 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-03 16:33:10,921 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@4ee543: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,menuService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-03 16:33:10,953 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} closed

@@ -10,7 +10,7 @@ import java.io.Serializable;
 public class GradeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id,name,teacherName,start,end;
-	private Integer sourcePrice,salePrice,total;
+	private Integer longDay,sourcePrice,salePrice,total;
 	private SubjectEntity subjectEntity;
 	/**
 	 * 获取所属科目。
@@ -147,4 +147,22 @@ public class GradeEntity implements Serializable {
 	public void setEnd(String end) {
 		this.end = end;
 	}
+	/**
+	 * 获取 天数
+	 * @return longDay
+	 * 天数
+	 */
+	public Integer getLongDay() {
+		return longDay;
+	}
+	/**
+	 * 设置 天数
+	 * @param longDay
+	 * 天数
+	 */
+	public void setLongDay(Integer longDay) {
+		this.longDay = longDay;
+	}
+	
+	
 }

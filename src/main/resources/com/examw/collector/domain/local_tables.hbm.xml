@@ -38,14 +38,14 @@
 		<!-- 包含班级数量 -->
 		<property name="fudao"  type="string" length="64" />
 		<!-- 所属考试  关联CODE而非主键 -->
-		<many-to-one name="catalogEntity"  column="edu24_code" class="CatalogEntity" property-ref="code"/>
+		<many-to-one name="catalogEntity"  column="ClassID" class="CatalogEntity" property-ref="code"/>
 	</class>
 	<!-- 班级 -->
 	<class name="GradeEntity"  table="NS_NClass_2">
 		<!--班级ID -->
 		<id name="id" column="NClassID" type="string"  length="64" />
 		<!-- 班级名称 -->
-		<property name="name"  type="string"  length="255" column="BanName" />
+		<property name="name"  type="string"  length="255" column="NType" />
 		<!-- 老师名字 -->
 		<property name="teacherName" column="TeacherName" type="string" length="255" />
 		<!-- 试听讲的集合 -->
@@ -53,9 +53,9 @@
 		<!-- 开课日期 -->
 		<property name="start" column="AddDate" type="string" length="32" />
 		<!-- 结课日期 -->
-		<property name="end" column="EndTimes" type="string" length="32" />
+		<property name="end" column="EndDate" type="string" length="32" />
 		<!-- 可学天数 -->
-		<!-- <property name="longDay"  type="integer" column="long_day" /> -->
+		<property name="longDay"  type="integer" column="EndTimes" />
 		<!-- 原价 -->
 		<property name="sourcePrice"  type="integer" column="Price" />
 		<!-- 优惠价 -->
