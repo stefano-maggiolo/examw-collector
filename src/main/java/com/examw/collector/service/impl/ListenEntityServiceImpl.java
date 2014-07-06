@@ -1,10 +1,15 @@
 package com.examw.collector.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.IListenEntityDao;
+import com.examw.collector.dao.IRelateDao;
+import com.examw.collector.domain.Relate;
+import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.ListenEntity;
 import com.examw.collector.model.RelateInfo;
 import com.examw.collector.service.IListenEntityService;
@@ -15,10 +20,10 @@ import com.examw.collector.service.IListenEntityService;
  * @since 2014年7月1日 上午9:24:19.
  */
 public class ListenEntityServiceImpl extends BaseDataServiceImpl<ListenEntity, RelateInfo> implements IListenEntityService{
-//	private static Logger logger = Logger.getLogger(ListenEntityServiceImpl.class);
+	private static Logger logger = Logger.getLogger(ListenEntityServiceImpl.class);
 	private IListenEntityDao listenEntityDao;
 //	private IDataServer dataServer;
-	
+	private IRelateDao relateDao;
 	/**
 	 * 设置 课节数据接口
 	 * @param relateDao
@@ -28,6 +33,15 @@ public class ListenEntityServiceImpl extends BaseDataServiceImpl<ListenEntity, R
 		this.listenEntityDao = listenEntityDao;
 	}
 	
+	/**
+	 * 设置 设置远程课节数据接口
+	 * @param relateDao
+	 * 
+	 */
+	public void setRelateDao(IRelateDao relateDao) {
+		this.relateDao = relateDao;
+	}
+
 	/**
 	 * 设置  远程数据接口
 	 * @param dataServer
@@ -71,15 +85,33 @@ public class ListenEntityServiceImpl extends BaseDataServiceImpl<ListenEntity, R
 	}
 	
 	
-	/*@Override
+	@Override
 	public void init(RelateInfo info) {
 		if(info == null) return;
 		logger.info("开始初始化课节...");
-		List<Relate> data = this.dataServer.loadRelates(info.getClassId());
+//		List<Relate> data = this.dataServer.loadRelates(info.getClassId());
+		List<Relate> data = this.relateDao.findRelates(info);
 		if(data!=null &&data.size()>0)
 		{
-			this.relateDao.batchSave(data);
+			this.listenEntityDao.batchSave(changeData(data));
 		}
 		logger.info("初始化完成！");
-	}*/
+	}
+	private List<ListenEntity> changeData(List<Relate> list){
+		List<ListenEntity> data = new ArrayList<ListenEntity>();
+		if(list!=null&&list.size()>0){
+			for(Relate r:list){
+				ListenEntity listen = new ListenEntity();
+				BeanUtils.copyProperties(r, listen,new String[]{"id"});
+				listen.setId(r.getNum().toString());
+				if(r.getSubclass()!=null){
+					GradeEntity g = new GradeEntity();
+					g.setId(r.getSubclass().getCode());
+					listen.setGrade(g);
+				}
+				data.add(listen);
+			}
+		}
+		return data;
+	}
 }

@@ -16,7 +16,7 @@ import com.examw.model.Paging;
 @JsonSerialize(include = Inclusion.NON_NULL)
 public class CatalogInfo extends Paging implements Serializable{
 	private static final long serialVersionUID = 1L;
-	private String pid,id,name;
+	private String pid,id,name,status;
 	private Integer classTotal;
 	private List<CatalogInfo> children;
 	/**
@@ -99,6 +99,22 @@ public class CatalogInfo extends Paging implements Serializable{
 	 */
 	public void setChildren(List<CatalogInfo> children) {
 		this.children = children;
+	}
+	/**
+	 * 获取 状态
+	 * @return status
+	 * 
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * 设置 状态
+	 * @param status
+	 * 
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

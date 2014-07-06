@@ -16,5 +16,11 @@
   		<module id="DC000402" icon="" name="本地套餐管理" uri="/admin/local/pack" order="4"/>
   		<module id="DC000502" icon="" name="本地课时管理" uri="/admin/local/listen" order="5"/>
   	</module>
+  	<module id="DC000003"  icon="" name="数据更新" uri="" order="1">
+  		<module id="DC000103" icon="" name="课程分类数据更新" uri="/admin/update/catalog" order="1"/>
+  		<module id="DC000203" icon="" name="科目数据更新" uri="/admin/update/subject" order="2"/>
+  		<module id="DC000303" icon="" name="班级数据更新" uri="/admin/update/grade" order="3"/>
+  		<module id="DC000403" icon="" name="套餐数据更新" uri="/admin/update/pack" order="4"/>
+  	</module>
   </system>
 </ipower>

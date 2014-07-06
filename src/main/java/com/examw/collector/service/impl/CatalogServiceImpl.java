@@ -1,7 +1,10 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.log4j.Logger;
@@ -180,5 +183,85 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 			node.setChildren(children);
 		}
 		return node;
+	}
+	
+	@Override
+	public Map<String, Object> findChanged() {
+		List<Catalog> remote = this.dataServer.loadCatalogs();	//远程的数据
+		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
+		Map<String,Object> map = new HashMap<String,Object>();
+		List<Catalog> add = new ArrayList<Catalog>();
+		List<Catalog> update = new ArrayList<Catalog>();
+		for(Catalog c:remote){
+			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
+			if(local_c == null){
+				add.add(c);
+			}else if(c.equals(local_c)){
+				if(c.getChildren()!=null&&c.getChildren().size()>0){
+					for(Catalog child:c.getChildren()){
+						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
+						if(child.equals(local_child)) continue;
+						else{
+							update.add(c);
+							break;
+						}
+					}
+				}
+			}else{
+				update.add(c);
+			}
+		}
+		map.put("ADD", add);
+		map.put("UPDATE", update);
+		return map;
+	}
+	
+	public List<Catalog> findChangedCatalog() {
+		List<Catalog> remote = this.dataServer.loadCatalogs();	//远程的数据
+		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
+		List<Catalog> add = new ArrayList<Catalog>();
+		for(Catalog c:remote){
+			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
+			if(local_c == null){
+				c.setStatus("新增");
+				add.add(c);
+			}else if(c.equals(local_c)){
+				if(c.getChildren()!=null&&c.getChildren().size()>0){
+					Set<Catalog> children = new HashSet<Catalog>();
+					for(Catalog child:c.getChildren()){
+						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
+						if(local_child == null){
+							child.setStatus("新增");
+							children.add(child);
+						}
+						if(child.equals(local_child)) continue;
+						else{
+							child.setStatus("新的");
+							children.add(child);
+							local_child.setStatus("旧的");
+							children.add(local_child);
+						}
+					}
+					if(children.size()>0){
+						c.setChildren(children);
+						add.add(c);
+					}
+				}
+			}else{
+				c.setStatus("旧的");
+				local_c.setStatus("新的");
+				add.add(c);
+				add.add(local_c);
+			}
+		}
+		return add;
+	}
+	@Override
+	public DataGrid<CatalogInfo> dataGridUpdate() {
+		List<Catalog> list = this.findChangedCatalog();
+		DataGrid<CatalogInfo> grid = new DataGrid<CatalogInfo>();
+		grid.setRows(this.changeModel(list));
+		grid.setTotal((long) list.size());
+		return grid;
 	}
 }

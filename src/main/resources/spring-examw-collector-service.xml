@@ -41,6 +41,7 @@
 	<!-- 科目服务 -->
 	<bean id="subjectService" class="com.examw.collector.service.impl.SubjectServiceImpl">
 	    <property name="subjectDao" ref="subjectDao"/>
+	    <property name="dataServer" ref="dataServer"/>
 	</bean>
 	<!-- 班级服务 -->
 	<bean id="subClassService" class="com.examw.collector.service.impl.SubClassServiceImpl">
@@ -82,6 +83,7 @@
 	<bean id="listenEntityService" class="com.examw.collector.service.impl.ListenEntityServiceImpl">
 	    <property name="listenEntityDao" ref="listenEntityDao"/>
 	    <!-- <property name="dataServer" ref="dataServer"/> -->
+	    <property name="relateDao" ref="relateDao"/>
 	</bean>
 	<!-- 广告服务 -->
 	<bean id="packageEntityService" class="com.examw.collector.service.impl.PackageEntityServiceImpl">

@@ -8,5 +8,9 @@ import com.examw.collector.model.RelateInfo;
  * @since 2014年7月1日 上午9:23:40.
  */
 public interface IListenEntityService extends IBaseDataService<RelateInfo>{
-	
+	/**
+	 * 初始化导入数据
+	 * @param info
+	 */
+	void init(RelateInfo info);
 }

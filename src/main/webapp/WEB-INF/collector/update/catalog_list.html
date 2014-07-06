@@ -1,27 +1,54 @@
 <#--菜单设置列表-->
 <#include "ftl/comm.ftl"/>
-<#assign module="local_catalog"/>
+<#assign module="update_catalog"/>
 <#assign dg="${module}_list_dg"/>
 <script type="text/javascript">
 <!--
 $(function(){
-	var current_catalog_id = "";
-	//catalog-exam-tree
-	var t = $("#${module}_list_catalog_exam_tree").tree({
-		url:"<@s.url '/admin/edu24/catalog/tree'/>",
+	var dg1 = $("#${dg}_remote").treegrid({
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		idField:"id",
+		treeField:"name",
+		singleSelect:false,
+		animate:true,
+		border:true,
+		striped:true,
+		columns:[[{
+			field:"children",
+			checkbox:true
+		},{
+			title:"类别名称",
+			field:"name",
+			width:25
+		},{
+			title:"类别代码",
+			field:"id",
+			width:15
+		},{
+			title:"状态",
+			field:"status",
+			width:35
+		}]],
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
-		onBeforeLoad:function(){
-			current_catalog_id = "";
-		},
-		onClick:function(node){
-			current_catalog_id = node.id;
-		}
+		toolbar:[
+		{
+			iconCls:"icon-add",
+			text:"检测课程类别数据更新",
+			handler:function(){
+				$.messager.confirm("确认","您是否确认检测课程类别数据更新?",function(r){
+					if(!r)return;
+					dg1.treegrid({url:"<@s.url '/admin/update/catalog/datagrid'/>"});
+				});
+			}
+		}]
 	});
 	//dg
 	var editingId,currentCode;
-	var dg = $("#${dg}").treegrid({
+	var dg = $("#${dg}_local").treegrid({
 		url:"<@s.url '/admin/local/catalog/datagrid'/>",
 		fit:true,
 		fitColumns:true,
@@ -100,15 +127,15 @@ $(function(){
 //-->
 </script>
 <div class="easyui-layout" data-options="fit:true" id="${dg}_layout">
-	 <div data-options="region:'west',title:'环球考试分类',split:true,tools: [{
+	 <div data-options="region:'west',title:'分类更新',split:true,tools: [{
 		 	iconCls:'icon-reload',
 		 	handler:function(){
-			 		$('#${module}_list_catalog_exam_tree').tree('reload');
+			 		$('#${dg}_remote').treegrid('reload');
 		 	}
-	 	}]" style="padding:5px;width:300px;">
-	 	<ul id="${module}_list_catalog_exam_tree"></ul>
+	 	}]" style="padding:5px;width:400px;">
+	 	<table id="${dg}_remote"></table>
 	 </div>
 	 <div data-options="region:'center',title:'本地考试分类'">
-		<table id="${dg}"></table>
+		<table id="${dg}_local"></table>
 	</div>
 </div>
