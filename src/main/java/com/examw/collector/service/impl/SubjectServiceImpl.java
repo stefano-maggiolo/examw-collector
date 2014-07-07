@@ -6,12 +6,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
+import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Subject;
-import com.examw.collector.model.CatalogInfo;
 import com.examw.collector.model.SubjectInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.ISubjectService;
@@ -26,6 +27,7 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 	//private static Logger logger = Logger.getLogger(MenuServiceImpl.class);
 	private ISubjectDao subjectDao;
 	private IDataServer dataServer;
+	private ICatalogDao catalogDao;
 	/**
 	 * 设置 科目数据接口
 	 * @param subjectDao
@@ -41,6 +43,15 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 	 */
 	public void setDataServer(IDataServer dataServer) {
 		this.dataServer = dataServer;
+	}
+	
+	/**
+	 * 设置 课程分类数据接口
+	 * @param catalogDao
+	 * 
+	 */
+	public void setCatalogDao(ICatalogDao catalogDao) {
+		this.catalogDao = catalogDao;
 	}
 	@Override
 	protected List<Subject> find(SubjectInfo info) {
@@ -136,5 +147,29 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
 		return grid;
+	}
+	
+	@Override
+	public void update(List<SubjectInfo> subjects) {
+		if(subjects == null ||subjects.size()==0) return;
+		for(SubjectInfo info:subjects){
+			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
+				continue;
+			}
+			this.subjectDao.saveOrUpdate(changeModel(info));
+		}
+	}
+	private Subject changeModel(SubjectInfo info){
+		if(info == null) return null;
+		Subject data = new Subject();
+		BeanUtils.copyProperties(info, data);
+		if(StringUtils.isEmpty(info.getCatalogId())){
+			return null;
+		}else{
+			Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
+			if(catalog==null) return null;
+			data.setCatalog(catalog);
+		}
+		return data;
 	}
 }

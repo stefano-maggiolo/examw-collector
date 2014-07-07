@@ -11,7 +11,7 @@ import com.examw.model.Paging;
  */
 public class SubClassInfo  extends Paging implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String code,name,teacherName,demo,start,end;
+	private String code,name,teacherName,demo,start,end,status;
 	private Boolean isLive,isShow;
 	private Integer longDay,sourcePrice,salePrice,total;
 	private String adVideoId,adVideoName;
@@ -291,6 +291,22 @@ public class SubClassInfo  extends Paging implements Serializable {
 	 */
 	public void setCatalogName(String catalogName) {
 		this.catalogName = catalogName;
+	}
+	/**
+	 * 获取 状态
+	 * @return status
+	 * 
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * 设置 状态
+	 * @param status
+	 * 
+	 */
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

@@ -7,6 +7,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 
+import com.examw.collector.dao.ICatalogEntityDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
 import com.examw.collector.domain.Subject;
@@ -24,6 +25,7 @@ public class SubjectEntityServiceImpl extends BaseDataServiceImpl<SubjectEntity,
 	private static Logger logger = Logger.getLogger(SubjectEntityServiceImpl.class);
 	private ISubjectEntityDao subjectEntityDao;
 	private ISubjectDao subjectDao;
+	private ICatalogEntityDao catalogEntityDao;
 	/**
 	 * 设置 科目数据接口
 	 * @param subjectDao
@@ -41,7 +43,15 @@ public class SubjectEntityServiceImpl extends BaseDataServiceImpl<SubjectEntity,
 	public void setSubjectDao(ISubjectDao subjectDao) {
 		this.subjectDao = subjectDao;
 	}
-
+	
+	/**
+	 * 设置 课程分类数据接口
+	 * @param catalogEntityDao
+	 * 
+	 */
+	public void setCatalogEntityDao(ICatalogEntityDao catalogEntityDao) {
+		this.catalogEntityDao = catalogEntityDao;
+	}
 
 	@Override
 	protected List<SubjectEntity> find(SubjectInfo info) {
@@ -112,5 +122,27 @@ public class SubjectEntityServiceImpl extends BaseDataServiceImpl<SubjectEntity,
 			list.add(entity);
 		}
 		return list;
+	}
+	
+
+	@Override
+	public void update(List<SubjectInfo> subjects) {
+		if(subjects == null ||subjects.size()==0) return;
+		for(SubjectInfo info:subjects){
+			this.subjectEntityDao.saveOrUpdate(changeModel(info));
+		}
+	}
+	private SubjectEntity changeModel(SubjectInfo info){
+		if(info == null) return null;
+		SubjectEntity data = new SubjectEntity();
+		BeanUtils.copyProperties(info, data);
+		if(StringUtils.isEmpty(info.getCatalogId())){
+			return null;
+		}else{
+			CatalogEntity catalog = this.catalogEntityDao.find(info.getCatalogId());
+			if(catalog==null) return null;
+			data.setCatalogEntity(catalog);
+		}
+		return data;
 	}
 }

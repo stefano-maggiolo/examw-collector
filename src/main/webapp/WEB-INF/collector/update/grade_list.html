@@ -45,7 +45,7 @@ $(function(){
 	});
 	//dg
 	var dg=$("#${dg}").datagrid({
-		url:"<@s.url '/admin/local/grade/datagrid'/>",
+		url:"<@s.url '/admin/update/grade/datagrid'/>",
 		fit:true,
 		fitColumns:true,
 		rownumbers:true,
@@ -78,6 +78,11 @@ $(function(){
 			width:10,
 			align:"left"
 		},{
+			title:"所属课程分类",
+			field:"catalogName",
+			width:10,
+			align:"right"
+		},{
 			title:"开始时间",
 			field:"start",
 			width:10,
@@ -108,6 +113,10 @@ $(function(){
 			align:"right",
 			sortable:true
 		},{
+			title:"状态",
+			field:"status",
+			width:8
+		},{
 			title:"操作",
 			field:"opt",
 			width:10,
@@ -129,41 +138,18 @@ $(function(){
 			  name:$("#${dg}_toobar input[name='name']").val()
 		});
 	};
-	//导入班级数据
+	//检查班级数据更新
 	${dg}_add = function(){
 		if(!current_subject_id){
 			$.messager.alert("提示","请先选择环球的分类");
 			return;
 		}
-		$.messager.confirm("确认","您是否确认初始化班级数据?",function(r){
+		$.messager.confirm("确认","您是否确认检查班级数据更新?",function(r){
 			if(!r)return;
-			$.messager.progress();
-			$.ajax({
-				url:"<@s.url '/admin/local/grade/init'/>",
-				type:"POST",
-				data:{"catalogId":current_catalog_id,"subjectId":current_subject_id},
-				dataType:"json",
-				error:function(e){
-					$.messager.progress("close");
-					<@error_dialog "e"/>
-				},
-				success:function(data,textStatus){
-					$.messager.progress("close");
-					if(data.success){
-						dg.datagrid("load");
-						dg.datagrid("unselectAll");
-						$.messager.show({
-							title:'提示',
-							msg:'班级数据导入成功',
-							showType:'show'
-						});
-					}else{
-						$.messager.show({
-							title:"提示",
-							msg:data.msg
-						});
-					}
-				}
+			dg.datagrid("load",{
+				action:"1",
+				catalogId:current_catalog_id,
+				subjectId:current_subject_id
 			});
 		});
 	};
@@ -223,7 +209,7 @@ $(function(){
 	 		<div data-options="region:'center',title:'班级列表'">
 				<table id="${dg}"></table>
 				<div id="${dg}_toobar">
-					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">导入数据</a>
+					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">检查更新</a>
 					<label>班级名称:</label>
 					<input name="name" type="text" style="width:198px;"/>
 

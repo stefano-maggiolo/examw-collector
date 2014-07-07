@@ -32,4 +32,9 @@ public interface ICatalogService extends IBaseDataService<CatalogInfo>{
 	 * @return
 	 */
 	DataGrid<CatalogInfo> dataGridUpdate();
+	/**
+	 * 更新一个集合
+	 * @param subjects
+	 */
+	void update(List<CatalogInfo> catalogs);
 }

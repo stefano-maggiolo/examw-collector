@@ -6,9 +6,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
+import com.examw.collector.dao.IPackDao;
 import com.examw.collector.dao.IPackageEntityDao;
 import com.examw.collector.domain.Pack;
+import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.domain.local.PackageEntity;
+import com.examw.collector.domain.local.SubjectEntity;
 import com.examw.collector.model.PackInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IPackageEntityService;
@@ -23,6 +26,7 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 	private static Logger logger = Logger.getLogger(PackageEntityServiceImpl.class);
 	private IPackageEntityDao packageEntityDao;
 	private IDataServer dataServer;
+	private IPackDao packDao;
 
 	/**
 	 * 设置 套餐数据接口
@@ -43,14 +47,24 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 	public void setDataServer(IDataServer dataServer) {
 		this.dataServer = dataServer;
 	}
+	
+	/**
+	 * 设置 远程套餐数据接口
+	 * @param packDao
+	 * 
+	 */
+	public void setPackDao(IPackDao packDao) {
+		this.packDao = packDao;
+	}
 
 	@Override
 	public void init(PackInfo info) {
 		if (info == null)
 			return;
 		logger.info("开始初始化套餐...");
-		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(),
-				info.getSubjectId());
+//		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(),
+//				info.getSubjectId());
+		List<Pack> data = this.packDao.findPacks(info);
 		if (data != null && data.size() > 0) {
 			//setSubClassRelationShip(data);
 			List<PackageEntity> list = new ArrayList<PackageEntity>();
@@ -67,6 +81,16 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 		PackageEntity data = new PackageEntity();
 		BeanUtils.copyProperties(pack, data);
 		data.setId(pack.getCode());
+		if(pack.getCatalog()!=null){
+			CatalogEntity c = new CatalogEntity();
+			c.setCode(pack.getCatalog().getCode());
+			data.setCatalogEntity(c);
+		}
+		if(pack.getSubject()!=null){
+			SubjectEntity s = new SubjectEntity();
+			s.setId(pack.getSubject().getCode());
+			data.setSubjectEntity(s);
+		}
 		return data;
 	}
 	// 不这么弄,里面有些的班级没有
@@ -102,15 +126,16 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 			return null;
 		PackInfo info = new PackInfo();
 		BeanUtils.copyProperties(data, info);
+		info.setCode(data.getId());
 		// 设置科目
-//		if (data.getSubjectEntity() != null) {
-//			info.setSubjectId(data.getSubject().getCode());
-//			info.setSubjectName(data.getSubject().getName());
-//		}
-//		if (data.getCatalog() != null) {
-//			info.setCatalogId(data.getCatalog().getCode());
-//			info.setCatalogName(data.getCatalog().getName());
-//		}
+		if (data.getSubjectEntity() != null) {
+			info.setSubjectId(data.getSubjectEntity().getId());
+			info.setSubjectName(data.getSubjectEntity().getName());
+		}
+		if (data.getCatalogEntity() != null) {
+			info.setCatalogId(data.getCatalogEntity().getCode());
+			info.setCatalogName(data.getCatalogEntity().getCname());
+		}
 		return info;
 	}
 

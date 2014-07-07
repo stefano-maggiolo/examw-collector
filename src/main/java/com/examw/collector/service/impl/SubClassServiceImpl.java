@@ -3,16 +3,20 @@ package com.examw.collector.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.IAdVideoDao;
 import com.examw.collector.dao.ISubClassDao;
+import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.AdVideo;
 import com.examw.collector.domain.SubClass;
+import com.examw.collector.domain.Subject;
 import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.ISubClassService;
+import com.examw.model.DataGrid;
 
 /**
  * 
@@ -24,6 +28,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	private ISubClassDao subClassDao;
 	private IAdVideoDao adVideoDao;
 	private IDataServer dataServer;
+	private ISubjectDao subjectDao;
 	
 	/**
 	 * 设置 班级数据接口
@@ -40,6 +45,15 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	 */
 	public void setAdVideoDao(IAdVideoDao adVideoDao) {
 		this.adVideoDao = adVideoDao;
+	}
+	
+	/**
+	 * 设置 科目数据接口
+	 * @param subjectDao
+	 * 
+	 */
+	public void setSubjectDao(ISubjectDao subjectDao) {
+		this.subjectDao = subjectDao;
 	}
 	/**
 	 * 设置 远程数据接口
@@ -107,6 +121,61 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 			}
 		}
 		logger.info("AdVideo的个数是:"+data.size());
+		return data;
+	}
+	
+	@Override
+	public DataGrid<SubClassInfo> dataGridUpdate(SubClassInfo info) {
+		if(StringUtils.isEmpty(info.getCatalogId()))
+			return null;
+		List<SubClass> list = this.findChangedSubClass(info);
+		DataGrid<SubClassInfo> grid = new DataGrid<SubClassInfo>();
+		grid.setRows(this.changeModel(list));
+		grid.setTotal((long) list.size());
+		return grid;
+		
+		
+	}
+	private List<SubClass> findChangedSubClass(SubClassInfo info){
+		List<SubClass> data = this.dataServer.loadClasses(info.getCatalogId(), info.getSubjectId());
+		List<SubClass> add = new ArrayList<SubClass>();
+		for(SubClass s:data){
+			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());
+			if(local_s == null){
+				s.setStatus("新增");
+				add.add(s);
+			}else if(local_s.equals(s)){
+				continue;
+			}else{
+				s.setStatus("新的");
+				local_s.setStatus("旧的");
+				add.add(s);
+				add.add(local_s);
+			}
+		}
+		return add;
+	}
+	@Override
+	public void update(List<SubClassInfo> subClasses) {
+		if(subClasses == null ||subClasses.size()==0) return;
+		for(SubClassInfo info:subClasses){
+			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
+				continue;
+			}
+			this.subClassDao.saveOrUpdate(changeModel(info));
+		}
+	}
+	private SubClass changeModel(SubClassInfo info){
+		if(info == null) return null;
+		SubClass data = new SubClass();
+		BeanUtils.copyProperties(info, data);
+		if(StringUtils.isEmpty(info.getSubjectId())){
+			return null;
+		}else{
+			Subject subject = this.subjectDao.load(Subject.class, info.getSubjectId());
+			if(subject==null) return null;
+			data.setSubject(subject);
+		}
 		return data;
 	}
 }

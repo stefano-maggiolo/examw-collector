@@ -17,5 +17,10 @@ public interface ICatalogEntityDao extends IBaseDao<CatalogEntity>{
 	 * 结果数据。
 	 */
 	List<CatalogEntity> findCatalogs(CatalogEntityInfo info);
-
+	/**
+	 * 根据环球的code找考试分类
+	 * @param edu24_code
+	 * @return
+	 */
+	CatalogEntity find(String edu24_code);
 }

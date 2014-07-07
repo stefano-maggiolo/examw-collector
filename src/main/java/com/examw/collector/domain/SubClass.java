@@ -6,7 +6,7 @@ import java.io.Serializable;
  * @author yangyong.
  * @since 2014-06-27.
  */
-public class SubClass implements Serializable {
+public class SubClass extends BaseDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name,teacherName,demo,start,end;
 	private Boolean isLive,isShow;
@@ -242,4 +242,109 @@ public class SubClass implements Serializable {
 	public void setCatalog(Catalog catalog) {
 		this.catalog = catalog;
 	}
+	/* 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		result = prime * result + ((demo == null) ? 0 : demo.hashCode());
+		result = prime * result + ((end == null) ? 0 : end.hashCode());
+		result = prime * result + ((isLive == null) ? 0 : isLive.hashCode());
+		result = prime * result + ((isShow == null) ? 0 : isShow.hashCode());
+		result = prime * result + ((longDay == null) ? 0 : longDay.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result
+				+ ((salePrice == null) ? 0 : salePrice.hashCode());
+		result = prime * result
+				+ ((sourcePrice == null) ? 0 : sourcePrice.hashCode());
+		result = prime * result + ((start == null) ? 0 : start.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		result = prime * result
+				+ ((teacherName == null) ? 0 : teacherName.hashCode());
+		result = prime * result + ((total == null) ? 0 : total.hashCode());
+		return result;
+	}
+	/* 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		SubClass other = (SubClass) obj;
+		if (code == null) {
+			if (other.code != null)
+				return false;
+		} else if (!code.equals(other.code))
+			return false;
+		if (demo == null) {
+			if (other.demo != null)
+				return false;
+		} else if (!demo.equals(other.demo))
+			return false;
+		if (end == null) {
+			if (other.end != null)
+				return false;
+		} else if (!end.equals(other.end))
+			return false;
+		if (isLive == null) {
+			if (other.isLive != null)
+				return false;
+		} else if (!isLive.equals(other.isLive))
+			return false;
+		if (isShow == null) {
+			if (other.isShow != null)
+				return false;
+		} else if (!isShow.equals(other.isShow))
+			return false;
+		if (longDay == null) {
+			if (other.longDay != null)
+				return false;
+		} else if (!longDay.equals(other.longDay))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (salePrice == null) {
+			if (other.salePrice != null)
+				return false;
+		} else if (!salePrice.equals(other.salePrice))
+			return false;
+		if (sourcePrice == null) {
+			if (other.sourcePrice != null)
+				return false;
+		} else if (!sourcePrice.equals(other.sourcePrice))
+			return false;
+		if (start == null) {
+			if (other.start != null)
+				return false;
+		} else if (!start.equals(other.start))
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.getCode().equals(other.subject.getCode()))
+			return false;
+		if (teacherName == null) {
+			if (other.teacherName != null)
+				return false;
+		} else if (!teacherName.equals(other.teacherName))
+			return false;
+		if (total == null) {
+			if (other.total != null)
+				return false;
+		} else if (!total.equals(other.total))
+			return false;
+		return true;
+	}
+	
 }

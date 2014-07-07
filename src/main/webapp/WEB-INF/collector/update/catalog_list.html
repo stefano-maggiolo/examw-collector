@@ -44,6 +44,47 @@ $(function(){
 					dg1.treegrid({url:"<@s.url '/admin/update/catalog/datagrid'/>"});
 				});
 			}
+		},{
+			iconCls:"icon-edit",
+			text:"数据更新",
+			handler:function(){
+				var rows = dg1.treegrid("getSelections");
+				if(!rows || rows.length == 0){
+					$.messager.alert("提示","请选择需要更新的数据");
+					return;
+				}
+				$.messager.confirm("确认","您是否确认更新课程类别数据更新?",function(r){
+					if(!r)return;
+					$.ajax({
+						url:"<@s.url '/admin/update/catalog/update'/>",
+						type:"post",
+						data:JSON.stringify(rows),
+						contentType:"application/json;charset=UTF-8",
+						dataType:"json",
+						success:function(data){
+							if(data.success){
+								$.messager.show({title:"提示",msg:"更新成功",showType:'show'});
+								//删除选中的行
+								$.each(rows,function(i){
+									if(rows[i]){
+										var id = rows[i].id;
+										var children = dg1.treegrid("getChildren",rows[i].id);
+										if(!children || children.length==0){
+											if(rows[i].status=="新的"){
+												dg1.treegrid("remove",id);
+												dg1.treegrid("remove",id);
+											}else
+												dg1.treegrid("remove",id);
+										}
+									}
+								});
+							}else{
+								$.messager.show({title:"提示",msg:"更新失败",showType:'show'});
+							}
+						}
+					});
+				});
+			}
 		}]
 	});
 	//dg

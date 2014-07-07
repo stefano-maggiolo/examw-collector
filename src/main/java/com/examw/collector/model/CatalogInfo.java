@@ -117,4 +117,15 @@ public class CatalogInfo extends Paging implements Serializable{
 		this.status = status;
 	}
 	
+	/*
+	 * 配合前台传过来的数据,没有实际的作用
+	 */
+	private String state;
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
+	}
+	
 }

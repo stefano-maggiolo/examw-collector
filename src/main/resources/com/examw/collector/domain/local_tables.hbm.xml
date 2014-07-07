@@ -80,7 +80,7 @@
 	    <!-- </set> -->
 	</class>
 	<!-- 套餐 -->
-	<class name="PackageEntity"  table="TaoCanList_2">
+	<class name="PackageEntity"  table="NS_TaoCanList_2">
 		<!-- 套餐ID -->
 		<id name="id" column="TaoCanID" type="string"  length="64" />
 		<!-- 套餐名称 -->
@@ -92,9 +92,9 @@
 		<!-- 是否可见 -->
 		<!-- <property name="isShow"  type="true_false" column="is_show"/> -->
 		<!-- 所属科目 -->
-		<!-- <many-to-one name="subjectEntity"  column="ClassID"  class="SubjectEntity" /> -->
+		<many-to-one name="subjectEntity"  column="ClassID"  class="SubjectEntity" />
 		<!-- 所属小类 -->
-		<!-- <many-to-one name="catalogEntity"  column="edu24_code"  class="CatalogEntity" property-ref="code"/> -->
+		<many-to-one name="catalogEntity"  column="edu24_code"  class="CatalogEntity" property-ref="code"/>
 		<!-- 包含班级代码 -->
 		<property name="classCodes" type="text" column="TC_NClassID"/>
 		<!-- 包含班级的集合 -->

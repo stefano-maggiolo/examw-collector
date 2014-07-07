@@ -1,6 +1,6 @@
 <#--考试类别列表-->
 <#include "ftl/comm.ftl"/>
-<#assign module="local_grade"/>
+<#assign module="local_pack"/>
 <#assign dg="${module}_list_dg"/>
 <script type="text/javascript">
 <!--
@@ -19,10 +19,10 @@ $(function(){
 			if(t.tree("isLeaf",node.target))
 			{
 				if(node.attributes && node.attributes.code)
-				current_catalog_id = node.attributes.code;
-				if(s){
-					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
-				}
+					current_catalog_id = node.attributes.code;
+					if(s){
+						s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
+					}
 				//search;
 				${dg}_search();
 			}
@@ -45,7 +45,7 @@ $(function(){
 	});
 	//dg
 	var dg=$("#${dg}").datagrid({
-		url:"<@s.url '/admin/local/grade/datagrid'/>",
+		url:"<@s.url '/admin/local/pack/datagrid'/>",
 		fit:true,
 		fitColumns:true,
 		rownumbers:true,
@@ -61,7 +61,7 @@ $(function(){
 			field:"check",
 			checkbox:true
 		},{
-			title:"班级代码",
+			title:"套餐代码",
 			field:"code",
 			width:10,
 			align:"left",
@@ -78,43 +78,39 @@ $(function(){
 			width:10,
 			align:"left"
 		},{
-			title:"开始时间",
-			field:"start",
+			title:"所属课程分类",
+			field:"catalogName",
 			width:10,
-			align:"right",
-			sortable:true
-		},{
-			title:"结束时间",
-			field:"end",
-			width:10,
-			align:"right",
-			sortable:true
+			align:"right"
 		},{
 			title:"原价",
-			field:"sourcePrice",
-			width:8,
+			field:"source",
+			width:10,
 			align:"right",
 			sortable:true
 		},{
 			title:"优惠价",
-			field:"salePrice",
-			width:8,
-			align:"right",
-			sortable:true
-		},{
-			title:"老师",
-			field:"teacherName",
+			field:"discount",
 			width:10,
 			align:"right",
 			sortable:true
 		},{
-			title:"操作",
-			field:"opt",
+			title:"是否显示",
+			field:"isShow",
 			width:10,
-			align:"center",
-			formatter:function(value,data,index){
-				return "<a class='role-list-dg-opt-right' onclick='${dg}_init_relate(\""+data.code +"\")' href='javascript:void(0)'>导入课节信息</a>"
+			align:"right",
+			formatter: function(value,row,index){
+				if (value){
+					return "是";
+				} else {
+					return "否";
+				}
 			}
+		},{
+			title:"包含班级",
+			field:"classCodes",
+			width:30,
+			align:"left"
 		}]],
 		toolbar:"#${dg}_toobar",
 		onLoadError:function(e){
@@ -131,15 +127,11 @@ $(function(){
 	};
 	//导入班级数据
 	${dg}_add = function(){
-		if(!current_subject_id){
-			$.messager.alert("提示","请先选择环球的分类");
-			return;
-		}
-		$.messager.confirm("确认","您是否确认初始化班级数据?",function(r){
+		$.messager.confirm("确认","您是否确认初始化套餐数据?",function(r){
 			if(!r)return;
 			$.messager.progress();
 			$.ajax({
-				url:"<@s.url '/admin/local/grade/init'/>",
+				url:"<@s.url '/admin/local/pack/init'/>",
 				type:"POST",
 				data:{"catalogId":current_catalog_id,"subjectId":current_subject_id},
 				dataType:"json",
@@ -154,7 +146,7 @@ $(function(){
 						dg.datagrid("unselectAll");
 						$.messager.show({
 							title:'提示',
-							msg:'班级数据导入成功',
+							msg:'套餐数据导入成功',
 							showType:'show'
 						});
 					}else{
@@ -167,41 +159,6 @@ $(function(){
 			});
 		});
 	};
-	//导入课节数据
-	${dg}_init_relate = function(classId)
-	{
-		$.messager.confirm("确认","您是否确认初始化课节数据?",function(r){
-			if(!r)return;
-			$.messager.progress();
-			$.ajax({
-				url:"<@s.url '/admin/local/listen/init'/>",
-				type:"POST",
-				data:{"classId":classId},
-				dataType:"json",
-				error:function(e){
-					$.messager.progress("close");
-					<@error_dialog "e"/>
-				},
-				success:function(data,textStatus){
-					$.messager.progress("close");
-					if(data.success){
-						dg.datagrid("load");
-						dg.datagrid("unselectAll");
-						$.messager.show({
-							title:'提示',
-							msg:'课节数据导入成功',
-							showType:'show'
-						});
-					}else{
-						$.messager.show({
-							title:"提示",
-							msg:data.msg
-						});
-					}
-				}
-			});
-		});
-	}
 });
 //-->
 </script>
@@ -215,12 +172,12 @@ $(function(){
 	 	}]" style="padding:5px;width:190px;">
 	 	<ul id="${module}_list_catalog_exam_tree"></ul>
 	 </div>
-	 <div data-options="region:'center',title:'班级列表'">
+	 <div data-options="region:'center',title:'套餐列表'">
 		<div class="easyui-layout" data-options="fit:true" id="${dg}_layout_2">
-	 		<div data-options="region:'west',title:'所属考试',split:true" style="padding:5px;width:190px;">
+	 		<div data-options="region:'west',title:'所属科目',split:true" style="padding:5px;width:190px;">
 	 			<ul id="${module}_list_subject_tree"></ul>
 	 		</div>
-	 		<div data-options="region:'center',title:'班级列表'">
+	 		<div data-options="region:'center',title:'套餐列表'">
 				<table id="${dg}"></table>
 				<div id="${dg}_toobar">
 					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">导入数据</a>

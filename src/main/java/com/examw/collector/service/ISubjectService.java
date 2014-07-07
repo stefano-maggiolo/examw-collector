@@ -1,5 +1,6 @@
 package com.examw.collector.service;
 
+import java.util.List;
 import java.util.Map;
 
 import com.examw.collector.model.SubjectInfo;
@@ -21,4 +22,9 @@ public interface ISubjectService extends IBaseDataService<SubjectInfo>{
 	 * @return
 	 */
 	DataGrid<SubjectInfo> dataGridUpdate();
+	/**
+	 * 更新一个集合
+	 * @param subjects
+	 */
+	void update(List<SubjectInfo> subjects);
 }

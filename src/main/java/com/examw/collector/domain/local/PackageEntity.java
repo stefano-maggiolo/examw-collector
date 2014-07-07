@@ -89,4 +89,39 @@ public class PackageEntity implements Serializable {
 		this.classCodes = classIds;
 	}
 	
+	private SubjectEntity subjectEntity;
+	private CatalogEntity catalogEntity;
+	/**
+	 * 获取 科目
+	 * @return subjectEntity
+	 * 
+	 */
+	public SubjectEntity getSubjectEntity() {
+		return subjectEntity;
+	}
+	/**
+	 * 设置 科目
+	 * @param subjectEntity
+	 * 
+	 */
+	public void setSubjectEntity(SubjectEntity subjectEntity) {
+		this.subjectEntity = subjectEntity;
+	}
+	/**
+	 * 获取 考试分类
+	 * @return catalogEntity
+	 * 
+	 */
+	public CatalogEntity getCatalogEntity() {
+		return catalogEntity;
+	}
+	/**
+	 * 设置 考试分类
+	 * @param catalogEntity
+	 * 
+	 */
+	public void setCatalogEntity(CatalogEntity catalogEntity) {
+		this.catalogEntity = catalogEntity;
+	}
+	
 }

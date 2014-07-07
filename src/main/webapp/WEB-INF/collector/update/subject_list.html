@@ -72,11 +72,21 @@ module="update_subject"/> <#assign dg="${module}_list_dg"/>
 								$.ajax({
 									url:"<@s.url '/admin/update/subject/update'/>",
 									type:"post",
-									data:{"subjects":rows},
+									data:JSON.stringify(rows),
+									contentType:"application/json;charset=UTF-8",
 									dataType:"json",
 									success:function(data){
 										if(data.success){
-											$.messager.show("提示","更新成功");
+											$.messager.show({title:"提示",msg:"更新成功",showType:"show"});
+											$.each(rows,function(i){
+												if(rows[i].status == "新的"){
+													var index = dg1.datagrid("getRowIndex",rows[i]);
+													dg1.datagrid("deleteRow",index+1);
+												}
+												dg1.datagrid("deleteRow",dg1.datagrid("getRowIndex",rows[i]));
+											});
+										}else{
+											$.messager.show({title:"提示",msg:"更新失败",showType:"show"});
 										}
 									}
 								});
@@ -91,6 +101,13 @@ module="update_subject"/> <#assign dg="${module}_list_dg"/>
 				if(data.status == "旧的"){
 					dg1.datagrid("uncheckRow",index);	//取消选择
 				}
+			},
+			onCheckAll:function(rows){
+				$.each(rows,function(i){
+					if(rows[i].status == "旧的"){
+						dg1.datagrid("uncheckRow",dg1.datagrid("getRowIndex",rows[i]));
+					}
+				});
 			}
 		});
 		//dg

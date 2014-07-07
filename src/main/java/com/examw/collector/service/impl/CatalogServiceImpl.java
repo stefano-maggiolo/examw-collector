@@ -1,12 +1,15 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeSet;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
@@ -227,7 +230,19 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 				add.add(c);
 			}else if(c.equals(local_c)){
 				if(c.getChildren()!=null&&c.getChildren().size()>0){
-					Set<Catalog> children = new HashSet<Catalog>();
+					Set<Catalog> children = new TreeSet<Catalog>(new Comparator<Catalog>(){
+						@Override
+						public int compare(Catalog o1, Catalog o2) {
+							int value = o1.getCode().compareTo(o2.getCode());
+							if(value==0){
+								if("新的".endsWith(o1.getStatus()))
+									return -1;
+								else
+									return 1;
+							}
+							return value;
+						}
+					});
 					for(Catalog child:c.getChildren()){
 						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
 						if(local_child == null){
@@ -248,8 +263,8 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 					}
 				}
 			}else{
-				c.setStatus("旧的");
-				local_c.setStatus("新的");
+				c.setStatus("新的");
+				local_c.setStatus("旧的");
 				add.add(c);
 				add.add(local_c);
 			}
@@ -263,5 +278,39 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
 		return grid;
+	}
+	
+	@Override
+	public void update(List<CatalogInfo> catalogs) {
+		if(catalogs == null ||catalogs.size()==0) return;
+		for(CatalogInfo info:catalogs){
+			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
+				continue;
+			}
+			this.catalogDao.saveOrUpdate(changeModel(info));
+		}
+	}
+	private Catalog changeModel(CatalogInfo info){
+		if(info == null) return null;
+		Catalog data = this.catalogDao.load(Catalog.class, info.getId());
+		if(data == null){
+			//新的分类
+			data = new Catalog();
+			if(info.getChildren()!=null&&info.getChildren().size()>0){
+				Set<Catalog> children = new HashSet<Catalog>();
+				for(CatalogInfo ci:info.getChildren()){
+					children.add(this.changeModel(ci));
+				}
+				data.setChildren(children);
+			}
+		}
+		BeanUtils.copyProperties(info, data);
+		if(!StringUtils.isEmpty(info.getPid())){
+			Catalog c = this.catalogDao.load(Catalog.class, info.getPid());
+			if(c != null){
+				data.setParent(c);
+			}
+		}
+		return data;
 	}
 }

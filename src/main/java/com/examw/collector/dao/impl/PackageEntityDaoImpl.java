@@ -52,12 +52,12 @@ public class PackageEntityDaoImpl extends BaseDaoImpl<PackageEntity> implements 
 			parameters.put("name", "%" + info.getName()+ "%");
 		}
 		if(info.getSubjectId() != null && !info.getSubjectId().trim().isEmpty()){
-			hql += "  and (p.subject.id = :subjectId)";
+			hql += "  and (p.subjectEntity.id = :subjectId)";
 			parameters.put("subjectId", info.getSubjectId());
 		}
 		if(StringUtils.isEmpty(info.getCatalogId()))
 		{
-			hql += "  and (p.catalog.id = :catalogId)";
+			hql += "  and (p.catalogEntity.id = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		return hql;

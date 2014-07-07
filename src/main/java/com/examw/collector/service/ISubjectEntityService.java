@@ -1,5 +1,7 @@
 package com.examw.collector.service;
 
+import java.util.List;
+
 import com.examw.collector.model.SubjectInfo;
 
 /**
@@ -12,4 +14,9 @@ public interface ISubjectEntityService extends IBaseDataService<SubjectInfo>{
 	 * 初始化导入数据
 	 */
 	void init(SubjectInfo info);
+	/**
+	 * 更新一个集合
+	 * @param subjects
+	 */
+	void update(List<SubjectInfo> subjects);
 }
