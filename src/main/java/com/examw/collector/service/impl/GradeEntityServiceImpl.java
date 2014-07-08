@@ -9,7 +9,9 @@ import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.dao.ISubClassDao;
+import com.examw.collector.dao.ISubjectEntityDao;
 import com.examw.collector.domain.SubClass;
+import com.examw.collector.domain.Subject;
 import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.SubjectEntity;
 import com.examw.collector.model.SubClassInfo;
@@ -26,7 +28,7 @@ public class GradeEntityServiceImpl extends
 	private static Logger logger = Logger.getLogger(GradeEntityServiceImpl.class);
 	private IGradeEntityDao gradeEntityDao;
 	private ISubClassDao subClassDao;
-	
+	private ISubjectEntityDao subjectEntityDao;
 	/**
 	 * 设置 班级数据接口
 	 * 
@@ -36,7 +38,15 @@ public class GradeEntityServiceImpl extends
 	public void setGradeEntityDao(IGradeEntityDao gradeEntityDao) {
 		this.gradeEntityDao = gradeEntityDao;
 	}
-	
+	/**
+	 * 设置 科目数据接口
+	 * @param subjectEntityDao
+	 * 
+	 */
+	public void setSubjectEntityDao(ISubjectEntityDao subjectEntityDao) {
+		this.subjectEntityDao = subjectEntityDao;
+	}
+
 	/**
 	 * 设置 环球班级数据接口
 	 * @param subClassDao
@@ -93,6 +103,14 @@ public class GradeEntityServiceImpl extends
 
 	@Override
 	public void delete(String[] ids) {
+		if(ids == null ||ids.length==0) return;
+		for(String id:ids){
+			GradeEntity data = this.gradeEntityDao.load(GradeEntity.class, id);
+			if(data != null){
+				this.gradeEntityDao.delete(data);
+				//TODO 是否连删
+			}
+		}
 	}
 
 	@Override
@@ -120,5 +138,36 @@ public class GradeEntityServiceImpl extends
 			list.add(entity);
 		}
 		return list;
+	}
+	
+	@Override
+	public void update(List<SubClassInfo> subClasses) {
+		if(subClasses == null ||subClasses.size()==0) return;
+		StringBuffer buf = new StringBuffer();
+		for(SubClassInfo info:subClasses){
+			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
+				continue;
+			}
+			if(info.getStatus().equals("被删")){
+				buf.append(info.getCode()).append(",");
+			}
+			this.gradeEntityDao.saveOrUpdate(changeModel(info));
+		}
+		if(buf.length()>0)
+			this.delete(buf.toString().split(","));
+	}
+	private GradeEntity changeModel(SubClassInfo info){
+		if(info == null) return null;
+		GradeEntity data = new GradeEntity();
+		BeanUtils.copyProperties(info, data);
+		data.setId(info.getCode());
+		if(StringUtils.isEmpty(info.getSubjectId())){
+			return null;
+		}else{
+			SubjectEntity subject = this.subjectEntityDao.load(SubjectEntity.class,info.getSubjectId());
+			if(subject==null) return null;
+			data.setSubjectEntity(subject);
+		}
+		return data;
 	}
 }

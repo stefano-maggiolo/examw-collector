@@ -1,6 +1,8 @@
 package com.examw.collector.test;
 
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -9,12 +11,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
 
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.service.IDataServer;
+import com.examw.collector.service.IRemoteDataProxy;
+import com.examw.utils.XmlUtil;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -27,6 +34,8 @@ import com.thoughtworks.xstream.XStream;
 public class RemoteLessonTest {
 	@Resource
 	private IDataServer dataServer;
+	@Resource 
+	private IRemoteDataProxy remoteDataProxy;
 	/**
 	 * 加载课程数据。
 	 * @throws IOException 
@@ -40,7 +49,7 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	@Test
+	//@Test
 	public void loadClasses(){
 		List<SubClass>  list = this.dataServer.loadClasses("1905", null);
 		for(SubClass s:list){
@@ -63,5 +72,13 @@ public class RemoteLessonTest {
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
+	}
+	@Test
+	public void loadTest() throws Exception{
+		String xml = this.remoteDataProxy.loadTeacher("435");
+		Document document = XmlUtil.loadDocument(xml);
+		Element root = document.getDocumentElement();
+		NodeList list = null;
+		System.out.println(xml);
 	}
 }

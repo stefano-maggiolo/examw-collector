@@ -8,7 +8,7 @@ import java.util.Set;
  * @author yangyong.
  * @since 2014-06-28.
  */
-public class Pack implements Serializable {
+public class Pack extends BaseDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name;
 	private String classCodes;
@@ -159,5 +159,74 @@ public class Pack implements Serializable {
 	public void setSubClasses(Set<SubClass> subClasses) {
 		this.subClasses = subClasses;
 	}
-	
+	/* 
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((catalog == null) ? 0 : catalog.hashCode());
+		result = prime * result
+				+ ((classCodes == null) ? 0 : classCodes.hashCode());
+		result = prime * result + ((code == null) ? 0 : code.hashCode());
+		result = prime * result
+				+ ((discount == null) ? 0 : discount.hashCode());
+		result = prime * result + (isShow ? 1231 : 1237);
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((source == null) ? 0 : source.hashCode());
+		result = prime * result + ((subject == null) ? 0 : subject.hashCode());
+		return result;
+	}
+	/* 
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Pack other = (Pack) obj;
+		if (catalog == null) {
+			if (other.catalog != null)
+				return false;
+		} else if (!catalog.getCode().equals(other.catalog.getCode()))
+			return false;
+		if (classCodes == null) {
+			if (other.classCodes != null)
+				return false;
+		} else if (!classCodes.equals(other.classCodes))
+			return false;
+		if (code == null) {
+			if (other.code != null)
+				return false;
+		} else if (!code.equals(other.code))
+			return false;
+		if (discount == null) {
+			if (other.discount != null)
+				return false;
+		} else if (!discount.equals(other.discount))
+			return false;
+		if (isShow != other.isShow)
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (source == null) {
+			if (other.source != null)
+				return false;
+		} else if (!source.equals(other.source))
+			return false;
+		if (subject == null) {
+			if (other.subject != null)
+				return false;
+		} else if (!subject.getCode().equals(other.subject.getCode()))
+			return false;
+		return true;
+	}
 }

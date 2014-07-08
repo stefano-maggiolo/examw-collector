@@ -26,4 +26,10 @@ public interface IPackDao extends IBaseDao<Pack>{
 	 * 数据总数。
 	 */
 	Long total(PackInfo info);
+	/**
+	 * 根据已存在的ID查找被删除的班级
+	 * @param existIds
+	 * @return
+	 */
+	List<Pack> findDeletePacks(String existIds,PackInfo info);
 }

@@ -74,4 +74,10 @@ public class SubjectDaoImpl extends	BaseDaoImpl<Subject> implements ISubjectDao{
 		}
 		return hql;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Subject> findDeleteSubjects(String existIds) {
+		String hql = "from Subject s where s.code not in ("+existIds+")";
+		return this.getCurrentSession().createQuery(hql).list();
+	}
 }

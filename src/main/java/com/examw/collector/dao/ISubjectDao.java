@@ -26,4 +26,10 @@ public interface ISubjectDao extends IBaseDao<Subject>{
 	 * 数据总数。
 	 */
 	Long total(SubjectInfo info);
+	/**
+	 * 根据已存在的ID查找被删除的科目
+	 * @param existIds
+	 * @return
+	 */
+	List<Subject> findDeleteSubjects(String existIds);
 }

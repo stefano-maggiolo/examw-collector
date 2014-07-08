@@ -23,6 +23,7 @@ import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
+import com.examw.collector.domain.Teacher;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IRemoteDataProxy;
 import com.examw.utils.XmlUtil;
@@ -746,5 +747,19 @@ public class DataServerImpl implements IDataServer {
 		if (type == null)
 			type = 3;
 		return this.remoteDataProxy.loadVideo(videoId, type, userName);
+	}
+	
+	@Override
+	public Teacher loadTeacher(String id) {
+		if(StringUtils.isEmpty(id)) return null;
+		try
+		{
+			String html = this.remoteDataProxy.loadTeacher(id);
+			logger.info(html);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

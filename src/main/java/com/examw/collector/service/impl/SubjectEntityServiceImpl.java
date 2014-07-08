@@ -94,6 +94,14 @@ public class SubjectEntityServiceImpl extends BaseDataServiceImpl<SubjectEntity,
 
 	@Override
 	public void delete(String[] ids) {
+		if(ids == null ||ids.length==0) return;
+		for(String id:ids){
+			SubjectEntity data = this.subjectEntityDao.load(SubjectEntity.class, id);
+			if(data != null){
+				this.subjectEntityDao.delete(data);
+				//TODO 是否连删
+			}
+		}
 	}
 	
 	@Override
@@ -128,9 +136,18 @@ public class SubjectEntityServiceImpl extends BaseDataServiceImpl<SubjectEntity,
 	@Override
 	public void update(List<SubjectInfo> subjects) {
 		if(subjects == null ||subjects.size()==0) return;
+		StringBuffer buf = new StringBuffer();
 		for(SubjectInfo info:subjects){
+			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
+				continue;
+			}
+			if(info.getStatus().equals("被删")){
+				buf.append(info.getCode()).append(",");
+			}
 			this.subjectEntityDao.saveOrUpdate(changeModel(info));
 		}
+		if(buf.length()>0)
+			this.delete(buf.toString().split(","));
 	}
 	private SubjectEntity changeModel(SubjectInfo info){
 		if(info == null) return null;

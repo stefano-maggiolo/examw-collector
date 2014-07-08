@@ -1,6 +1,9 @@
 package com.examw.collector.service;
 
+import java.util.List;
+
 import com.examw.collector.model.PackInfo;
+import com.examw.model.DataGrid;
 
 /**
  * 
@@ -13,4 +16,14 @@ public interface IPackService extends IBaseDataService<PackInfo>{
 	 * @param info
 	 */
 	void init(PackInfo info);
+	/**
+	 * 获取新增或更新的集合
+	 * @return
+	 */
+	DataGrid<PackInfo> dataGridUpdate(PackInfo info);
+	/**
+	 * 更新集合
+	 * @param info
+	 */
+	void update(List<PackInfo> packs);
 }

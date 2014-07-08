@@ -62,4 +62,12 @@ public class PackDaoImpl extends BaseDaoImpl<Pack> implements IPackDao{
 		}
 		return hql;
 	}
+	
+	@Override
+	public List<Pack> findDeletePacks(String existIds,PackInfo info) {
+		String hql = "from Pack p where p.code not in ("+ existIds+")";
+		Map<String, Object> parameters = new HashMap<>();
+		hql = this.addWhere(info, hql, parameters);
+		return this.find(hql, parameters, null,null);
+	}
 }

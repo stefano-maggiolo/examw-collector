@@ -1,5 +1,7 @@
 package com.examw.collector.service;
 
+import java.util.List;
+
 import com.examw.collector.model.PackInfo;
 
 /**
@@ -13,4 +15,9 @@ public interface IPackageEntityService extends IBaseDataService<PackInfo>{
 	 * @param info
 	 */
 	void init(PackInfo info);
+	/**
+	 * 更新集合
+	 * @param info
+	 */
+	void update(List<PackInfo> packs);
 }

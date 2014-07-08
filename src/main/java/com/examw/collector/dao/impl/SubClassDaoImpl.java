@@ -69,4 +69,12 @@ public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassD
 		}
 		return hql;
 	}
+	
+	@Override
+	public List<SubClass> findDeleteSubClasss(String existIds,SubClassInfo info) {
+		String hql = "from SubClass sc where sc.code not in ("+existIds+")";
+		Map<String, Object> parameters = new HashMap<>();
+		hql = this.addWhere(info, hql, parameters);
+		return this.find(hql, parameters, null, null);
+	}
 }

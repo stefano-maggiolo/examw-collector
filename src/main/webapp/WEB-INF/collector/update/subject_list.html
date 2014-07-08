@@ -1,5 +1,7 @@
-<#--科目设置列表--> <#include "ftl/comm.ftl"/> <#assign
-module="update_subject"/> <#assign dg="${module}_list_dg"/>
+<#--科目设置列表--> 
+<#include "ftl/comm.ftl"/> 
+<#assign module="update_subject"/> 
+<#assign dg="${module}_list_dg"/>
 <script type="text/javascript">
 <!--
 	$(function() {
@@ -68,6 +70,7 @@ module="update_subject"/> <#assign dg="${module}_list_dg"/>
 								var rows = dg1.datagrid("getChecked");
 								if(!rows ||rows.length == 0){
 									$.messager.alert("提示","请选择要更新的数据");
+									return;
 								}
 								$.ajax({
 									url:"<@s.url '/admin/update/subject/update'/>",
@@ -101,13 +104,6 @@ module="update_subject"/> <#assign dg="${module}_list_dg"/>
 				if(data.status == "旧的"){
 					dg1.datagrid("uncheckRow",index);	//取消选择
 				}
-			},
-			onCheckAll:function(rows){
-				$.each(rows,function(i){
-					if(rows[i].status == "旧的"){
-						dg1.datagrid("uncheckRow",dg1.datagrid("getRowIndex",rows[i]));
-					}
-				});
 			}
 		});
 		//dg

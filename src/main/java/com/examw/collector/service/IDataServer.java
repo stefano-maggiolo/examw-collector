@@ -6,6 +6,7 @@ import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
+import com.examw.collector.domain.Teacher;
 
 /**
  * 数据服务接口。
@@ -141,4 +142,6 @@ public interface IDataServer {
 	 * Error6 - 课程未授权.
 	 */
 	String loadVideo(String userName,Integer type,String videoId) throws Exception;
+	
+	Teacher loadTeacher(String id);
 }

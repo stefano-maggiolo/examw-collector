@@ -99,6 +99,14 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	}
 	@Override
 	public void delete(String[] ids) {
+		if(ids == null ||ids.length==0) return;
+		for(String id:ids){
+			SubClass data = this.subClassDao.load(SubClass.class, id);
+			if(data != null){
+				this.subClassDao.delete(data);
+				//TODO 是否连删
+			}
+		}
 	}
 	
 	@Override
@@ -139,7 +147,9 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	private List<SubClass> findChangedSubClass(SubClassInfo info){
 		List<SubClass> data = this.dataServer.loadClasses(info.getCatalogId(), info.getSubjectId());
 		List<SubClass> add = new ArrayList<SubClass>();
+		StringBuffer existIds = new StringBuffer();
 		for(SubClass s:data){
+			if(!StringUtils.isEmpty(s.getCode())) existIds.append(s.getCode()).append(",");
 			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
@@ -153,17 +163,35 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 				add.add(local_s);
 			}
 		}
+		if(existIds.length()>0)
+		{
+			existIds.append("0");
+			List<SubClass> deleteList = this.subClassDao.findDeleteSubClasss(existIds.toString(),info);
+			if(deleteList!=null && deleteList.size()>0)
+			{
+				for(SubClass s:deleteList){
+					s.setStatus("被删");
+				}
+				add.addAll(deleteList);
+			}
+		}
 		return add;
 	}
 	@Override
 	public void update(List<SubClassInfo> subClasses) {
 		if(subClasses == null ||subClasses.size()==0) return;
+		StringBuffer buf = new StringBuffer();
 		for(SubClassInfo info:subClasses){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
 			}
+			if(info.getStatus().equals("被删")){
+				buf.append(info.getCode()).append(",");
+			}
 			this.subClassDao.saveOrUpdate(changeModel(info));
 		}
+		if(buf.length()>0)
+			this.delete(buf.toString().split(","));
 	}
 	private SubClass changeModel(SubClassInfo info){
 		if(info == null) return null;
@@ -175,6 +203,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 			Subject subject = this.subjectDao.load(Subject.class, info.getSubjectId());
 			if(subject==null) return null;
 			data.setSubject(subject);
+			data.setCatalog(subject.getCatalog());
 		}
 		return data;
 	}

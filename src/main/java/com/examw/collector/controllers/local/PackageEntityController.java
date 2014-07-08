@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.examw.collector.model.PackInfo;
-import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IPackageEntityService;
 import com.examw.model.DataGrid;
 import com.examw.model.Json;

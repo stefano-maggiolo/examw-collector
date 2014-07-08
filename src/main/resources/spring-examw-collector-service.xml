@@ -26,6 +26,8 @@
 		<property name="lessonUrl" value="${REMOTE_LESSON_URL}" />
 		<!-- 用户操作URL -->
 		<property name="userUrl" value="${REMOTE_USER_URL}" />
+		<!-- 老师页面采集地址 -->
+		<property name="teacherUrl" value = "${REMOTE_TEACHER_URL}" />
 	</bean>
 	<!-- 数据服务 -->
 	<bean id="dataServer" class="com.examw.collector.service.impl.DataServerImpl">
@@ -64,6 +66,7 @@
 	<bean id="packService" class="com.examw.collector.service.impl.PackServiceImpl">
 	    <property name="subClassDao" ref="subClassDao"/>
 	    <property name="packDao" ref="packDao"/>
+	    <property name="catalogDao" ref="catalogDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	</bean>
 	
@@ -80,6 +83,7 @@
 	<bean id="gradeEntityService" class="com.examw.collector.service.impl.GradeEntityServiceImpl">
 	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
 	    <property name="subClassDao" ref="subClassDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
 	    <!-- <property name="dataServer" ref="dataServer"/> -->
 	</bean>
 	<!-- 课节服务 -->
@@ -88,9 +92,10 @@
 	    <!-- <property name="dataServer" ref="dataServer"/> -->
 	    <property name="relateDao" ref="relateDao"/>
 	</bean>
-	<!-- 广告服务 -->
+	<!-- 套餐服务 -->
 	<bean id="packageEntityService" class="com.examw.collector.service.impl.PackageEntityServiceImpl">
 	    <property name="packageEntityDao" ref="packageEntityDao"/>
+	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	    <property name="packDao" ref="packDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	</bean>

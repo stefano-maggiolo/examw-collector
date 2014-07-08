@@ -13,49 +13,50 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.examw.collector.model.SubClassInfo;
-import com.examw.collector.service.IGradeEntityService;
-import com.examw.collector.service.ISubClassService;
+import com.examw.collector.controllers.edu24.CatalogController;
+import com.examw.collector.model.PackInfo;
+import com.examw.collector.service.IPackService;
+import com.examw.collector.service.IPackageEntityService;
 import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
  * 
  * @author fengwei.
- * @since 2014年7月7日 下午4:43:11.
+ * @since 2014年7月8日 上午11:43:46.
  */
 @Controller
-@RequestMapping("/admin/update/grade")
-public class GradeUpdateController {
-	private static Logger logger  = Logger.getLogger(GradeUpdateController.class);
+@RequestMapping("/admin/update/pack")
+public class PackageUpdateController {
+	private static Logger logger  = Logger.getLogger(CatalogController.class);
 	@Resource
-	private IGradeEntityService gradeEntityService;
+	private IPackageEntityService packageEntityService;
 	@Resource
-	private ISubClassService subClassService;
+	private IPackService packService;
 	
 	@RequestMapping(value={"","/list"}, method = RequestMethod.GET)
 	public String list(Model model){
-		return "update/grade_list";
+		return "update/pack_list";
 	}
 	@RequestMapping(value="/datagrid", method = RequestMethod.POST)
 	@ResponseBody
-	public DataGrid<SubClassInfo> datagrid(String action,SubClassInfo info){
+	public DataGrid<PackInfo> datagrid(String action,PackInfo info){
 		if(action == null || !action.equals("1"))
 		{
-			DataGrid<SubClassInfo> data = new DataGrid<SubClassInfo>();
-			data.setRows(new ArrayList<SubClassInfo>());
+			DataGrid<PackInfo> data = new DataGrid<PackInfo>();
+			data.setRows(new ArrayList<PackInfo>());
 			return data;
 		}
-		return this.subClassService.dataGridUpdate(info);
+		return this.packService.dataGridUpdate(info);
 	}
 	
 	@RequestMapping(value="/update", method = RequestMethod.POST)
 	@ResponseBody
-	public Json update(@RequestBody List<SubClassInfo> subClasses){
+	public Json update(@RequestBody List<PackInfo> packs){
 		Json result = new Json();
 		try {
-			this.subClassService.update(subClasses);
-			//this.gradeEntityService.update(subClasses);
+			this.packService.update(packs);
+			this.packageEntityService.update(packs);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);

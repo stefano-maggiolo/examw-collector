@@ -87,4 +87,10 @@ public interface IRemoteDataProxy {
 	 * @return
 	 */
 	String loadVideo(String videoId, Integer videoType,String userName) throws IOException;
+	/**
+	 * 获取老师页面
+	 * @param id 老师的ID
+	 * @return
+	 */
+	String loadTeacher(String id) throws IOException;
 }

@@ -21,6 +21,7 @@ import com.examw.utils.StringUtil;
 public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	private static Logger logger = Logger.getLogger(RemoteDataProxyImpl.class);
 	private String lessonUrl,userUrl,sid,key;
+	private String teacherUrl;
 	/**
 	 * 设置服务器URL。
 	 * @param url
@@ -50,6 +51,15 @@ public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	 */
 	public void setKey(String key) {
 		this.key = key;
+	}
+	
+	/**
+	 * 设置 老师页面地址
+	 * @param teacherUrl
+	 * 
+	 */
+	public void setTeacherUrl(String teacherUrl) {
+		this.teacherUrl = teacherUrl;
 	}
 	/*
 	 * 加载课程数据。
@@ -177,5 +187,11 @@ public class RemoteDataProxyImpl implements IRemoteDataProxy {
 	 */
 	private String builderTime(Date time){
 		return new SimpleDateFormat("YYYYMMddHHmmss").format(time);
+	}
+	
+	@Override
+	public String loadTeacher(String id) throws IOException {
+		String url = String.format(this.teacherUrl, id);
+		return com.examw.utils.HttpUtil.sendRequest(url, "GET", null,"GBK");
 	}
 }

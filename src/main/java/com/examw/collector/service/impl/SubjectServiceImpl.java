@@ -83,6 +83,14 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 
 	@Override
 	public void delete(String[] ids) {
+		if(ids == null ||ids.length==0) return;
+		for(String id:ids){
+			Subject data = this.subjectDao.load(Subject.class, id);
+			if(data != null){
+				this.subjectDao.delete(data);
+				//TODO 是否连删
+			}
+		}
 	}
 	
 	@Override
@@ -124,7 +132,10 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 		List<Catalog> data = this.dataServer.loadCatalogs();
 		List<Subject> subjects = getSubjects(data);
 		List<Subject> add = new ArrayList<Subject>();
+		StringBuffer existIds = new StringBuffer();
+		System.out.println(subjects.size());
 		for(Subject s:subjects){
+			if(!StringUtils.isEmpty(s.getCode())) existIds.append(s.getCode()).append(",");
 			Subject local_s = this.subjectDao.load(Subject.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
@@ -136,6 +147,19 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 				local_s.setStatus("旧的");
 				add.add(s);
 				add.add(local_s);
+			}
+		}
+		if(existIds.length()>0)
+		{
+			existIds.append("0");
+			System.out.println(existIds);
+			List<Subject> deleteList = this.subjectDao.findDeleteSubjects(existIds.toString());
+			if(deleteList!=null && deleteList.size()>0)
+			{
+				for(Subject s:deleteList){
+					s.setStatus("被删");
+				}
+				add.addAll(deleteList);
 			}
 		}
 		return add;
@@ -152,12 +176,18 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 	@Override
 	public void update(List<SubjectInfo> subjects) {
 		if(subjects == null ||subjects.size()==0) return;
+		StringBuffer buf = new StringBuffer();
 		for(SubjectInfo info:subjects){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
 			}
+			if(info.getStatus().equals("被删")){
+				buf.append(info.getCode()).append(",");
+			}
 			this.subjectDao.saveOrUpdate(changeModel(info));
 		}
+		if(buf.length()>0)
+			this.delete(buf.toString().split(","));
 	}
 	private Subject changeModel(SubjectInfo info){
 		if(info == null) return null;

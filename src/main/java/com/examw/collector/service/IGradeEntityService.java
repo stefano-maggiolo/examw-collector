@@ -1,5 +1,7 @@
 package com.examw.collector.service;
 
+import java.util.List;
+
 import com.examw.collector.model.SubClassInfo;
 
 /**
@@ -13,4 +15,9 @@ public interface IGradeEntityService  extends IBaseDataService<SubClassInfo>{
 	 * @param info
 	 */
 	void init(SubClassInfo info);
+	/**
+	 * 更新数据集合
+	 * @param subClasses
+	 */
+	void update(List<SubClassInfo> subClasses);
 }

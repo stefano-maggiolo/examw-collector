@@ -26,5 +26,10 @@ public interface ISubClassDao  extends IBaseDao<SubClass>{
 	 * 数据总数。
 	 */
 	Long total(SubClassInfo info);
-
+	/**
+	 * 根据已存在的ID查找被删除的班级
+	 * @param existIds
+	 * @return
+	 */
+	List<SubClass> findDeleteSubClasss(String existIds,SubClassInfo info);
 }

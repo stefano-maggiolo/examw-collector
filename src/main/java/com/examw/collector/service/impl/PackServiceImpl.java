@@ -1,5 +1,6 @@
 package com.examw.collector.service.impl;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,13 +9,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 
+import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.IPackDao;
 import com.examw.collector.dao.ISubClassDao;
+import com.examw.collector.dao.ISubjectDao;
+import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.SubClass;
+import com.examw.collector.domain.Subject;
 import com.examw.collector.model.PackInfo;
+import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IPackService;
+import com.examw.model.DataGrid;
 
 /**
  * 
@@ -28,7 +35,8 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	private IDataServer dataServer;
 
 	private ISubClassDao subClassDao;
-
+	private ISubjectDao subjectDao;
+	private ICatalogDao catalogDao;
 	/**
 	 * 设置 班级数据接口
 	 * 
@@ -47,6 +55,24 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	 */
 	public void setPackDao(IPackDao packDao) {
 		this.packDao = packDao;
+	}
+	
+	/**
+	 * 设置 科目数据接口
+	 * @param subjectDao
+	 * 
+	 */
+	public void setSubjectDao(ISubjectDao subjectDao) {
+		this.subjectDao = subjectDao;
+	}
+
+	/**
+	 * 设置 课程分类数据接口
+	 * @param catalogDao
+	 * 
+	 */
+	public void setCatalogDao(ICatalogDao catalogDao) {
+		this.catalogDao = catalogDao;
 	}
 
 	/**
@@ -130,6 +156,103 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 
 	@Override
 	public void delete(String[] ids) {
+		if(ids == null ||ids.length==0) return;
+		for(String id:ids){
+			Pack data = this.packDao.load(Pack.class, id);
+			if(data != null){
+				this.packDao.delete(data);
+			}
+		}
 	}
-
+	@Override
+	public DataGrid<PackInfo> dataGridUpdate(PackInfo info) {
+		if(StringUtils.isEmpty(info.getCatalogId()))
+			return null;
+		List<Pack> list = this.findChangedPack(info);
+		DataGrid<PackInfo> grid = new DataGrid<PackInfo>();
+		grid.setRows(this.changeModel(list));
+		grid.setTotal((long) list.size());
+		return grid;
+	}
+	/**
+	 * 找出有变化的套餐
+	 * @param info
+	 * @return
+	 */
+	private List<Pack> findChangedPack(PackInfo info){
+		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(), info.getSubjectId());
+		List<Pack> add = new ArrayList<Pack>();
+		StringBuffer existIds = new StringBuffer();
+		for(Pack p:data){
+			if(!StringUtils.isEmpty(p.getCode())) existIds.append(p.getCode()).append(",");
+			Pack local_p = this.packDao.load(Pack.class, p.getCode());
+			if(local_p == null){
+				p.setStatus("新增");
+				add.add(p);
+			}else if(local_p.equals(p)){
+				continue;
+			}else{
+				p.setStatus("新的");
+				local_p.setStatus("旧的");
+				add.add(p);
+				add.add(local_p);
+			}
+		}
+		if(existIds.length()>0)
+		{
+			existIds.append("0");
+			System.out.println(existIds);
+			List<Pack> deleteList = this.packDao.findDeletePacks(existIds.toString(),info);
+			if(deleteList!=null && deleteList.size()>0)
+			{
+				for(Pack s:deleteList){
+					s.setStatus("被删");
+				}
+				add.addAll(deleteList);
+			}
+		}
+		return add;
+	}
+	
+	@Override
+	public void update(List<PackInfo> packs) {
+		if(packs == null ||packs.size()==0) return;
+		StringBuffer buf = new StringBuffer();
+		for(PackInfo info:packs){
+			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
+				continue;
+			}
+			if(info.getStatus().equals("被删")){
+				buf.append(info.getCode()).append(",");
+			}
+			this.packDao.saveOrUpdate(changeModel(info));
+		}
+		if(buf.length()>0)
+			this.delete(buf.toString().split(","));
+	}
+	/**
+	 * 数据转换
+	 * @param info
+	 * @return
+	 */
+	private Pack changeModel(PackInfo info){
+		if(info == null) return null;
+		Pack data = new Pack();
+		BeanUtils.copyProperties(info, data);
+		if(StringUtils.isEmpty(info.getCatalogId())){
+			return null;
+		}else{
+			if(StringUtils.isEmpty(info.getSubjectId())){
+				Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
+				if(catalog == null) return null;
+				data.setCatalog(catalog);
+			}else{
+				Subject subject = this.subjectDao.load(Subject.class, info.getSubjectId());
+				if(subject==null) return null;
+				data.setSubject(subject);
+				data.setCatalog(subject.getCatalog());
+			}
+		}
+		return data;
+	}
 }
