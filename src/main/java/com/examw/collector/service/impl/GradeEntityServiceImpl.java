@@ -11,7 +11,6 @@ import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectEntityDao;
 import com.examw.collector.domain.SubClass;
-import com.examw.collector.domain.Subject;
 import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.SubjectEntity;
 import com.examw.collector.model.SubClassInfo;

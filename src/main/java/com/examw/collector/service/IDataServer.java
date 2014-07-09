@@ -6,7 +6,7 @@ import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
-import com.examw.collector.domain.Teacher;
+import com.examw.collector.domain.local.TeacherEntity;
 
 /**
  * 数据服务接口。
@@ -143,5 +143,5 @@ public interface IDataServer {
 	 */
 	String loadVideo(String userName,Integer type,String videoId) throws Exception;
 	
-	Teacher loadTeacher(String id);
+	TeacherEntity loadTeacher(String id);
 }

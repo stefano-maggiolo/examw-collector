@@ -62,6 +62,8 @@
 		<property name="salePrice"  type="integer" column="GoodPrice" />
 		<!-- 总讲数 -->
 		<property name="total" column="CourseNum"  type="integer" />
+		<!-- 老师ID -->
+		<property name="teacherId" column="TeacherID" type="string" length="32"/>
 		<!-- 是否显示 -->
 		<!-- <property name="isShow" type="true_false" column="is_show"/> -->
 		<!-- 是否直播 -->
@@ -114,5 +116,18 @@
 		<property name="orderNum" column="OrderNum" type="integer" />
 		<!-- 所属科目 -->
 		<many-to-one name="grade"  column="NClassID"  class="GradeEntity" />
+	</class>
+	<class name="TeacherEntity"  table="NS_Teacher">
+		<!-- ID -->
+		<id name="id" column="TID" type="string"  length="64" />
+		<property name="name" column="TName" type="string"  length="64" />
+		<property name="imgurl" column="TPicPath" type="string"  length="100" />
+		<property name="description" column="TJianJie" type="text" />
+		<property name="info" column="TInfo" type="text" />
+		<property name="schoolName" column="SchoolName" type="string" length="50" />
+		<property name="lessons" column="lessons" type="string" length="512"/>
+		<!-- 时间 -->
+		<property name="addDate" column="AddDate" type="timestamp" />
+		<property name="catalogId" column="ZhuJiang" type="string" length="256" />
 	</class>
 </hibernate-mapping>

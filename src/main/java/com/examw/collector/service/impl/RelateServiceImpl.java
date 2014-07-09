@@ -83,4 +83,14 @@ public class RelateServiceImpl extends BaseDataServiceImpl<Relate, RelateInfo> i
 		}
 		logger.info("初始化完成！");
 	}
+	
+	@Override
+	public void delete(RelateInfo info) {
+		List<Relate> list = this.find(info);
+		if(list==null || list.size()==0) return;
+		for(Relate data:list){
+			if(data==null) continue;
+			this.relateDao.delete(data);
+		}
+	}
 }

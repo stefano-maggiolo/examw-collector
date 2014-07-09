@@ -1,4 +1,4 @@
-package com.examw.collector.domain;
+package com.examw.collector.domain.local;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -8,9 +8,9 @@ import java.util.Date;
  * @author fengwei.
  * @since 2014年7月8日 下午5:34:00.
  */
-public class Teacher implements Serializable {
+public class TeacherEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,name,description,lessons,info,imgurl,education,schoolName;
+	private String id,name,description,lessons,info,imgurl,education,schoolName,catalogId;
 	private Date addDate;
 	/**
 	 * 获取 ID
@@ -57,8 +57,8 @@ public class Teacher implements Serializable {
 	 * @param discription
 	 * 
 	 */
-	public void setDescription(String discription) {
-		this.description = discription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	/**
 	 * 获取 所授课程
@@ -156,4 +156,21 @@ public class Teacher implements Serializable {
 	public void setAddDate(Date addDate) {
 		this.addDate = addDate;
 	}
+	/**
+	 * 获取 所受课程分类ID(小类)
+	 * @return catalogId
+	 * 
+	 */
+	public String getCatalogId() {
+		return catalogId;
+	}
+	/**
+	 * 设置 所受课程分类ID
+	 * @param catalogId
+	 * 
+	 */
+	public void setCatalogId(String catalogId) {
+		this.catalogId = catalogId;
+	}
+	
 }

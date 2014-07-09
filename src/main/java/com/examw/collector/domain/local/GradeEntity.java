@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class GradeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id,name,teacherName,start,end;
+	private String id,name,teacherName,start,end,teacherId;
 	private Integer longDay,sourcePrice,salePrice,total;
 	private SubjectEntity subjectEntity;
 	/**
@@ -71,6 +71,22 @@ public class GradeEntity implements Serializable {
 	 */
 	public void setTeacherName(String teacherName) {
 		this.teacherName = teacherName;
+	}
+	/**
+	 * 获取 老师ID
+	 * @return teacherId
+	 * 
+	 */
+	public String getTeacherId() {
+		return teacherId;
+	}
+	/**
+	 * 设置  老师ID
+	 * @param teacherId
+	 * 
+	 */
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
 	}
 	/**
 	 * 获取班级的原售价。

@@ -1,0 +1,150 @@
+<#--考试类别列表-->
+<#include "ftl/comm.ftl"/>
+<#assign module="local_pack"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	var current_catalog_id = "",current_subject_id="";
+	//catalog-exam-tree
+	var t = $("#${module}_list_catalog_exam_tree").tree({
+		url:"<@s.url '/admin/local/catalog/tree'/>",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+		onBeforeLoad:function(){
+			current_catalog_id = "";
+		},
+		onClick:function(node){
+			if(t.tree("isLeaf",node.target))
+			{
+				if(node.attributes && node.attributes.code)
+					current_catalog_id = node.attributes.code;
+				//search;
+				${dg}_search();
+			}
+		}
+	});
+	//dg
+	var dg=$("#${dg}").datagrid({
+		url:"<@s.url '/admin/local/teacher/datagrid'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		pagination:true,
+		pagePosition:"bottom",
+		pageSize:20,
+		pageList:[20,30,40],
+		border:true,
+		striped:true,
+		sortName:"id",
+		idField:"code",
+		columns:[[{
+			field:"check",
+			checkbox:true
+		},{
+			title:"老师代码",
+			field:"id",
+			width:10,
+			align:"left",
+			sortable:true
+		},{
+			title:"名字",
+			field:"name",
+			width:10,
+			align:"left",
+			sortable:true
+		},{
+			title:"添加时间",
+			field:"addDate",
+			width:15,
+			align:"left",
+			sortable:true
+		},{
+			title:"图片地址",
+			field:"imgurl",
+			width:25,
+			align:"left",
+			sortable:true
+		},{
+			title:"简介",
+			field:"description",
+			width:45,
+			align:"left",
+			formatter:function(value,row,index){
+				if(value.length>25){
+					return value.substring(0,26)+"...";
+				}
+				return value;
+			}
+		}]],
+		toolbar:"#${dg}_toobar",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		}
+	});
+	//search
+	${dg}_search = function(){
+		dg.datagrid("load",{
+			  catalogId:current_catalog_id,
+			  name:$("#${dg}_toobar input[name='name']").val()
+		});
+	};
+	//导入老师数据
+	${dg}_add = function(){
+		$.messager.confirm("确认","您是否确认初始化老师数据?",function(r){
+			if(!r)return;
+			$.messager.progress();
+			$.ajax({
+				url:"<@s.url '/admin/local/teacher/init'/>",
+				type:"POST",
+				data:{"catalogId":current_catalog_id},
+				dataType:"json",
+				error:function(e){
+					$.messager.progress("close");
+					<@error_dialog "e"/>
+				},
+				success:function(data,textStatus){
+					$.messager.progress("close");
+					if(data.success){
+						dg.datagrid("load");
+						dg.datagrid("unselectAll");
+						$.messager.show({
+							title:'提示',
+							msg:'老师数据导入成功',
+							showType:'show'
+						});
+					}else{
+						$.messager.show({
+							title:"提示",
+							msg:data.msg
+						});
+					}
+				}
+			});
+		});
+	};
+});
+//-->
+</script>
+<div class="easyui-layout" data-options="fit:true" id="${dg}_layout">
+	 <div data-options="region:'west',title:'所属考试',split:true,tools: [{
+		 	iconCls:'icon-reload',
+		 	handler:function(){
+			 		$('#${module}_list_catalog_exam_tree').tree('reload');
+			 		${dg}_search();
+		 	}
+	 	}]" style="padding:5px;width:190px;">
+	 	<ul id="${module}_list_catalog_exam_tree"></ul>
+	 </div>
+	 <div data-options="region:'center',title:'老师列表'">
+				<table id="${dg}"></table>
+				<div id="${dg}_toobar">
+					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">导入数据</a>
+					<label>老师姓名:</label>
+					<input name="name" type="text" style="width:198px;"/>
+
+					<a href="#" class="easyui-linkbutton" style="margin-left:10px;"  onclick="${dg}_search()" data-options="iconCls:'icon-search',plain:true">查询</a>
+				</div>
+			</div>
+</div>

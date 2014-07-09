@@ -33,6 +33,8 @@
 	<bean id="dataServer" class="com.examw.collector.service.impl.DataServerImpl">
 		<!-- 远程数据代理 -->
 		<property name="remoteDataProxy" ref="remoteDataProxy" />
+		<!-- 图片存储位置 -->
+		<property name="savePath" value="${IMAGE_SAVE_PATH}" />
 	</bean>
 	<!-- 课程分类服务 -->
 	<bean id="catalogService" class="com.examw.collector.service.impl.CatalogServiceImpl">
@@ -62,11 +64,12 @@
 	<bean id="adVideoService" class="com.examw.collector.service.impl.AdVideoServiceImpl">
 	    <property name="adVideoDao" ref="adVideoDao"/>
 	</bean>
-	<!-- 广告服务 -->
+	<!-- 套餐服务 -->
 	<bean id="packService" class="com.examw.collector.service.impl.PackServiceImpl">
-	    <property name="subClassDao" ref="subClassDao"/>
+	    <!-- <property name="subClassDao" ref="subClassDao"/> -->
 	    <property name="packDao" ref="packDao"/>
 	    <property name="catalogDao" ref="catalogDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	</bean>
 	
@@ -97,7 +100,39 @@
 	    <property name="packageEntityDao" ref="packageEntityDao"/>
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	    <property name="packDao" ref="packDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <!-- <property name="dataServer" ref="dataServer"/> -->
+	</bean>
+	<!-- 老师服务 -->
+	<bean id="teacherEntityService" class="com.examw.collector.service.impl.TeacherEntityServiceImpl">
+	    <property name="teacherEntityDao" ref="teacherEntityDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	</bean>
 	<!-- 本地数据服务end -->
+	
+	<!-- 数据更新服务start -->
+	<!-- 科目更新 -->
+	<bean id="subjectUpdateService" class="com.examw.collector.service.impl.SubjectUpdateServiceImpl">
+	    <property name="catalogDao" ref="catalogDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	</bean>
+	<!-- 班级更新 -->
+	<bean id="gradeUpdateService" class="com.examw.collector.service.impl.GradeUpdateServiceImpl">
+	    <property name="subClassDao" ref="subClassDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
+	</bean>
+	<!-- 套餐更新 -->
+	<bean id="packageUpdateService" class="com.examw.collector.service.impl.PackageUpdateServiceImpl">
+	   <property name="catalogDao" ref="catalogDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
+	    <property name="packDao" ref="packDao"/>
+	    <property name="packageEntityDao" ref="packageEntityDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	</bean>
+	<!-- 数据更新服务end -->
 </beans>

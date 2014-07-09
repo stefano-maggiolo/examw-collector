@@ -1,9 +1,7 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
@@ -11,14 +9,11 @@ import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.IPackDao;
-import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Pack;
-import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
 import com.examw.collector.model.PackInfo;
-import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IPackService;
 import com.examw.model.DataGrid;
@@ -34,7 +29,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	private IPackDao packDao;
 	private IDataServer dataServer;
 
-	private ISubClassDao subClassDao;
+//	private ISubClassDao subClassDao;
 	private ISubjectDao subjectDao;
 	private ICatalogDao catalogDao;
 	/**
@@ -43,9 +38,9 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	 * @param subClassDao
 	 * 
 	 */
-	public void setSubClassDao(ISubClassDao subClassDao) {
-		this.subClassDao = subClassDao;
-	}
+//	public void setSubClassDao(ISubClassDao subClassDao) {
+//		this.subClassDao = subClassDao;
+//	}
 
 	/**
 	 * 设置 套餐数据接口
@@ -99,26 +94,26 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 		logger.info("初始化完成！");
 	}
 	// 不这么弄,里面有些的班级没有
-	private void setSubClassRelationShip(List<Pack> data) {
-		Set<SubClass> classes = new HashSet<SubClass>();
-		for (Pack p : data) {
-			if (!StringUtils.isEmpty(p.getClassCodes())) {
-				String[] codes = p.getClassCodes().split(",");
-				if (codes != null && codes.length > 0) {
-					for (String code : codes) {
-						// SubClass subClass =
-						// this.subClassDao.load(SubClass.class, code);
-						// if(subClass!=null){
-						SubClass subClass = new SubClass();
-						subClass.setCode(code);
-						classes.add(subClass);
-						// }
-					}
-					p.setSubClasses(classes);
-				}
-			}
-		}
-	}
+//	private void setSubClassRelationShip(List<Pack> data) {
+//		Set<SubClass> classes = new HashSet<SubClass>();
+//		for (Pack p : data) {
+//			if (!StringUtils.isEmpty(p.getClassCodes())) {
+//				String[] codes = p.getClassCodes().split(",");
+//				if (codes != null && codes.length > 0) {
+//					for (String code : codes) {
+//						// SubClass subClass =
+//						// this.subClassDao.load(SubClass.class, code);
+//						// if(subClass!=null){
+//						SubClass subClass = new SubClass();
+//						subClass.setCode(code);
+//						classes.add(subClass);
+//						// }
+//					}
+//					p.setSubClasses(classes);
+//				}
+//			}
+//		}
+//	}
 
 	@Override
 	protected List<Pack> find(PackInfo info) {

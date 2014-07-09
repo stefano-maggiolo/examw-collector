@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.examw.collector.controllers.edu24.CatalogController;
 import com.examw.collector.model.SubjectInfo;
-import com.examw.collector.service.ISubjectEntityService;
 import com.examw.collector.service.ISubjectService;
+import com.examw.collector.service.ISubjectUpdateService;
 import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
@@ -30,7 +30,7 @@ import com.examw.model.Json;
 public class SubjectUpdateController {
 	private static Logger logger  = Logger.getLogger(CatalogController.class);
 	@Resource
-	private ISubjectEntityService subjectEntityService;
+	private ISubjectUpdateService subjectUpdateService;
 	@Resource
 	private ISubjectService subjectService;
 	
@@ -38,6 +38,7 @@ public class SubjectUpdateController {
 	public String list(Model model){
 		return "update/subject_list";
 	}
+	
 	@RequestMapping(value="/datagrid", method = RequestMethod.POST)
 	@ResponseBody
 	public DataGrid<SubjectInfo> datagrid(String action,SubjectInfo info){
@@ -55,8 +56,7 @@ public class SubjectUpdateController {
 	public Json update(@RequestBody List<SubjectInfo> subjects){
 		Json result = new Json();
 		try {
-			this.subjectService.update(subjects);
-			this.subjectEntityService.update(subjects);
+			this.subjectUpdateService.update(subjects);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);

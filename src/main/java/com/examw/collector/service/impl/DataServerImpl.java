@@ -1,10 +1,17 @@
 package com.examw.collector.service.impl;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
@@ -23,7 +30,7 @@ import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
-import com.examw.collector.domain.Teacher;
+import com.examw.collector.domain.local.TeacherEntity;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IRemoteDataProxy;
 import com.examw.utils.XmlUtil;
@@ -37,6 +44,17 @@ import com.examw.utils.XmlUtil;
 public class DataServerImpl implements IDataServer {
 	private static Logger logger = Logger.getLogger(DataServerImpl.class);
 	private IRemoteDataProxy remoteDataProxy;
+	
+	private String savePath;
+	
+	/**
+	 * 设置 图片文件保存位置
+	 * @param savePath
+	 * 
+	 */
+	public void setSavePath(String savePath) {
+		this.savePath = savePath;
+	}
 
 	/**
 	 * 设置远程数据服务接口。
@@ -204,6 +222,7 @@ public class DataServerImpl implements IDataServer {
 				data.setLongDay(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./long_day")));
 				data.setStart(XmlUtil.getNodeStringValue(list.item(i),"./start_date"));
 				data.setEnd(XmlUtil.getNodeStringValue(list.item(i),"./end_date"));
+				data.setTeacherId(XmlUtil.getNodeStringValue(list.item(i),"./teacher_id"));
 				data.setTeacherName(XmlUtil.getNodeStringValue(list.item(i),"./teacher_name"));
 				data.setSourcePrice(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./source_price")));
 				data.setSalePrice(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./sale_price")));
@@ -272,6 +291,7 @@ public class DataServerImpl implements IDataServer {
 					data.setLongDay(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./long_day")));
 					data.setStart(XmlUtil.getNodeStringValue(list.item(i),"./start_date"));
 					data.setEnd(XmlUtil.getNodeStringValue(list.item(i),"./end_date"));
+					data.setTeacherId(XmlUtil.getNodeStringValue(list.item(i), "./teacher_id"));//teacher_id
 					data.setTeacherName(XmlUtil.getNodeStringValue(list.item(i), "./teacher_name"));
 					data.setSourcePrice(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./source_price")));
 					data.setSalePrice(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./sale_price")));
@@ -367,21 +387,16 @@ public class DataServerImpl implements IDataServer {
 			logger.info("获取单个科目中套餐的信息接口...	lesson_code非必需[修改了下]");
 			if (StringUtils.isEmpty(lesson_type_code))
 				return null;
+			if (StringUtils.isEmpty(lesson_code)) // 取全科套餐
+				return loadPacks(lesson_type_code);
 			String xml = this.remoteDataProxy.loadLesson(4, lesson_type_code,
 					lesson_code, null);
 			if (StringUtils.isEmpty(xml))
 				return null;
 			Document document = XmlUtil.loadDocument(xml);
 			Element root = document.getDocumentElement();
-			NodeList list = null;
-			if (StringUtils.isEmpty(lesson_code)) // 取全科套餐
-			{
-				list = XmlUtil.selectNodes(root, ".//lesson[lesson_code='"
-						+ lesson_type_code + "']//discount");
-			} else {
-				list = XmlUtil.selectNodes(root, ".//lesson[lesson_code='"
+			NodeList list = XmlUtil.selectNodes(root, ".//lesson[lesson_code='"
 						+ lesson_code + "']//discount");
-			}
 			if (list == null || list.getLength() == 0)
 				return null;
 			List<Pack> packs = new ArrayList<>();
@@ -428,7 +443,70 @@ public class DataServerImpl implements IDataServer {
 		}
 		return null;
 	}
-
+	//获取整个类别下套餐的信息接口...
+	public List<Pack> loadPacks(String lesson_type_code){
+		try{
+			logger.info("获取整个类别下套餐的信息接口...");
+			String xml = this.remoteDataProxy.loadLesson(4, lesson_type_code,null, null);
+			if (StringUtils.isEmpty(xml))
+				return null;
+			Document document = XmlUtil.loadDocument(xml);
+			Element root = document.getDocumentElement();
+			//获取整个大类下的所有套餐
+			NodeList lessonList = XmlUtil.selectNodes(root, ".//lesson");
+			if (lessonList == null || lessonList.getLength() == 0)
+				return null;
+			List<Pack> packs = new ArrayList<>();
+			// ==================================================
+			Catalog catalog = new Catalog();
+			catalog.setCode(lesson_type_code);
+			// ==================================================
+			for (int j = 0; j < lessonList.getLength(); j++) {
+				if (lessonList.item(j) == null)
+					continue;
+				Subject subject = new Subject();
+				subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				//如果lesson_code == 子类别的ID表示全科套餐
+				if(lesson_type_code.equals(subject.getCode())){
+					subject = null;
+				}
+				//其下的套餐
+				NodeList list = XmlUtil.selectNodes(lessonList.item(j),".//discount");
+				for (int i = 0; i < list.getLength(); i++) {
+					if (list.item(i) == null)
+						continue;
+					Pack data = new Pack();
+					// ==================================================
+					data.setCatalog(catalog);
+					data.setSubject(subject);
+					// ==================================================
+					data.setCode(XmlUtil.getNodeStringValue(list.item(i),
+							"./discount_code"));
+					data.setName(XmlUtil.getNodeStringValue(list.item(i),
+							"./discount_name"));
+					data.setSource(Integer.parseInt(XmlUtil.getNodeStringValue(
+							list.item(i), "./source_amount")));
+					data.setDiscount(Integer.parseInt(XmlUtil.getNodeStringValue(
+							list.item(i), "./discount_amount")));
+					data.setIsShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(
+							list.item(i), "./is_show")));
+					// data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
+					// "./class_code").split(","));
+					data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
+							"./class_code"));
+					packs.add(data);
+				}
+			}
+			return packs;
+		}catch (IOException | SAXException | ParserConfigurationException
+				| XPathExpressionException e) {
+			logger.error(e);
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
 	/*
 	 * 注册。
 	 * 
@@ -750,16 +828,101 @@ public class DataServerImpl implements IDataServer {
 	}
 	
 	@Override
-	public Teacher loadTeacher(String id) {
-		if(StringUtils.isEmpty(id)) return null;
+	public TeacherEntity loadTeacher(String id) {
+		if(StringUtils.isEmpty(id) ||id.equals("0")) return null;
+		TeacherEntity teacher = null;
 		try
 		{
+			teacher = new TeacherEntity();
+			teacher.setId(id);
 			String html = this.remoteDataProxy.loadTeacher(id);
-			logger.info(html);
+			html = html.replaceAll("\\s", "");
+			Pattern teacherName = Pattern.compile("<h2><dl><dt>(.+)</dt><ddclass=\"ms_itdt_dd1\"(.+)");
+			Pattern teacherLessons = Pattern.compile("<dt><strong>(.+)</strong></dt><ddstyle=(.*)><fonttitle=(.*)>(.*)</font></dd></dl>");//</dt><ddstyle=(.+)<fonttile=(.+)>(.+)</font></dd></dl>");
+			Pattern teacherInfo = Pattern.compile("<ul><li><pclass=\"dd_p_1center\">(.+)</p></li></ul>");
+			Pattern teacherImg = Pattern.compile("<imgsrc=\"([/\\w\\d.]+)\"width=\"479px");
+			Matcher m2 = teacherName.matcher(html);//group(1);
+			while(m2.find()){
+				String s = m2.group(1);
+				if(s!=null){
+					teacher.setName(s.replace("老师", ""));
+					break;
+				}
+			}
+		    m2 = teacherLessons.matcher(html); //group(4);
+		    while(m2.find()){
+				String s = m2.group(4);
+				if(s!=null){
+					teacher.setLessons(s);
+					break;
+				}
+			}
+		    m2 = teacherInfo.matcher(html);	//group(1);
+		    while(m2.find()){
+				String s = m2.group(1);
+				if(s!=null){
+					teacher.setDescription(s);
+					teacher.setInfo(s);
+					break;
+				}
+			}
+		    m2 = teacherImg.matcher(html);	//group(1);
+		    while(m2.find()){
+				String s = m2.group(1);
+				if(s!=null){
+					if(StringUtils.isEmpty(savePath)){
+						teacher.setImgurl("http://www.edu24ol.com"+s);
+					}else{
+						teacher.setImgurl(getImagePath("http://www.edu24ol.com"+s));
+					}
+					break;
+				}
+			}
+		    teacher.setAddDate(new Date());
 		}catch(Exception e)
 		{
 			e.printStackTrace();
 		}
-		return null;
+		return teacher;
+	}
+	private String getImagePath(String url){
+		String path = url;
+		String fileName = url.substring(url.lastIndexOf("/")+1);
+		String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+		String filePath = null;
+		if(!savePath.endsWith("/")){
+			filePath = savePath + File.separator + date;
+		}else{
+			filePath = savePath + date;
+		}
+		if(!new File(filePath).exists()){
+			new File(filePath).mkdirs();
+		}
+		try{  
+			java.net.HttpURLConnection conn =(java.net.HttpURLConnection) new URL(url).openConnection();  
+            if (conn.getResponseCode() == 200) {  
+              
+                java.io.InputStream is = (java.io.InputStream) conn.getInputStream();  
+                try{  
+                    String realPath = filePath+File.separator+fileName;  
+                    FileOutputStream baos = new FileOutputStream(new File(realPath));  
+                    int buffer = 1024;  
+                    byte[] b = new byte[buffer];  
+                    int n = 0;  
+                    while ((n = is.read(b, 0, buffer)) > 0) {  
+                        baos.write(b, 0, n);  
+                    }  
+                    is.close();  
+                    baos.close();  
+                }catch(Exception e){  
+                	e.printStackTrace();
+                }  
+                path = "/"+date+"/"+fileName;
+            }else{  
+            }  
+        }catch(Exception e){  
+                e.printStackTrace();  
+        }  
+		return path;
 	}
 }

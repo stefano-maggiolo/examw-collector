@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.examw.collector.model.SubClassInfo;
-import com.examw.collector.service.IGradeEntityService;
+import com.examw.collector.service.IGradeUpdateService;
 import com.examw.collector.service.ISubClassService;
 import com.examw.model.DataGrid;
 import com.examw.model.Json;
@@ -29,7 +29,7 @@ import com.examw.model.Json;
 public class GradeUpdateController {
 	private static Logger logger  = Logger.getLogger(GradeUpdateController.class);
 	@Resource
-	private IGradeEntityService gradeEntityService;
+	private IGradeUpdateService gradeUpdateService;
 	@Resource
 	private ISubClassService subClassService;
 	
@@ -54,8 +54,7 @@ public class GradeUpdateController {
 	public Json update(@RequestBody List<SubClassInfo> subClasses){
 		Json result = new Json();
 		try {
-			this.subClassService.update(subClasses);
-			//this.gradeEntityService.update(subClasses);
+			this.gradeUpdateService.update(subClasses);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);

@@ -8,7 +8,7 @@ import java.io.Serializable;
  */
 public class SubClass extends BaseDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String code,name,teacherName,demo,start,end;
+	private String code,name,teacherName,demo,start,end,teacherId;
 	private Boolean isLive,isShow;
 	private Integer longDay,sourcePrice,salePrice,total;
 	private AdVideo adVideo;
@@ -256,6 +256,7 @@ public class SubClass extends BaseDomain implements Serializable {
 		result = prime * result + ((isShow == null) ? 0 : isShow.hashCode());
 		result = prime * result + ((longDay == null) ? 0 : longDay.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((teacherId == null) ? 0 : teacherId.hashCode());
 		result = prime * result
 				+ ((salePrice == null) ? 0 : salePrice.hashCode());
 		result = prime * result
@@ -334,6 +335,11 @@ public class SubClass extends BaseDomain implements Serializable {
 				return false;
 		} else if (!subject.getCode().equals(other.subject.getCode()))
 			return false;
+		if (teacherId == null) {
+			if (other.teacherId != null)
+				return false;
+		} else if (!teacherId.equals(other.teacherId))
+			return false;
 		if (teacherName == null) {
 			if (other.teacherName != null)
 				return false;
@@ -345,6 +351,22 @@ public class SubClass extends BaseDomain implements Serializable {
 		} else if (!total.equals(other.total))
 			return false;
 		return true;
+	}
+	/**
+	 * 获取 老师ID
+	 * @return teacherId
+	 * 
+	 */
+	public String getTeacherId() {
+		return teacherId;
+	}
+	/**
+	 * 设置 老师ID
+	 * @param teacherId
+	 * 
+	 */
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
 	}
 	
 }

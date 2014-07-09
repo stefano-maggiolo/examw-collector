@@ -16,7 +16,6 @@ import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.domain.local.PackageEntity;
 import com.examw.collector.domain.local.SubjectEntity;
 import com.examw.collector.model.PackInfo;
-import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IPackageEntityService;
 
 /**
@@ -28,7 +27,7 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 		implements IPackageEntityService {
 	private static Logger logger = Logger.getLogger(PackageEntityServiceImpl.class);
 	private IPackageEntityDao packageEntityDao;
-	private IDataServer dataServer;
+	//private IDataServer dataServer;
 	private IPackDao packDao;
 	private ISubjectEntityDao subjectEntityDao;
 	private ICatalogEntityDao catalogEntityDao;
@@ -66,9 +65,9 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 	 * @param dataServer
 	 * 
 	 */
-	public void setDataServer(IDataServer dataServer) {
-		this.dataServer = dataServer;
-	}
+//	public void setDataServer(IDataServer dataServer) {
+//		this.dataServer = dataServer;
+//	}
 	
 	/**
 	 * 设置 远程套餐数据接口
@@ -216,6 +215,7 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 				SubjectEntity subject = this.subjectEntityDao.load(SubjectEntity.class,info.getSubjectId());
 				if(subject==null) return null;
 				data.setSubjectEntity(subject);
+				data.setCatalogEntity(subject.getCatalogEntity());
 			}
 		}
 		return data;

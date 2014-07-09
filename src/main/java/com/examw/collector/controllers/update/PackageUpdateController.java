@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.examw.collector.controllers.edu24.CatalogController;
 import com.examw.collector.model.PackInfo;
 import com.examw.collector.service.IPackService;
-import com.examw.collector.service.IPackageEntityService;
+import com.examw.collector.service.IPackageUpdateService;
 import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
@@ -30,7 +30,7 @@ import com.examw.model.Json;
 public class PackageUpdateController {
 	private static Logger logger  = Logger.getLogger(CatalogController.class);
 	@Resource
-	private IPackageEntityService packageEntityService;
+	private IPackageUpdateService packageUpdateService;
 	@Resource
 	private IPackService packService;
 	
@@ -55,8 +55,7 @@ public class PackageUpdateController {
 	public Json update(@RequestBody List<PackInfo> packs){
 		Json result = new Json();
 		try {
-			this.packService.update(packs);
-			this.packageEntityService.update(packs);
+			this.packageUpdateService.update(packs);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);

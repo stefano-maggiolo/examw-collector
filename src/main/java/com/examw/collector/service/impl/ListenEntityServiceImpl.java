@@ -114,4 +114,16 @@ public class ListenEntityServiceImpl extends BaseDataServiceImpl<ListenEntity, R
 		}
 		return data;
 	}
+	
+	@Override
+	public void delete(RelateInfo info) {
+		logger.info("开始删除课节...");
+		List<ListenEntity> list = this.listenEntityDao.findRelates(info);
+		if(list==null || list.size()==0) return;
+		for(ListenEntity data:list){
+			if(data==null) continue;
+			this.listenEntityDao.delete(data);
+		}
+		logger.info("删除完成！");
+	}
 }

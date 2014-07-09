@@ -57,6 +57,7 @@
 		<property name="name"  type="string"  length="128"  not-null="true"/>
 		<!-- 老师名字 -->
 		<property name="teacherName" column="teacher_name" type="string" length="255" />
+		<property name="teacherId" column="teacher_id" type="string" length="64" />
 		<!-- 试听讲的集合 -->
 		<property name="demo" type="string" length="255"/>
 		<!-- 开课日期 -->

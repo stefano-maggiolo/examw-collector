@@ -49,5 +49,9 @@
 	<bean id="packageEntityDao" class="com.examw.collector.dao.impl.PackageEntityDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
+	<!-- 老师Dao -->
+	<bean id="teacherEntityDao" class="com.examw.collector.dao.impl.TeacherEntityDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
 	<!-- 本地数据接口end -->
 </beans>

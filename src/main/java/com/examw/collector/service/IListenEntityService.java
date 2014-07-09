@@ -13,4 +13,9 @@ public interface IListenEntityService extends IBaseDataService<RelateInfo>{
 	 * @param info
 	 */
 	void init(RelateInfo info);
+	/**
+	 * 根据班级ID删除课节
+	 * @param subClassId
+	 */
+	void delete(RelateInfo info);
 }

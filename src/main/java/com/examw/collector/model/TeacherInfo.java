@@ -1,21 +1,27 @@
-package com.examw.collector.domain;
+package com.examw.collector.model;
 
 import java.io.Serializable;
 import java.util.Date;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+import com.examw.collector.support.CustomDateSerializer;
+import com.examw.model.Paging;
+
 /**
  * 
  * @author fengwei.
- * @since 2014年7月8日 下午5:34:00.
+ * @since 2014年7月9日 上午10:51:36.
  */
-public class Teacher implements Serializable {
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
+public class TeacherInfo extends Paging implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id,name,description,lessons,info,imgurl,education,schoolName;
 	private Date addDate;
 	/**
 	 * 获取 ID
 	 * @return id
-	 * 
+	 *  
 	 */
 	public String getId() {
 		return id;
@@ -57,8 +63,8 @@ public class Teacher implements Serializable {
 	 * @param discription
 	 * 
 	 */
-	public void setDescription(String discription) {
-		this.description = discription;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 	/**
 	 * 获取 所授课程
@@ -145,6 +151,7 @@ public class Teacher implements Serializable {
 	 * @return addDate
 	 * 
 	 */
+	@JsonSerialize(using=CustomDateSerializer.class)
 	public Date getAddDate() {
 		return addDate;
 	}
@@ -156,4 +163,40 @@ public class Teacher implements Serializable {
 	public void setAddDate(Date addDate) {
 		this.addDate = addDate;
 	}
+	
+	public String subjectId,catalogId;
+	
+	/**
+	 * 获取 科目ID
+	 * @return subjectId
+	 * 
+	 */
+	public String getSubjectId() {
+		return subjectId;
+	}
+	/**
+	 * 设置 科目ID
+	 * @param subjectId
+	 * 
+	 */
+	public void setSubjectId(String subjectId) {
+		this.subjectId = subjectId;
+	}
+	/**
+	 * 获取 科目分类ID
+	 * @return catalogId
+	 * 
+	 */
+	public String getCatalogId() {
+		return catalogId;
+	}
+	/**
+	 * 设置 科目分类ID
+	 * @param catalogId
+	 * 
+	 */
+	public void setCatalogId(String catalogId) {
+		this.catalogId = catalogId;
+	}
+	
 }

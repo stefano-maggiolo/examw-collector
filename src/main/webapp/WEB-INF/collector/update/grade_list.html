@@ -179,8 +179,10 @@ $(function(){
 								var index = dg.datagrid("getRowIndex",rows[i]);
 								dg.datagrid("deleteRow",index+1);
 								dg.datagrid("deleteRow",index);
-							}else
+							}else{
+								var index = dg.datagrid("getRowIndex",rows[i]);
 								dg.datagrid("deleteRow",dg.datagrid("getRowIndex",index));
+							}
 						});
 					}else{
 						$.messager.show({title:"提示",msg:"更新失败",showType:"show"});
