@@ -26,5 +26,9 @@ public interface IRelateDao extends IBaseDao<Relate>{
 	 * 数据总数。
 	 */
 	Long total(RelateInfo info);
-
+	/**
+	 * 根据班级ID删除课节
+	 * @param classId
+	 */
+	void delete(String classId);
 }

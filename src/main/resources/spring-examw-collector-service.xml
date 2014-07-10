@@ -124,6 +124,9 @@
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
 	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
+	    <property name="listenEntityDao" ref="listenEntityDao"/>
+	    <property name="dataServer" ref="dataServer"/>
+	    <property name="relateDao" ref="relateDao"/>
 	</bean>
 	<!-- 套餐更新 -->
 	<bean id="packageUpdateService" class="com.examw.collector.service.impl.PackageUpdateServiceImpl">
@@ -135,4 +138,18 @@
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	</bean>
 	<!-- 数据更新服务end -->
+	
+	<!-- 数据整体导入 -->
+	<bean id="importDataService" class="com.examw.collector.service.impl.ImportDataServiceImpl">
+	    <property name="subClassDao" ref="subClassDao"/>
+	    <property name="subjectDao" ref="subjectDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
+	    <property name="listenEntityDao" ref="listenEntityDao"/>
+	    <property name="packDao" ref="packDao"/>
+	    <property name="packageEntityDao" ref="packageEntityDao"/>
+	    <property name="teacherEntityDao" ref="teacherEntityDao"/>
+	    <property name="adVideoDao" ref="adVideoDao"/>
+	    <property name="dataServer" ref="dataServer"/>
+	</bean>
 </beans>

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
+
 import com.examw.collector.dao.IRelateDao;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.model.RelateInfo;
@@ -58,5 +60,13 @@ public class RelateDaoImpl extends BaseDaoImpl<Relate> implements IRelateDao{
 			parameters.put("classId", info.getClassId());
 		}
 		return hql;
+	}
+	
+	@Override
+	public void delete(String classId) {
+		String hql = "delete from Relate l where l.subclass.id = :classId";
+		Query query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("classId", classId);
+		query.executeUpdate();
 	}
 }

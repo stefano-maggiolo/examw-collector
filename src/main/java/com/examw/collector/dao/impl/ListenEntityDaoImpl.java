@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
+
 import com.examw.collector.dao.IListenEntityDao;
 import com.examw.collector.domain.local.ListenEntity;
 import com.examw.collector.model.RelateInfo;
@@ -19,7 +21,7 @@ public class ListenEntityDaoImpl extends BaseDaoImpl<ListenEntity> implements IL
 	 */
 	@Override
 	public List<ListenEntity> findRelates(RelateInfo info) {
-		String hql = "from Relate r where 1=1 ";
+		String hql = "from ListenEntity r where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		if(info.getSort() != null && !info.getSort().trim().isEmpty()){
@@ -32,7 +34,7 @@ public class ListenEntityDaoImpl extends BaseDaoImpl<ListenEntity> implements IL
 	 */
 	@Override
 	public Long total(RelateInfo info) {
-		String hql = "select count(*) from Relate r where 1=1 ";
+		String hql = "select count(*) from ListenEntity r where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.count(hql, parameters);
@@ -58,5 +60,13 @@ public class ListenEntityDaoImpl extends BaseDaoImpl<ListenEntity> implements IL
 			parameters.put("classId", info.getClassId());
 		}
 		return hql;
+	}
+	
+	@Override
+	public void delete(String gradeId) {
+		String hql = "delete from Listen l where l.grade.id = :gradeId";
+		Query query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("gradeId", gradeId);
+		query.executeUpdate();
 	}
 }

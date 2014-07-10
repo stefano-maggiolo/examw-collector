@@ -131,6 +131,10 @@ $(function(){
 			$.messager.alert("提示","请先选择环球的分类");
 			return;
 		}
+		if(!s || !s.tree("getData")){
+			$.messager.alert("提示","请先导入科目");
+			return;
+		}
 		$.messager.confirm("确认","您是否确认检测套餐数据更新?",function(r){
 			if(!r)return;
 			dg.datagrid("load",{

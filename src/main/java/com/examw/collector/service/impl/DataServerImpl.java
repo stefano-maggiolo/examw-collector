@@ -888,6 +888,11 @@ public class DataServerImpl implements IDataServer {
 	private String getImagePath(String url){
 		String path = url;
 		String fileName = url.substring(url.lastIndexOf("/")+1);
+		//如果使用默认图片,地址有点不同
+		if(fileName.equalsIgnoreCase("tc_w_b.gif"))
+		{
+			path = url = "http://www.edu24ol.com/web_teacher/images2011/tc_w_b.gif";
+		}
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		String filePath = null;
 		if(!savePath.endsWith("/")){

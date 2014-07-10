@@ -103,6 +103,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService{
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.packDao.saveOrUpdate(changeRemoteModel(info));
 		}

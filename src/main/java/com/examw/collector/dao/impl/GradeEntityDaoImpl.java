@@ -62,7 +62,7 @@ public class GradeEntityDaoImpl extends BaseDaoImpl<GradeEntity> implements IGra
 			hql += "  and (sc.subjectEntity.id = :subjectId)";
 			parameters.put("subjectId", info.getSubjectId());
 		}
-		if(StringUtils.isEmpty(info.getCatalogId()))
+		if(!StringUtils.isEmpty(info.getCatalogId()))
 		{
 			hql += "  and (sc.subjectEntity.catalogEntity.code = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());

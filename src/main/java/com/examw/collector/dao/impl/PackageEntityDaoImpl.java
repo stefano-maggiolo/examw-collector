@@ -55,9 +55,9 @@ public class PackageEntityDaoImpl extends BaseDaoImpl<PackageEntity> implements 
 			hql += "  and (p.subjectEntity.id = :subjectId)";
 			parameters.put("subjectId", info.getSubjectId());
 		}
-		if(StringUtils.isEmpty(info.getCatalogId()))
+		if(!StringUtils.isEmpty(info.getCatalogId()))
 		{
-			hql += "  and (p.catalogEntity.id = :catalogId)";
+			hql += "  and (p.catalogEntity.code = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		return hql;

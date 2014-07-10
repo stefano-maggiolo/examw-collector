@@ -53,7 +53,7 @@ $(function(){
 					$.messager.alert("提示","请选择需要更新的数据");
 					return;
 				}
-				$.messager.confirm("确认","您是否确认更新课程类别数据更新?",function(r){
+				$.messager.confirm("确认","您是否确认更新课程类别数据更新?<br/><span style='color:red'>注意:此项更新只更新了副本数据,需要比对右边进行实际更新数据</span>",function(r){
 					if(!r)return;
 					$.ajax({
 						url:"<@s.url '/admin/update/catalog/update'/>",

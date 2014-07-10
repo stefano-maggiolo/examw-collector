@@ -143,6 +143,7 @@ public class SubjectEntityServiceImpl extends BaseDataServiceImpl<SubjectEntity,
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.subjectEntityDao.saveOrUpdate(changeModel(info));
 		}

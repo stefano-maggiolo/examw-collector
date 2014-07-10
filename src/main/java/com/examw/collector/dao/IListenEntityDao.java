@@ -26,5 +26,10 @@ public interface IListenEntityDao extends IBaseDao<ListenEntity>{
 	 * 数据总数。
 	 */
 	Long total(RelateInfo info);
+	/**
+	 * 根据班级ID删除课节
+	 * @param subClassId
+	 */
+	void delete(String	gradeId);
 
 }

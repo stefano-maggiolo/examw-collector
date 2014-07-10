@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -106,9 +105,9 @@ public class RemoteLessonTest {
 	}
 	//@Test
 	public void downloadPicTest() throws Exception{
-		String url = "http://www.edu24ol.com//web_teacher/images/20111229144831.jpg";
+		String url = "http://www.edu24ol.com/web_teacher/images2011/tc_w_b.gif";
 		String path = url;
-		String savePath = "F:/tempp/";
+		String savePath = "F:/temp/";
 		String fileName = url.substring(url.lastIndexOf("/")+1);
 		String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
 		String filePath = null;
@@ -147,7 +146,7 @@ public class RemoteLessonTest {
         }  
 		System.out.println(path);
 	}
-	@Test
+	//@Test
 	public void loadTeacherTest()throws Exception{
 		TeacherEntity t = this.dataServer.loadTeacher("221");
 		if(t!=null)

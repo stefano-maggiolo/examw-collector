@@ -28,7 +28,7 @@ public class ListenEntityController {
 
 	@RequestMapping(value = { "", "/list" }, method = RequestMethod.GET)
 	public String list(Model model) {
-		return "local/subject_list";
+		return "local/listen_list";
 	}
 
 	@RequestMapping(value = "/datagrid", method = RequestMethod.POST)

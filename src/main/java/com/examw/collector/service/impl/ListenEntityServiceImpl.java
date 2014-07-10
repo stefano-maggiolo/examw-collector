@@ -60,7 +60,9 @@ public class ListenEntityServiceImpl extends BaseDataServiceImpl<ListenEntity, R
 	protected RelateInfo changeModel(ListenEntity data) {
 		if(data == null) return null;
 		RelateInfo info = new RelateInfo();
-		BeanUtils.copyProperties(data, info);
+		BeanUtils.copyProperties(data, info,new String[]{"id"});
+		//info.setNum(Integer.valueOf(data.getId()));
+		info.setId(Integer.valueOf(data.getId()));
 		if(data.getGrade() != null){
 				info.setClassId(data.getGrade().getId());
 				info.setClassName(data.getGrade().getName());

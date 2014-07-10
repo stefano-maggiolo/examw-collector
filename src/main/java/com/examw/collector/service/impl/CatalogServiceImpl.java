@@ -222,6 +222,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 	public List<Catalog> findChangedCatalog() {
 		List<Catalog> remote = this.dataServer.loadCatalogs();	//远程的数据
 		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
+		logger.info("查找有变化的考试分类");
 		List<Catalog> add = new ArrayList<Catalog>();
 		for(Catalog c:remote){
 			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
@@ -248,8 +249,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 						if(local_child == null){
 							child.setStatus("新增");
 							children.add(child);
-						}
-						if(child.equals(local_child)) continue;
+						}else if(child.equals(local_child)) continue;
 						else{
 							child.setStatus("新的");
 							children.add(child);
@@ -269,15 +269,21 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 				add.add(local_c);
 			}
 		}
+		logger.info(add.size());
 		return add;
 	}
 	@Override
 	public DataGrid<CatalogInfo> dataGridUpdate() {
+		try{
 		List<Catalog> list = this.findChangedCatalog();
 		DataGrid<CatalogInfo> grid = new DataGrid<CatalogInfo>();
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
 		return grid;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 	
 	@Override

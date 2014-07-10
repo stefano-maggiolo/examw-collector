@@ -1,0 +1,97 @@
+<#--考试类别列表-->
+<#include "ftl/comm.ftl"/>
+<#assign module="local_listen"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	//dg
+	var dg=$("#${dg}").datagrid({
+		url:"<@s.url '/admin/local/listen/datagrid'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		pagination:true,
+		pagePosition:"bottom",
+		pageSize:20,
+		pageList:[20,30,40],
+		border:true,
+		striped:true,
+		idField:"id",
+		sortName:"id",
+		columns:[[{
+			field:"check",
+			checkbox:true
+		},{
+			title:"ID",
+			field:"id",
+			width:10,
+			align:"left",
+			sortable:true
+		},{
+			title:"名称",
+			field:"name",
+			width:20,
+			align:"left",
+			sortable:true
+		},{
+			title:"所在班级",
+			field:"className",
+			width:20,
+			align:"right"
+		},{
+			title:"更新时间",
+			field:"updateDate",
+			width:20,
+			align:"left"
+		},{
+			title:"是否试听",
+			field:"isDemo",
+			width:10,
+			align:"left",
+			formatter: function(value,row,index){
+				if (value){
+					return "是";
+				} else {
+					return "否";
+				}
+			}
+		},{
+			title:"是否最新",
+			field:"isNew",
+			width:10,
+			align:"left",
+			formatter: function(value,row,index){
+				if (value){
+					return "是";
+				} else {
+					return "否";
+				}
+			}
+		},{
+			title:"地址",
+			field:"address",
+			width:30,
+			align:"left",
+		}]],
+		toolbar:"#${dg}_toobar",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		}
+	});
+	//search
+	${dg}_search = function(){
+		dg.datagrid("load",{
+			  name:$("#${dg}_toobar input[name='name']").val()
+		});
+	};
+});
+//-->
+</script>
+<table id="${dg}"></table>
+<div id="${dg}_toobar">
+	
+	<label>名称：<input name="name" type="text" style="width:198px;"/></label>
+	
+	<a href="#" class="easyui-linkbutton" style="margin-left:10px;"  onclick="${dg}_search()" data-options="iconCls:'icon-search',plain:true">查询</a>
+</div>

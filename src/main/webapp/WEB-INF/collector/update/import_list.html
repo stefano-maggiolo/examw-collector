@@ -1,0 +1,100 @@
+<#include "ftl/comm.ftl"/>
+<#assign module="import_data"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	//dg
+	var editingId,currentCode;
+	var dg = $("#${dg}_local").treegrid({
+		url:"<@s.url '/admin/local/catalog/datagrid'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		idField:"id",
+		treeField:"cname",
+		singleSelect:false,
+		animate:true,
+		border:true,
+		striped:true,
+		columns:[[{
+			field:"id",
+			checkbox:true
+		},{
+			title:"类别名称",
+			field:"cname",
+			width:25
+		},{
+			title:"网校代码",
+			field:"schoolId",
+			width:15
+		},{
+			title:"环球CODE",
+			field:"code",
+			width:15,
+			editor:'text'
+		}]],
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+		toolbar:[
+		{
+		 	iconCls:"icon-add",
+		 	text:"数据整体导入",
+		 	handler:function(){
+		 		var rows = dg.treegrid("getSelections");
+	 			if(!rows || rows.length ==0){
+	 				$.messager.alert("提示","请选择带环球code的分类");
+	 				return;
+	 			}
+	 			var ids=[];
+	 			$.each(rows,function(i){
+	 				if(rows[i] && rows[i].code){
+	 					ids.push(rows[i].code);
+	 				}
+	 			});
+	 			ids.join(",");
+	 			if(ids.length !=0)
+	 			{
+		 			$.messager.confirm("确认","您是否确认整体导入数据?",function(r){
+		 				if(!r)return;
+		 				$.messager.progress();
+		 				$.ajax({
+		 					url:"<@s.url '/admin/import/data/init'/>",
+		 					type:"POST",
+		 					data:{id:ids.toString()},
+		 					dataType:"json",
+		 					success:function(data)
+		 					{
+		 						$.messager.progress("close");
+		 						if(data.success){
+		 							$.messager.show({
+		 								title:'提示',
+		 								msg:'导入成功',
+		 								showType:'show'
+		 							});
+		 						}else{
+		 							$.messager.show({
+		 								title:'提示',
+		 								msg:'导入失败',
+		 								showType:'show'
+		 							});
+		 						}
+		 					},
+		 					error:function(e){
+		 						$.messager.progress("close");
+		 						<@error_dialog "e"/>
+		 					}
+		 				});
+		 			});
+	 			}else{
+	 				$.messager.alert("提示","请选择带环球code的分类");
+	 				return;
+	 			}
+		 	}
+		}]
+	});
+});
+//-->
+</script>
+<table id="${dg}_local"></table>
