@@ -5,7 +5,7 @@
 <script type="text/javascript">
 <!--
 $(function(){
-	console.info("gagagagaga");
+	//console.info("gagagagaga");
 	var current_catalog_id = "";
 	//catalog-exam-tree
 	var t = $("#${module}_list_catalog_exam_tree").tree({
@@ -66,7 +66,7 @@ $(function(){
 	});
 	//search
 	${dg}_search = function(){
-		console.info(current_catalog_id);
+		//console.info(current_catalog_id);
 		dg.datagrid("load",{
 			  name:$("#${dg}_toobar input[name='name']").val(),
 			  catalogId:current_catalog_id,

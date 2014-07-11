@@ -8,7 +8,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.TreeNode;
 
 /**
- * 
+ * 课程分类服务接口
  * @author fengwei.
  * @since 2014年6月30日 上午10:57:15.
  */

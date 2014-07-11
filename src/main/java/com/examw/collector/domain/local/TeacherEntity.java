@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 
+ * 老师数据
  * @author fengwei.
  * @since 2014年7月8日 下午5:34:00.
  */

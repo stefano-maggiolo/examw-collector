@@ -20,7 +20,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
- * 
+ * 班级数据更新控制器
  * @author fengwei.
  * @since 2014年7月7日 下午4:43:11.
  */

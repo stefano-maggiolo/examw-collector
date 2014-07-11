@@ -17,7 +17,7 @@ import com.examw.collector.model.SubjectInfo;
 import com.examw.collector.service.ISubjectEntityService;
 
 /**
- * 
+ * 科目服务接口实现类
  * @author fengwei.
  * @since 2014年6月30日 下午3:55:20.
  */

@@ -21,7 +21,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
- * 
+ * 科目数据更新控制器
  * @author fengwei.
  * @since 2014年7月6日 下午2:32:24.
  */

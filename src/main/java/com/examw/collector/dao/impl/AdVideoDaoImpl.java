@@ -11,7 +11,7 @@ import com.examw.collector.domain.AdVideo;
 import com.examw.collector.model.AdVideoInfo;
 
 /**
- * 
+ * 广告数据接口实现类
  * @author fengwei.
  * @since 2014年6月30日 下午4:37:17.
  */

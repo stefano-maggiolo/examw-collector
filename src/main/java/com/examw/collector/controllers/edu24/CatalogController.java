@@ -18,7 +18,7 @@ import com.examw.model.Json;
 import com.examw.model.TreeNode;
 
 /**
- * 
+ * 课程分类(本地副本)控制器
  * @author fengwei.
  * @since 2014年6月30日 上午10:40:54.
  */

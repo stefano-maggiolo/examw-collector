@@ -17,7 +17,7 @@ import com.examw.collector.model.SubjectInfo;
 import com.examw.collector.service.ISubjectUpdateService;
 
 /**
- * 
+ * 科目数据更新服务接口实现类
  * @author fengwei.
  * @since 2014年7月9日 下午4:46:49.
  */
@@ -75,6 +75,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.subjectDao.saveOrUpdate(changeRemoteModel(info));
 		}
@@ -114,6 +115,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.subjectEntityDao.saveOrUpdate(changeLocalModel(info));
 		}

@@ -24,7 +24,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.TreeNode;
 
 /**
- * 
+ * 课程分类(本地副本)服务接口实现类
  * @author fengwei.
  * @since 2014年6月30日 上午11:36:26.
  */
@@ -224,7 +224,9 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
 		logger.info("查找有变化的考试分类");
 		List<Catalog> add = new ArrayList<Catalog>();
+		StringBuilder pbuf = new StringBuilder();
 		for(Catalog c:remote){
+			pbuf.append(c.getCode()).append(",");
 			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
 			if(local_c == null){
 				c.setStatus("新增");
@@ -244,7 +246,9 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 							return value;
 						}
 					});
+					StringBuilder cbuf = new StringBuilder();
 					for(Catalog child:c.getChildren()){
+						cbuf.append(child.getCode()).append(",");
 						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
 						if(local_child == null){
 							child.setStatus("新增");
@@ -256,6 +260,17 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 							local_child.setStatus("旧的");
 							children.add(local_child);
 						}
+					}
+					if(cbuf.length()>0){
+						cbuf.append("0");
+						List<Catalog> d = this.catalogDao.findDeleteCatalogs(cbuf.toString(), c.getCode());
+						if(d!=null&&d.size()>0){
+							for(Catalog s:d){
+								s.setStatus("被删");
+							}
+							children.addAll(d);
+						}
+						cbuf = null;
 					}
 					if(children.size()>0){
 						c.setChildren(children);
@@ -269,9 +284,25 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 				add.add(local_c);
 			}
 		}
-		logger.info(add.size());
+		//查找被删的集合
+		if(pbuf.length()>0){
+			pbuf.append("0");
+			List<Catalog> d = this.catalogDao.findDeleteCatalogs(pbuf.toString(), null);
+			if(d!=null&&d.size()>0){
+				for(Catalog s:d){
+					s.setStatus("被删");
+				}
+				add.addAll(d);
+			}
+			pbuf = null;
+		}
+//		logger.info(add.size());
 		return add;
 	}
+	/*
+	 * 查找有更新的数据
+	 * @see com.examw.collector.service.ICatalogService#dataGridUpdate()
+	 */
 	@Override
 	public DataGrid<CatalogInfo> dataGridUpdate() {
 		try{
@@ -285,17 +316,38 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 		}
 		return null;
 	}
-	
+	/*
+	 * 更新数据
+	 * @see com.examw.collector.service.ICatalogService#update(java.util.List)
+	 */
 	@Override
 	public void update(List<CatalogInfo> catalogs) {
 		if(catalogs == null ||catalogs.size()==0) return;
+		StringBuilder buf = new StringBuilder();
 		for(CatalogInfo info:catalogs){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
 			}
+			if(info.getStatus().equals("被删")){
+				buf.append(info.getId()).append(",");
+				continue;
+			}
 			this.catalogDao.saveOrUpdate(changeModel(info));
 		}
+		if(buf.length()>0)
+		{
+			String[] ids = buf.toString().split(",");
+			if(ids == null ||ids.length==0) return;
+			for(String id:ids){
+				Catalog data = this.catalogDao.load(Catalog.class, id);
+				if(data != null){
+					//删除[子类级联.]
+					this.catalogDao.delete(data);
+				}
+			}
+		}
 	}
+	//转换数据模型
 	private Catalog changeModel(CatalogInfo info){
 		if(info == null) return null;
 		Catalog data = this.catalogDao.load(Catalog.class, info.getId());

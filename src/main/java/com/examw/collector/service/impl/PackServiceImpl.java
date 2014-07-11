@@ -19,7 +19,7 @@ import com.examw.collector.service.IPackService;
 import com.examw.model.DataGrid;
 
 /**
- * 
+ * 套餐服务接口实现类
  * @author fengwei.
  * @since 2014年7月1日 上午9:59:06.
  */
@@ -219,6 +219,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.packDao.saveOrUpdate(changeModel(info));
 		}

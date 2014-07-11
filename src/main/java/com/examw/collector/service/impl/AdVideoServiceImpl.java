@@ -10,7 +10,7 @@ import com.examw.collector.model.AdVideoInfo;
 import com.examw.collector.service.IAdVideoService;
 
 /**
- * 
+ * 广告服务接口实现类
  * @author fengwei.
  * @since 2014年7月1日 上午10:31:00.
  */

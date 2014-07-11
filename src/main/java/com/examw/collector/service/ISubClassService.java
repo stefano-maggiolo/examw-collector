@@ -6,7 +6,7 @@ import com.examw.collector.model.SubClassInfo;
 import com.examw.model.DataGrid;
 
 /**
- * 
+ * 班级服务接口
  * @author fengwei.
  * @since 2014年6月30日 下午4:33:11.
  */

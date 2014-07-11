@@ -6,7 +6,7 @@ import com.examw.collector.model.local.CatalogEntityInfo;
 import com.examw.model.TreeNode;
 
 /**
- * 
+ * 课程分类服务接口
  * @author fengwei.
  * @since 2014年7月2日 上午10:00:14.
  */

@@ -11,7 +11,7 @@ import com.examw.collector.domain.local.TeacherEntity;
 import com.examw.collector.model.TeacherInfo;
 
 /**
- * 
+ * 老师数据接口实现类
  * @author fengwei.
  * @since 2014年7月9日 上午11:20:35.
  */

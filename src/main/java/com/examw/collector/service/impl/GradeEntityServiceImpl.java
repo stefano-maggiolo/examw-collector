@@ -17,7 +17,7 @@ import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IGradeEntityService;
 
 /**
- * 
+ * 班级服务接口实现类
  * @author fengwei.
  * @since 2014年6月30日 下午4:34:44.
  */

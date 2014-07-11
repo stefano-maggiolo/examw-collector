@@ -23,7 +23,7 @@ import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IGradeUpdateService;
 
 /**
- * 
+ * 班级数据更新服务接口实现类
  * @author fengwei.
  * @since 2014年7月9日 下午5:01:58.
  */
@@ -114,6 +114,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.subClassDao.saveOrUpdate(changeRemoteModel(info));
 		}

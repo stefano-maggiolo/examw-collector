@@ -11,7 +11,7 @@ import com.examw.collector.domain.Pack;
 import com.examw.collector.model.PackInfo;
 
 /**
- * 
+ * 套餐数据接口实现类
  * @author fengwei.
  * @since 2014年7月1日 上午9:56:37.
  */

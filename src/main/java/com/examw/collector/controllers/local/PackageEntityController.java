@@ -15,7 +15,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
- * 本地套餐控制器
+ * 套餐控制器
  * @author fengwei.
  * @since 2014年7月7日 上午9:27:28.
  */

@@ -9,7 +9,7 @@ import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.model.local.CatalogEntityInfo;
 
 /**
- * 
+ * 课程分类数据接口实现类
  * @author fengwei.
  * @since 2014年7月2日 上午9:59:12.
  */

@@ -13,7 +13,7 @@ import com.examw.collector.service.IAdVideoService;
 import com.examw.model.DataGrid;
 
 /**
- * 
+ * 广告服务控制器
  * @author fengwei.
  * @since 2014年7月1日 上午10:50:13.
  */

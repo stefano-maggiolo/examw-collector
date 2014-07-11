@@ -1,4 +1,4 @@
-<#--菜单设置列表-->
+<#--本地课程分类设置列表-->
 <#include "ftl/comm.ftl"/>
 <#assign module="local_catalog"/>
 <#assign dg="${module}_list_dg"/>
@@ -73,7 +73,7 @@ $(function(){
 			if (editingId != undefined){
 				dg.treegrid('endEdit', editingId);
 				var row = dg.treegrid('find',editingId);
-				console.info(currentCode + "----" + row.code);
+				//console.info(currentCode + "----" + row.code);
 				if((currentCode == undefined && row.code=="")||(currentCode != undefined && currentCode == row.code)){
 					dg.treegrid('endEdit',editingId);
 					editingId = undefined;
@@ -88,6 +88,7 @@ $(function(){
 					success:function(data){
 						if(data.success){
 							editingId = undefined;
+							currentCode = undefined;
 							dg.treegrid('reloadFooter');
 						}
 					}

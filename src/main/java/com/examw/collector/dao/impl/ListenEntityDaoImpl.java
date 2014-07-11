@@ -11,7 +11,7 @@ import com.examw.collector.domain.local.ListenEntity;
 import com.examw.collector.model.RelateInfo;
 
 /**
- * 
+ * 课节数据接口实现类
  * @author fengwei.
  * @since 2014年7月1日 上午9:18:26.
  */

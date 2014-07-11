@@ -17,7 +17,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.TreeNode;
 
 /**
- * 
+ * 课程分类服务接口实现类
  * @author fengwei.
  * @since 2014年7月2日 上午10:01:04.
  */

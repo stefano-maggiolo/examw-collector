@@ -15,7 +15,7 @@ import com.examw.collector.model.RelateInfo;
 import com.examw.collector.service.IListenEntityService;
 
 /**
- * 
+ * 课节服务接口实现类
  * @author fengwei.
  * @since 2014年7月1日 上午9:24:19.
  */

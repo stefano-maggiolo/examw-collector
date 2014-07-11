@@ -11,7 +11,7 @@ import com.examw.collector.domain.Subject;
 import com.examw.collector.model.SubjectInfo;
 
 /**
- * 
+ * 科目数据接口实现类
  * @author fengwei.
  * @since 2014年6月30日 下午2:41:39.
  */

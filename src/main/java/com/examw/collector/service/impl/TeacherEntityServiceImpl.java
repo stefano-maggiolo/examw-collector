@@ -18,7 +18,7 @@ import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.ITeacherEntityService;
 
 /**
- * 
+ * 老师服务接口实现类
  * @author fengwei.
  * @since 2014年7月9日 上午11:25:25.
  */

@@ -4,7 +4,7 @@ import com.examw.collector.domain.AdVideo;
 import com.examw.model.IPaging;
 
 /**
- * 
+ * 广告信息
  * @author fengwei.
  * @since 2014年6月30日 上午11:32:44.
  */

@@ -6,7 +6,7 @@ import com.examw.collector.domain.Relate;
 import com.examw.collector.model.RelateInfo;
 
 /**
- * 课节信息
+ * 课节数据接口
  * @author fengwei.
  * @since 2014年7月1日 上午9:17:31.
  */

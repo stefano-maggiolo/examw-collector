@@ -21,7 +21,7 @@ import com.examw.collector.model.PackInfo;
 import com.examw.collector.service.IPackageUpdateService;
 
 /**
- * 
+ * 套餐数据更新服务接口实现类
  * @author fengwei.
  * @since 2014年7月9日 下午5:12:19.
  */
@@ -151,6 +151,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService{
 			}
 			if(info.getStatus().equals("被删")){
 				buf.append(info.getCode()).append(",");
+				continue;
 			}
 			this.packageEntityDao.saveOrUpdate(changeLocalModel(info));
 		}

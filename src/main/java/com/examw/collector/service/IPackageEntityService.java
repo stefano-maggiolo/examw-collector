@@ -5,7 +5,7 @@ import java.util.List;
 import com.examw.collector.model.PackInfo;
 
 /**
- * 
+ * 套餐服务接口
  * @author fengwei.
  * @since 2014年7月1日 上午9:58:16.
  */

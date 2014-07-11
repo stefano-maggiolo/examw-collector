@@ -7,7 +7,7 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 import com.examw.model.Paging;
 
 /**
- * 
+ * 科目信息
  * @author fengwei.
  * @since 2014年6月30日 上午11:14:19.
  */

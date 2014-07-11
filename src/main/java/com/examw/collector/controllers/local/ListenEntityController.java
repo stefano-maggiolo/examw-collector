@@ -15,7 +15,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
- * 
+ * 课节(实际)控制器
  * @author fengwei.
  * @since 2014年7月6日 上午8:53:09.
  */

@@ -21,7 +21,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.Json;
 
 /**
- * 
+ * 套餐数据更新控制器
  * @author fengwei.
  * @since 2014年7月8日 上午11:43:46.
  */

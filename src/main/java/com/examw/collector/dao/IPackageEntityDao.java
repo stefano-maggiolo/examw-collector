@@ -6,7 +6,7 @@ import com.examw.collector.domain.local.PackageEntity;
 import com.examw.collector.model.PackInfo;
 
 /**
- * 
+ * 套餐数据接口
  * @author fengwei.
  * @since 2014年7月1日 上午9:55:58.
  */

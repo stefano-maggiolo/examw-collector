@@ -3,7 +3,7 @@ package com.examw.collector.domain.local;
 import java.io.Serializable;
 
 /**
- * 
+ * 课节数据
  * @author fengwei.
  * @since 2014年6月28日 下午5:10:41.
  */

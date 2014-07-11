@@ -6,7 +6,7 @@ import com.examw.collector.domain.Pack;
 import com.examw.collector.model.PackInfo;
 
 /**
- * 
+ * 套餐数据接口
  * @author fengwei.
  * @since 2014年7月1日 上午9:55:58.
  */
@@ -27,7 +27,7 @@ public interface IPackDao extends IBaseDao<Pack>{
 	 */
 	Long total(PackInfo info);
 	/**
-	 * 根据已存在的ID查找被删除的班级
+	 * 根据已存在的ID查找被删除的套餐
 	 * @param existIds
 	 * @return
 	 */

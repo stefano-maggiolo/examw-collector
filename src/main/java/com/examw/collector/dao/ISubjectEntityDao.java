@@ -6,7 +6,7 @@ import com.examw.collector.domain.local.SubjectEntity;
 import com.examw.collector.model.SubjectInfo;
 
 /**
- * 
+ * 科目数据接口
  * @author fengwei.
  * @since 2014年6月30日 下午2:41:03.
  */

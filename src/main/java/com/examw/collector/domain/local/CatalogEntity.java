@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Set;
 
 /**
- * 
+ * 课程分类
  * @author fengwei.
  * @since 2014年7月2日 上午9:51:29.
  */

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import com.examw.model.Paging;
 
 /**
- * 
+ * 课节信息
  * @author fengwei.
  * @since 2014年6月30日 上午11:22:51.
  */

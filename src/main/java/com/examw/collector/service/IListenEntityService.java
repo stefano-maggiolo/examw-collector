@@ -3,7 +3,7 @@ package com.examw.collector.service;
 import com.examw.collector.model.RelateInfo;
 
 /**
- * 
+ * 课节服务接口
  * @author fengwei.
  * @since 2014年7月1日 上午9:23:40.
  */

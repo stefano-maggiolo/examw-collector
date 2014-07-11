@@ -1,4 +1,4 @@
-<#--菜单设置列表-->
+<#--课程分类数据更新列表-->
 <#include "ftl/comm.ftl"/>
 <#assign module="update_catalog"/>
 <#assign dg="${module}_list_dg"/>
@@ -25,11 +25,11 @@ $(function(){
 		},{
 			title:"类别代码",
 			field:"id",
-			width:15
+			width:10
 		},{
 			title:"状态",
 			field:"status",
-			width:35
+			width:10
 		}]],
 		onLoadError:function(e){
 			<@error_dialog "e"/>
@@ -141,7 +141,7 @@ $(function(){
 			if (editingId != undefined){
 				dg.treegrid('endEdit', editingId);
 				var row = dg.treegrid('find',editingId);
-				console.info(currentCode + "----" + row.code);
+				//console.info(currentCode + "----" + row.code);
 				if((currentCode == undefined && row.code=="")||(currentCode != undefined && currentCode == row.code)){
 					dg.treegrid('endEdit',editingId);
 					editingId = undefined;

@@ -11,7 +11,7 @@ import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.model.SubClassInfo;
 
 /**
- * 
+ * 班级数据接口实现类
  * @author fengwei.
  * @since 2014年6月30日 下午4:21:44.
  */

@@ -9,7 +9,7 @@ import com.examw.collector.support.CustomDateSerializer;
 import com.examw.model.Paging;
 
 /**
- * 
+ * 老师信息
  * @author fengwei.
  * @since 2014年7月9日 上午10:51:36.
  */

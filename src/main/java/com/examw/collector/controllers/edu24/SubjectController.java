@@ -17,7 +17,7 @@ import com.examw.model.DataGrid;
 import com.examw.model.TreeNode;
 
 /**
- * 
+ * 科目(副本)控制器
  * @author fengwei.
  * @since 2014年6月30日 下午3:52:00.
  */
