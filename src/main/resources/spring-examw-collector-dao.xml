@@ -2,6 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<!-- dao -->
+	<!-- 系统数据接口start -->
+	<bean id="userDao" class="com.examw.collector.dao.impl.UserDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<bean id="loginLogDao" class="com.examw.collector.dao.impl.LoginLogDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 系统数据接口end -->
 	<!-- 环球数据接口start -->
 	<!-- 考试类别Dao -->
 	<bean id="catalogDao" class="com.examw.collector.dao.impl.CatalogDaoImpl">

@@ -18,8 +18,14 @@ $(function(){
 		onClick:function(node){
 			if(t.tree("isLeaf",node.target))
 			{
-				if(node.attributes && node.attributes.code)
-					current_catalog_id = node.attributes.code;
+				if(node.attributes == undefined)
+				{
+					return;
+				}else
+				{
+					if(node.attributes.code)
+						current_catalog_id = node.attributes.code;
+				}
 				//search;
 				${dg}_search();
 			}

@@ -9,6 +9,7 @@
 		是否共享
 		<property name="shared" value="true"/>
 	</bean> -->
+	<!-- 系统服务 End -->
 	<!-- 菜单服务 -->
 	<bean id="menuService" class="com.examw.collector.service.impl.MenuServiceImpl">
 		<!-- 菜单文件 -->
@@ -16,6 +17,39 @@
 		<!-- 系统ID -->
 		<property name="systemId" value="${systemId}"/>
 	</bean>
+	<!-- 密码工具 -->
+	<bean id="passwordHelper"  class="com.examw.collector.support.PasswordHelper">
+		<!-- 验证密码算法 -->
+		<property name="algorithmName"  value="${algorithmName}" />
+		<!-- 迭代次数 -->
+		<property name="hashIterations"  value="${hashIterations}"  />
+	</bean>
+	<!-- 用户管理服务 -->
+	<bean id="userService"  class="com.examw.collector.service.impl.UserServiceImpl">
+		<!-- 用户数据接口 -->
+		<property name="userDao"  ref="userDao" />
+		<!-- 密码工具 -->
+		<property name="passwordHelper"  ref="passwordHelper" />
+		<!-- 用户状态 -->
+		<property name="statusNames">
+			<map>
+	   			<entry key="0"  value="${STATUS_DISABLE}" />
+	   			<entry key="1"  value="${STATUS_ENABLED}" />
+	   		</map>
+		</property>
+		<!-- 性别 -->
+		<property name="genderNames">
+			<map>
+	   			<entry key="1"  value="${GENDER_MALE}" />
+	   			<entry key="2"  value="${GENDER_FEMALE}" />
+	   		</map>
+		</property>
+	</bean>
+	<!-- 登录日志服务 -->
+	<bean id="loginLogService"  class="com.examw.collector.service.impl.LoginLogServiceImpl">
+		<property name="loginLogDao" ref="loginLogDao" />
+	</bean>
+	<!-- 系统服务 End -->
 	<!-- 远程数据代理服务 -->
 	<bean id="remoteDataProxy" class="com.examw.collector.service.impl.RemoteDataProxyImpl">
 		<!-- 合作ID号 -->

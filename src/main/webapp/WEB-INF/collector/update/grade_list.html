@@ -18,8 +18,14 @@ $(function(){
 		onClick:function(node){
 			if(t.tree("isLeaf",node.target))
 			{
-				if(node.attributes && node.attributes.code)
-				current_catalog_id = node.attributes.code;
+				if(node.attributes == undefined)
+				{
+					return;
+				}else
+				{
+					if(node.attributes.code)
+						current_catalog_id = node.attributes.code;
+				}
 				if(s){
 					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
 				}
@@ -249,7 +255,9 @@ $(function(){
 				<div id="${dg}_toobar">
 					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">检查更新</a>
 					<span>|</span>
-					<a href="#" class="easyui-linkbutton" onclick="${dg}_update()" data-options="iconCls:'icon-reload',plain:true" style="float:left;">更新数据</a>
+					<a href="#" class="easyui-linkbutton" onclick="${dg}_update()" data-options="iconCls:'icon-reload',plain:true">更新数据</a>
+					<span>|</span>
+					<a href="#" class="easyui-linkbutton" onclick="${dg}_ignore()" data-options="iconCls:'icon-remove',plain:true">忽略更新</a>
 					<label>班级名称:</label>
 					<input name="name" type="text" style="width:198px;"/>
 
