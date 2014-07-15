@@ -6,23 +6,22 @@ import java.util.Map;
 
 import org.springframework.util.StringUtils;
 
-import com.examw.collector.dao.ILoginLogDao;
-import com.examw.collector.domain.LoginLog;
-import com.examw.collector.model.LoginLogInfo;
+import com.examw.collector.dao.IOperateLogDao;
+import com.examw.collector.domain.OperateLog;
+import com.examw.collector.model.OperateLogInfo;
 
 /**
  * 登录日志数据接口实现。
  * @author yangyong.
  * @since 2014-05-17.
  */
-public class LoginLogDaoImpl extends BaseDaoImpl<LoginLog> implements ILoginLogDao{
+public class OperateLogDaoImpl extends BaseDaoImpl<OperateLog> implements IOperateLogDao{
 	/*
 	 * 查询数据。
-	 * @see com.examw.netplatform.dao.admin.ILoginLogDao#findLoginLogs(com.examw.netplatform.model.admin.LoginLogInfo)
 	 */
 	@Override
-	public List<LoginLog> findLoginLogs(LoginLogInfo info) {
-		String hql = "from LoginLog l where 1=1 ";
+	public List<OperateLog> findOperateLogs(OperateLogInfo info) {
+		String hql = "from OperateLog l where 1=1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		if(!StringUtils.isEmpty(info.getSort())){
@@ -32,11 +31,10 @@ public class LoginLogDaoImpl extends BaseDaoImpl<LoginLog> implements ILoginLogD
 	}
 	/*
 	 * 查询数据统计。
-	 * @see com.examw.netplatform.dao.admin.ILoginLogDao#total(com.examw.netplatform.model.admin.LoginLogInfo)
 	 */
 	@Override
-	public Long total(LoginLogInfo info) {
-		String hql = "select count(*) from LoginLog l where 1 = 1 ";
+	public Long total(OperateLogInfo info) {
+		String hql = "select count(*) from OperateLog l where 1 = 1 ";
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.count(hql, parameters);
@@ -52,7 +50,7 @@ public class LoginLogDaoImpl extends BaseDaoImpl<LoginLog> implements ILoginLogD
 	 * @return
 	 * HQL
 	 */
-	protected String addWhere(LoginLogInfo info, String hql, Map<String, Object> parameters){
+	protected String addWhere(OperateLogInfo info, String hql, Map<String, Object> parameters){
 		if(!StringUtils.isEmpty(info.getAccount())){
 			hql += " and (l.account like :account)";
 			parameters.put("account", "%" + info.getAccount() + "%");

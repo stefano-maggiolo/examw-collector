@@ -3,10 +3,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 	<!-- dao -->
 	<!-- 系统数据接口start -->
+	<!-- 用户DAO -->
 	<bean id="userDao" class="com.examw.collector.dao.impl.UserDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
+	<!-- 登录日志DAO -->
 	<bean id="loginLogDao" class="com.examw.collector.dao.impl.LoginLogDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 操作日志DAO -->
+	<bean id="operateLogDao" class="com.examw.collector.dao.impl.OperateLogDaoImpl">
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
 	<!-- 系统数据接口end -->

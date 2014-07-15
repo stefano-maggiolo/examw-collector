@@ -190,43 +190,68 @@ public class Pack extends BaseDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Pack other = (Pack) obj;
+		boolean flag = true;	updateInfo = "";
 		if (catalog == null) {
 			if (other.catalog != null)
-				return false;
+				flag = false;
 		} else if (!catalog.getCode().equals(other.catalog.getCode()))
-			return false;
+		{
+			updateInfo += (" 上级分类变更:"+other.catalog.getName()+other.catalog.getCode()+"-->"+catalog.getName()+catalog.getCode());
+			flag = false;
+		}
 		if (classCodes == null) {
 			if (other.classCodes != null)
-				return false;
+				flag = false;
 		} else if (!classCodes.equals(other.classCodes))
-			return false;
+		{
+			updateInfo += (" 包含班级变更:"+other.classCodes+"-->"+classCodes);
+			flag = false;
+		}
 		if (code == null) {
 			if (other.code != null)
-				return false;
+				flag = false;
 		} else if (!code.equals(other.code))
-			return false;
-		if (discount == null) {
-			if (other.discount != null)
-				return false;
-		} else if (!discount.equals(other.discount))
-			return false;
-		if (isShow != other.isShow)
-			return false;
+		{
+			updateInfo += (" 代码变更:"+other.code+"-->"+code);
+			flag = false;
+		}
 		if (name == null) {
 			if (other.name != null)
-				return false;
+				flag = false;
 		} else if (!name.equals(other.name))
-			return false;
+		{
+			updateInfo += (" 名字变更:"+other.name+"-->"+name);
+			flag = false;
+		}
+		if (discount == null) {
+			if (other.discount != null)
+				flag = false;
+		} else if (!discount.equals(other.discount))
+		{
+			updateInfo += (" 优惠价变更:"+other.discount+"-->"+discount);
+			flag = false;
+		}
 		if (source == null) {
 			if (other.source != null)
-				return false;
+				flag = false;
 		} else if (!source.equals(other.source))
-			return false;
+		{
+			updateInfo += (" 原价变更:"+other.source+"-->"+source);
+			flag = false;
+		}
+		if (isShow != other.isShow)
+		{
+			updateInfo += (" 是否显示变更:"+other.isShow+"-->"+isShow);
+			flag = false;
+		}
 		if (subject == null) {
 			if (other.subject != null)
-				return false;
+				flag = false;
 		} else if (!subject.getCode().equals(other.subject.getCode()))
-			return false;
-		return true;
+		{
+			updateInfo += (" 所属科目变更:"+other.subject.getName()+other.subject.getCode()+"-->"+subject.getName()+subject.getCode());
+			flag = false;
+		}
+		return flag;
 	}
 }

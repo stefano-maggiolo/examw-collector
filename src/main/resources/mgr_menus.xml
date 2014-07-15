@@ -2,9 +2,9 @@
 <ipower verion="1.0" xmlns="http://ipower.org/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ipower.org/ iPowerSchema.xsd ">
   <system id="DC000000" sign="ipower.wechat" name="中华考试网数据采集服务系统" description="中华考试网数据采集服务系统">
   	<module id="DC000001"  icon="" name="系统管理" uri="" order="1">
-  	    <module id="DC000101" icon="" name="用户管理" uri="/admin/edu24/catalog" order="1"/>
-  		<module id="DC000201" icon="" name="登录日志" uri="/admin/edu24/subject" order="2"/>
-  		<module id="DC000301" icon="" name="操作日志" uri="/admin/edu24/subclass" order="3"/>
+  	    <module id="DC000101" icon="" name="用户管理" uri="/admin/security/user" order="1"/>
+  		<module id="DC000201" icon="" name="登录日志" uri="/admin/security/loginlog" order="2"/>
+  		<module id="DC000301" icon="" name="操作日志" uri="/admin/security/operatelog" order="3"/>
   	</module>
   	<module id="DC000002"  icon="" name="环球网校课程管理" uri="" order="1">
   		<module id="DC000102" icon="" name="课程分类" uri="/admin/edu24/catalog" order="1"/>

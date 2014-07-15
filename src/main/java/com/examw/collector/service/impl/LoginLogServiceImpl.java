@@ -9,7 +9,7 @@ import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.ILoginLogDao;
 import com.examw.collector.domain.LoginLog;
-import com.examw.collector.domain.LoginLogInfo;
+import com.examw.collector.model.LoginLogInfo;
 import com.examw.collector.service.ILoginLogService;
 /**
  * 登录日志服务实现。

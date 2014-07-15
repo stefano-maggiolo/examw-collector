@@ -1,0 +1,53 @@
+<#--用户编辑-->
+<#assign module="security_user"/>
+<#assign form="${module}_edit_form"/>
+<script type="text/javascript">
+<!--
+$(function(){
+});
+//-->
+</script>
+<form id="${form}" style="padding:5px" method="POST">
+			<div style="float:left;margin-left:5px;width:340px;">
+				<div style="float:left;">
+					<label style="width:70px;">姓 名：</label>
+					<input type="text" name="name" class="easyui-validatebox"  style="width:198px;" data-options="required:true,validType:'length[1,20]'"/>
+					<input type="hidden" name="id"/>
+				</div>
+				
+				<div style="float:left;margin-top:10px;" class="easyui-tooltip"  title="请输入20位以内的字母、数字、下划线、连结线等字符作为账号"  data-options="position:'top'">
+					<label style="width:70px;">账 号：</label>
+					<input type="text" name="account" class="easyui-validatebox"   style="width:198px;" data-options="required:true,validType:['account','length[1,20]']"/>
+				</div>
+				
+				<div style="float:left;margin-top:10px;">
+					<label style="width:70px;">性 别：</label>
+					<input type="radio" name="gender" value="1" checked="checked"/>${GENDER_MALE}
+					<input type="radio" name="gender" value="0"/>${GENDER_FEMALE}
+				</div>
+				
+				<div style="float:left;margin-top:10px;">
+					<label style="width:70px;">密 码：</label>
+					<input type="text" name="password" class="easyui-validatebox"   style="width:198px;" data-options="required:true,validType:['length[1,20]']"/>
+				</div>
+				
+				<div style="float:left;margin-top:10px;">
+					<label style="width:70px;">状 态：</label>
+					<label><input type="radio" name="status" value="1" checked="checked"/>${STATUS_ENABLED}</label>
+					<label><input type="radio" name="status" value="0"/>${STATUS_DISABLE}</label>
+				</div>
+				<div style="float:left;margin-top:10px;">
+					<label style="width:70px;">手机号码：</label>
+					<input type="text" name="phone" class="easyui-validatebox"  style="width:198px;" data-options="validType:'length[0,20]'"/>
+				</div>
+				<div style="float:left;margin-top:10px;">
+					<label style="width:70px;">QQ：</label>
+					<input type="text" name="qq" class="easyui-validatebox"  style="width:198px;" data-options="validType:'length[0,20]'"/>
+				</div>
+				
+				<div style="float:left;margin-top:10px;">
+					<label style="width:70px;">Email：</label>
+					<input type="text" name="email" class="easyui-validatebox"  style="width:198px;" data-options="validType:'length[0,45]'"/>
+				</div>
+	</div>
+</form>

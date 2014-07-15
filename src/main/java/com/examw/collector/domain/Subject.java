@@ -95,22 +95,32 @@ public class Subject extends BaseDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Subject other = (Subject) obj;
+		boolean flag = true;	updateInfo = "";
 		if (catalog == null) {
 			if (other.catalog != null)
-				return false;
+				flag = false;
 		} else if (!catalog.getCode().equals(other.catalog.getCode()))
-			return false;
+		{
+			updateInfo += (" 上级分类变更:"+other.catalog.getName()+other.catalog.getCode()+"-->"+catalog.getName()+catalog.getCode());
+			flag = false;
+		}
 		if (code == null) {
 			if (other.code != null)
-				return false;
+				flag = false;
 		} else if (!code.equals(other.code))
-			return false;
+		{
+			updateInfo += (" 代码变更:"+other.code+"-->"+code);
+			flag = false;
+		}
 		if (name == null) {
 			if (other.name != null)
-				return false;
+				flag = false;
 		} else if (!name.equals(other.name))
-			return false;
-		return true;
+		{
+			updateInfo += (" 名称变更:"+other.name+"-->"+name);
+			flag = false;
+		}
+		return flag;
 	}
 	
 }

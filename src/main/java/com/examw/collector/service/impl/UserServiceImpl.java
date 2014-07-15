@@ -10,7 +10,7 @@ import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.IUserDao;
 import com.examw.collector.domain.User;
-import com.examw.collector.domain.UserInfo;
+import com.examw.collector.model.UserInfo;
 import com.examw.collector.service.IUserService;
 import com.examw.collector.support.PasswordHelper;
 

@@ -130,21 +130,47 @@ public class Catalog extends BaseDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Catalog other = (Catalog) obj;
+		boolean flag = true;	updateInfo = "";
 		if (code == null) {
 			if (other.code != null)
-				return false;
+				flag = false;
 		} else if (!code.equals(other.code))
-			return false;
+		{
+			updateInfo += ("代码变更:"+other.code+"-->"+code);
+			flag = false;
+		}
 		if (name == null) {
 			if (other.name != null)
-				return false;
+				flag =  false;
 		} else if (!name.equals(other.name))
-			return false;
+		{
+			updateInfo += (" 名称变更:"+other.name+"-->"+name);
+			flag =  false;
+		}
 		if (parent == null) {
 			if (other.parent != null)
-				return false;
+				flag =  false;
 		} else if (!parent.equals(other.parent))
-			return false;
-		return true;
+		{
+			updateInfo += (" 上级分类变更:"+other.parent.name+other.parent.code+"-->"+parent.name+parent.code);
+			flag = false;
+		}
+		return flag;
 	}
+	
+//	//设置updateInfo
+//	public void setUpdateInfo(Catalog other){
+//		updateInfo = "";
+//		if(!code.equals(other.code)){
+//			updateInfo += ("代码变更:"+other.code+"-->"+code);
+//		}
+//		if (!name.equals(other.name))
+//		{
+//			updateInfo += (" 名称变更:"+other.name+"-->"+name);
+//		}
+//		if (parent!=null&&!parent.equals(other.parent))
+//		{
+//			updateInfo += (" 上级分类变更:"+other.parent.name+"-->"+parent.name);
+//		}
+//	}
 }

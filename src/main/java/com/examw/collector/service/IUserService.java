@@ -1,7 +1,7 @@
 package com.examw.collector.service;
 
 import com.examw.collector.domain.User;
-import com.examw.collector.domain.UserInfo;
+import com.examw.collector.model.UserInfo;
 
 /**
  * 用户服务接口。

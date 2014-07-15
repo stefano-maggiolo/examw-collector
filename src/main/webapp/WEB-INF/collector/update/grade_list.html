@@ -20,17 +20,29 @@ $(function(){
 			{
 				if(node.attributes == undefined)
 				{
+					current_catalog_id = "";
+					current_subject_id = "";
+					s.tree("loadData",[]);
 					return;
 				}else
 				{
 					if(node.attributes.code)
+					{
 						current_catalog_id = node.attributes.code;
+						current_subject_id = "";
+					}
+					else{
+						current_catalog_id = "";
+						current_subject_id = "";
+						s.tree("loadData",[]);
+						return;
+					}
 				}
 				if(s){
 					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
 				}
 				//search;
-				${dg}_search();
+				//${dg}_search();
 			}
 		}
 	});
@@ -46,7 +58,7 @@ $(function(){
 		onClick:function(node){
 			current_subject_id = node.id;
 			//search;
-			${dg}_search();
+			//${dg}_search();
 		}
 	});
 	//dg
@@ -79,55 +91,18 @@ $(function(){
 			align:"left",
 			sortable:true
 		},{
-			title:"开始时间",
-			field:"start",
-			width:10,
-			align:"right",
-			sortable:true
-		},{
-			title:"结束时间",
-			field:"end",
-			width:10,
-			align:"right",
-			sortable:true
-		},{
-			title:"原价",
-			field:"sourcePrice",
-			width:8,
-			align:"right",
-			sortable:true
-		},{
-			title:"优惠价",
-			field:"salePrice",
-			width:8,
-			align:"right",
-			sortable:true
-		},{
-			title:"是否显示",
-			field:"isShow",
-			width:8
-		},{
-			title:"是否直播",
-			field:"isLive",
-			width:8
-		},{
-			title:"天数",
-			field:"longDay",
-			width:8
-		},{
-			title:"总课节",
-			field:"total",
-			width:8
-		},{
-			title:"老师",
-			field:"teacherName",
-			width:10,
-			align:"right",
-			sortable:true
-		},{
 			title:"状态",
 			field:"status",
-			width:8
+			width:8,
+			styler: function(value,row,index){
+				if (value == "被删"){
+					return 'background-color:#ffee00;color:red;';
+				}
+			}
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
 		}]],
 		toolbar:"#${dg}_toobar",
 		onLoadError:function(e){
@@ -149,8 +124,12 @@ $(function(){
 	};
 	//检查班级数据更新
 	${dg}_add = function(){
-		if(!current_subject_id){
+		if(!current_catalog_id){
 			$.messager.alert("提示","请先选择环球的分类");
+			return;
+		}
+		if(s.tree("getRoots").length == 0){
+			$.messager.alert("提示","请先导入科目");
 			return;
 		}
 		$.messager.confirm("确认","您是否确认检查班级数据更新?",function(r){
@@ -181,14 +160,14 @@ $(function(){
 					if(data.success){
 						$.messager.show({title:"提示",msg:"更新成功",showType:"show"});
 						$.each(rows,function(i){
-							if(rows[i].status == "新的"){
-								var index = dg.datagrid("getRowIndex",rows[i]);
-								dg.datagrid("deleteRow",index+1);
-								dg.datagrid("deleteRow",index);
-							}else{
+							//if(rows[i].status == "新的"){
+							//	var index = dg.datagrid("getRowIndex",rows[i]);
+							//	dg.datagrid("deleteRow",index+1);
+							//	dg.datagrid("deleteRow",index);
+							//}else{
 								var index = dg.datagrid("getRowIndex",rows[i]);
 								dg.datagrid("deleteRow",dg.datagrid("getRowIndex",index));
-							}
+							//}
 						});
 					}else{
 						$.messager.show({title:"提示",msg:"更新失败",showType:"show"});

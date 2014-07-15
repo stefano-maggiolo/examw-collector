@@ -21,7 +21,7 @@ $(function(){
 		},{
 			title:"类别名称",
 			field:"name",
-			width:25
+			width:15
 		},{
 			title:"类别代码",
 			field:"id",
@@ -30,6 +30,10 @@ $(function(){
 			title:"状态",
 			field:"status",
 			width:10
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
 		}]],
 		onLoadError:function(e){
 			<@error_dialog "e"/>
@@ -70,10 +74,10 @@ $(function(){
 										var id = rows[i].id;
 										var children = dg1.treegrid("getChildren",rows[i].id);
 										if(!children || children.length==0){
-											if(rows[i].status=="新的"){
-												dg1.treegrid("remove",id);
-												dg1.treegrid("remove",id);
-											}else
+											//if(rows[i].status=="新的"){
+											//	dg1.treegrid("remove",id);
+											//	dg1.treegrid("remove",id);
+											//}else
 												dg1.treegrid("remove",id);
 										}
 									}
@@ -159,7 +163,6 @@ $(function(){
 							dg.treegrid('reloadFooter');
 						}
 					}
-					
 				});
 			}
 		}
@@ -173,7 +176,7 @@ $(function(){
 		 	handler:function(){
 			 		$('#${dg}_remote').treegrid('reload');
 		 	}
-	 	}]" style="padding:5px;width:400px;">
+	 	}]" style="padding:5px;width:600px;">
 	 	<table id="${dg}_remote"></table>
 	 </div>
 	 <div data-options="region:'center',title:'本地考试分类'">

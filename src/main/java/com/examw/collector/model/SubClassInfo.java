@@ -309,4 +309,12 @@ public class SubClassInfo  extends Paging implements Serializable {
 		this.status = status;
 	}
 	
+	private String updateInfo;
+	public String getUpdateInfo() {
+		return updateInfo;
+	}
+	public void setUpdateInfo(String updateInfo) {
+		this.updateInfo = updateInfo;
+	}
+	
 }

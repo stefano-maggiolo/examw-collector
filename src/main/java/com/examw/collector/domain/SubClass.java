@@ -280,77 +280,120 @@ public class SubClass extends BaseDomain implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		SubClass other = (SubClass) obj;
+		boolean flag = true;	updateInfo = "";
 		if (code == null) {
 			if (other.code != null)
-				return false;
+				flag = false;
 		} else if (!code.equals(other.code))
-			return false;
+		{
+			updateInfo += ("代码变更:"+other.code+"-->"+code);
+			flag = false;
+		}
 		if (demo == null) {
 			if (other.demo != null)
-				return false;
+				flag = false;
 		} else if (!demo.equals(other.demo))
-			return false;
+		{
+			updateInfo += (" 试听项变更:"+other.demo+"-->"+demo);
+			flag = false;
+		}
 		if (end == null) {
 			if (other.end != null)
-				return false;
+				flag = false;
 		} else if (!end.equals(other.end))
-			return false;
+		{
+			updateInfo += (" 结课日期变更:"+other.end+"-->"+end);
+			flag = false;
+		}
 		if (isLive == null) {
 			if (other.isLive != null)
-				return false;
+				flag = false;
 		} else if (!isLive.equals(other.isLive))
-			return false;
+		{
+			updateInfo += (" 是否直播变更:"+other.isLive+"-->"+isLive);
+			flag = false;
+		}
 		if (isShow == null) {
 			if (other.isShow != null)
-				return false;
+				flag = false;
 		} else if (!isShow.equals(other.isShow))
-			return false;
+		{
+			updateInfo += (" 是否显示变更:"+other.isShow+"-->"+isShow);
+			flag = false;
+		}
 		if (longDay == null) {
 			if (other.longDay != null)
-				return false;
+				flag = false;
 		} else if (!longDay.equals(other.longDay))
-			return false;
+		{
+			updateInfo += (" 学习天数变更:"+other.longDay+"-->"+longDay);
+			flag = false;
+		}
 		if (name == null) {
 			if (other.name != null)
-				return false;
+				flag = false;
 		} else if (!name.equals(other.name))
-			return false;
+		{
+			updateInfo += (" 名字变更:"+other.name+"-->"+name);
+			flag = false;
+		}
 		if (salePrice == null) {
 			if (other.salePrice != null)
-				return false;
+				flag = false;
 		} else if (!salePrice.equals(other.salePrice))
-			return false;
+		{
+			updateInfo += (" 优惠价变更:"+other.salePrice+"-->"+salePrice);
+			flag = false;
+		}
 		if (sourcePrice == null) {
 			if (other.sourcePrice != null)
-				return false;
+				flag = false;
 		} else if (!sourcePrice.equals(other.sourcePrice))
-			return false;
+		{
+			updateInfo += (" 优惠价变更:"+other.sourcePrice+"-->"+sourcePrice);
+			flag = false;
+		}
 		if (start == null) {
 			if (other.start != null)
-				return false;
+				flag = false;
 		} else if (!start.equals(other.start))
-			return false;
+		{
+			updateInfo += (" 开课日期变更:"+other.start+"-->"+start);
+			flag = false;
+		}
 		if (subject == null) {
 			if (other.subject != null)
-				return false;
+				flag = false;
 		} else if (!subject.getCode().equals(other.subject.getCode()))
-			return false;
+		{
+			updateInfo += (" 所属科目变更:"+other.subject.getName()+other.subject.getCode()+"-->"+subject.getName()+subject.getCode());
+			flag = false;
+		}
 		if (teacherId == null) {
 			if (other.teacherId != null)
-				return false;
+				flag = false;
 		} else if (!teacherId.equals(other.teacherId))
-			return false;
+		{
+			updateInfo += (" 教师ID变更:"+other.teacherId+"-->"+teacherId);
+			flag = false;
+		}
 		if (teacherName == null) {
 			if (other.teacherName != null)
-				return false;
+				flag = false;
 		} else if (!teacherName.equals(other.teacherName))
-			return false;
+		{
+			updateInfo += (" 教师名字变更:"+other.teacherName+"-->"+teacherName);
+			flag = false;
+		}
 		if (total == null) {
 			if (other.total != null)
-				return false;
+				flag = false;
 		} else if (!total.equals(other.total))
-			return false;
-		return true;
+		{
+			updateInfo += (" 总讲数变更:"+other.total+"-->"+total);
+			flag = false;
+		}
+		return flag;
 	}
 	/**
 	 * 获取 老师ID

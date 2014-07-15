@@ -20,11 +20,19 @@ $(function(){
 			{
 				if(node.attributes == undefined)
 				{
+					current_catalog_id = "";
+					s.tree("loadData",[]);
 					return;
 				}else
 				{
 					if(node.attributes.code)
 						current_catalog_id = node.attributes.code;
+					else{
+						current_catalog_id = "";
+						s.tree("loadData",[]);
+						return;
+					}
+						
 				}
 				if(s){
 					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
@@ -79,39 +87,19 @@ $(function(){
 			align:"left",
 			sortable:true
 		},{
-			title:"原价",
-			field:"source",
-			width:10,
-			align:"right",
-			sortable:true
-		},{
-			title:"优惠价",
-			field:"discount",
-			width:10,
-			align:"right",
-			sortable:true
-		},{
-			title:"是否显示",
-			field:"isShow",
-			width:10,
-			align:"right",
-			formatter: function(value,row,index){
-				if (value){
-					return "是";
-				} else {
-					return "否";
-				}
-			}
-		},{
-			title:"包含班级",
-			field:"classCodes",
-			width:30,
-			align:"left"
-		},{
 			title:"状态",
 			field:"status",
 			width:10,
-			align:"left"
+			align:"left",
+			styler: function(value,row,index){
+				if (value == "被删"){
+					return 'background-color:#ffee00;color:red;';
+				}
+			}
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
 		}]],
 		toolbar:"#${dg}_toobar",
 		onLoadError:function(e){
@@ -137,7 +125,7 @@ $(function(){
 			$.messager.alert("提示","请先选择环球的分类");
 			return;
 		}
-		if(!s || !s.tree("getData")){
+		if(!s || s.tree("getRoots").length==0){
 			$.messager.alert("提示","请先导入科目");
 			return;
 		}
@@ -168,14 +156,14 @@ $(function(){
 					if(data.success){
 						$.messager.show({title:"提示",msg:"更新成功",showType:"show"});
 						$.each(rows,function(i){
-							if(rows[i].status == "新的"){
-								var index = dg.datagrid("getRowIndex",rows[i]);
-								dg.datagrid("deleteRow",index+1);
-								dg.datagrid("deleteRow",index);
-							}else{
+							//if(rows[i].status == "新的"){
+							//	var index = dg.datagrid("getRowIndex",rows[i]);
+							//	dg.datagrid("deleteRow",index+1);
+							//	dg.datagrid("deleteRow",index);
+							//}else{
 								var index = dg.datagrid("getRowIndex",rows[i]);
 								dg.datagrid("deleteRow",dg.datagrid("getRowIndex",index));
-							}
+							//}
 						});
 					}else{
 						$.messager.show({title:"提示",msg:"更新失败",showType:"show"});

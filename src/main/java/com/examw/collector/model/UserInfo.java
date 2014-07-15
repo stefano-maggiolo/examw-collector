@@ -1,4 +1,4 @@
-package com.examw.collector.domain;
+package com.examw.collector.model;
 
 import java.util.Date;
 

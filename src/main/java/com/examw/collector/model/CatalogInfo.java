@@ -127,5 +127,11 @@ public class CatalogInfo extends Paging implements Serializable{
 	public void setState(String state) {
 		this.state = state;
 	}
-	
+	private String updateInfo;
+	public String getUpdateInfo() {
+		return updateInfo;
+	}
+	public void setUpdateInfo(String updateInfo) {
+		this.updateInfo = updateInfo;
+	}
 }

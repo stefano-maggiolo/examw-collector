@@ -1,13 +1,13 @@
 package com.examw.collector.service;
 
-import com.examw.collector.model.LoginLogInfo;
+import com.examw.collector.model.OperateLogInfo;
 
 /**
  * 登录日志服务接口。
  * @author yangyong.
  * @since 2014-05-17.
  */
-public interface ILoginLogService extends IBaseDataService<LoginLogInfo> {
+public interface IOperateLogService extends IBaseDataService<OperateLogInfo> {
 	/**
 	 * 添加日志。
 	 * @param account

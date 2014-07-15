@@ -1,8 +1,9 @@
-package com.examw.collector.domain;
+package com.examw.collector.model;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.codehaus.jackson.map.annotate.JsonSerialize.Inclusion;
 
+import com.examw.collector.domain.LoginLog;
 import com.examw.model.IPaging;
 /**
  * 登录日志信息。

@@ -2,15 +2,15 @@ package com.examw.collector.dao;
 
 import java.util.List;
 
-import com.examw.collector.domain.LoginLog;
-import com.examw.collector.model.LoginLogInfo;
+import com.examw.collector.domain.OperateLog;
+import com.examw.collector.model.OperateLogInfo;
 
 /**
  * 登录日志数据接口。
  * @author yangyong.
  * @since 2014-04-17.
  */
-public interface ILoginLogDao extends IBaseDao<LoginLog> {
+public interface IOperateLogDao extends IBaseDao<OperateLog> {
 	/**
 	 * 查询数据。
 	 * @param info
@@ -18,7 +18,7 @@ public interface ILoginLogDao extends IBaseDao<LoginLog> {
 	 * @return
 	 * 结果数据。
 	 */
-	List<LoginLog> findLoginLogs(LoginLogInfo info);
+	List<OperateLog> findOperateLogs(OperateLogInfo info);
 	/**
 	 * 查询数据总数。
 	 * @param info
@@ -26,5 +26,5 @@ public interface ILoginLogDao extends IBaseDao<LoginLog> {
 	 * @return
 	 * 数据总数。
 	 */
-	Long total(LoginLogInfo info);
+	Long total(OperateLogInfo info);
 }

@@ -13,5 +13,5 @@
 		<!-- service -->
 		<import resource="spring-examw-collector-service.xml" />
 		<!-- shiro -->
-		<!--<import resource="spring-examw-collector-shiro.xml" />-->
+		<import resource="spring-examw-collector-shiro.xml" />
 </beans>

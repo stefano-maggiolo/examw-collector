@@ -3,7 +3,6 @@
 <hibernate-mapping package="com.examw.collector.domain">
 	<!-- 用户 -->
 	<class name="User"  table="tbl_Collector_Security_Users">
-		<cache usage="read-write"/>
 		<!-- 用户ID -->
 		<id  name="id"  type="string"  length="64" />
 		<!-- 用户姓名 -->
@@ -31,7 +30,6 @@
 	</class>
 	<!-- 用户登录日志 -->
 	<class name="LoginLog"  table="tbl_Collector_Security_LoginLog">
-		<cache usage="read-write"/>
 		<!-- 日志ID -->
 		<id  name="id"  type="string"  length="64" />
 		<!-- 登录账号 -->
@@ -45,17 +43,16 @@
 	</class>
 	<!-- 用户操作日志 -->
 	<class name="OperateLog"  table="tbl_Collector_Security_OperateLog">
-		<cache usage="read-write"/>
 		<!-- 日志ID -->
 		<id  name="id"  type="string"  length="64" />
 		<!-- 登录账号 -->
 		<property name="account"  type="string"  length="64" />
-		<!-- 登录IP -->
-		<property name="ip"  type="string"  length="32" />
-		<!-- 登录浏览器 -->
-		<property name="browser"  type="string"  length="255" />
 		<!-- 登录时间 -->
 		<property name="addTime" type="timestamp" />
+		<!-- 操作类型 -->
+		<property name="type" type="integer" />
+		<!-- 操作名称 -->
+		<property name="name" type="string" length="256" />
 		<!-- 操作内容 -->
 		<property name="content" type="text" not-null="true"/> 
 	</class>

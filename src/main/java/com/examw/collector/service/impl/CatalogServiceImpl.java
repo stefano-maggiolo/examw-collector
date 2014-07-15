@@ -257,8 +257,8 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 						else{
 							child.setStatus("新的");
 							children.add(child);
-							local_child.setStatus("旧的");
-							children.add(local_child);
+							//local_child.setStatus("旧的");
+							//children.add(local_child);
 						}
 					}
 					if(cbuf.length()>0){
@@ -279,9 +279,9 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 				}
 			}else{
 				c.setStatus("新的");
-				local_c.setStatus("旧的");
+				//local_c.setStatus("旧的");
 				add.add(c);
-				add.add(local_c);
+				//add.add(local_c);
 			}
 		}
 		//查找被删的集合

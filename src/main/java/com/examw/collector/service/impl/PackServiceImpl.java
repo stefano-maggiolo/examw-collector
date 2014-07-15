@@ -184,13 +184,13 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 			if(local_p == null){
 				p.setStatus("新增");
 				add.add(p);
-			}else if(local_p.equals(p)){
+			}else if(p.equals(local_p)){
 				continue;
 			}else{
 				p.setStatus("新的");
-				local_p.setStatus("旧的");
+				//local_p.setStatus("旧的");
 				add.add(p);
-				add.add(local_p);
+				//add.add(local_p);
 			}
 		}
 		if(existIds.length()>0)

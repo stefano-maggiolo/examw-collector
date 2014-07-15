@@ -11,7 +11,7 @@
 		<property name="cacheManagerConfigFile" value="classpath:spring-examw-collector-ehcache-shiro.xml" />
 	</bean>
 	<!-- 凭证匹配器 -->
-	<bean id="credentialsMatcher"  class="com.examw.netplatform.shiro.RetryLimitHashedCredentialsMatcher">
+	<bean id="credentialsMatcher"  class="com.examw.collector.shiro.RetryLimitHashedCredentialsMatcher">
 		<!-- 构造函数 -->
 		<constructor-arg ref="cacheManager" />
 		<!-- 摘要算法 -->
@@ -22,24 +22,24 @@
 		<property name="storedCredentialsHexEncoded"  value="true" />
 	</bean>
 	<!-- Realm实现 -->
-	<!-- <bean id="userRealm"  class="com.examw.netplatform.shiro.UserRealm">
-		用户服务接口
+	<bean id="userRealm"  class="com.examw.collector.shiro.UserRealm">
+		<!-- 用户服务接口 -->
 		<property name="userService"  ref="userService" />
-		用户密码工具
+		<!-- 用户密码工具 -->
 		<property name="passwordHelper"  ref="passwordHelper" />
-		凭证匹配器
+		<!-- 凭证匹配器 -->
 		<property name="credentialsMatcher"  ref="credentialsMatcher" />
-		是否启用缓存
+		<!-- 是否启用缓存 -->
 		<property name="cachingEnabled"  value="true" />
-		是否启用认证缓存
+		<!-- 是否启用认证缓存 -->
 		<property name="authenticationCachingEnabled"  value="true" />
-		认证缓存名称
+		<!-- 认证缓存名称 -->
 		<property name="authenticationCacheName"  value="authenticationCache" />
-		是否启用授权缓存
+		<!-- 是否启用授权缓存 -->
 		<property name="authorizationCachingEnabled"  value="true" />
-		授权缓存名称
+		<!-- 授权缓存名称 -->
 		<property name="authorizationCacheName"  value="authorizationCache" />
-	</bean> -->
+	</bean>
 	<!-- 会话ID生成器 -->
 	<bean id="sessionIdGenerator"  class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
 	<!-- 会话Cookie模版 -->

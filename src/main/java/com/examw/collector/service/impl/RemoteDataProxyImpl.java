@@ -6,7 +6,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.apache.log4j.Logger; 
+import org.apache.log4j.Logger;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
 

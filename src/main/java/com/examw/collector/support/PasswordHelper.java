@@ -5,7 +5,7 @@ import org.apache.shiro.util.ByteSource;
 import org.springframework.util.StringUtils;
 
 import com.examw.collector.domain.User;
-import com.examw.collector.domain.UserInfo;
+import com.examw.collector.model.UserInfo;
 import com.examw.utils.AESUtil;
 import com.examw.utils.HexUtil;
 import com.examw.utils.MD5Util;

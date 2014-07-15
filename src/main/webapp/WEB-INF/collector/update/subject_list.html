@@ -25,7 +25,7 @@
 						current_catalog_id = node.attributes.code;
 				}
 				//search;
-				${dg}_search();
+				//${dg}_search();
 			}
 		});
 		var dg1 = $("#${dg}_remote").datagrid({
@@ -48,13 +48,18 @@
 				field:"code",
 				width:15
 			},{
-				title:"所属类别",
-				field:"catalogName",
-				width:35
-			},{
 				title:"状态",
 				field:"status",
-				width:15
+				width:15,
+				styler: function(value,row,index){
+					if (value == "被删"){
+						return 'background-color:#ffee00;color:red;';
+					}
+				}
+			},{
+				title:"变更提醒",
+				field:"updateInfo",
+				width:40
 			}]],
 			toolbar : [
 			   		{
@@ -88,13 +93,13 @@
 										if(data.success){
 											$.messager.show({title:"提示",msg:"更新成功",showType:"show"});
 											$.each(rows,function(i){
-												if(rows[i].status == "新的"){
-													var index = dg1.datagrid("getRowIndex",rows[i]);
-													dg1.datagrid("deleteRow",index+1);
-												}else{
+												//if(rows[i].status == "新的"){
+												//	var index = dg1.datagrid("getRowIndex",rows[i]);
+												//	dg1.datagrid("deleteRow",index+1);
+												//}else{
 													var index = dg1.datagrid("getRowIndex",rows[i]);
 													dg1.datagrid("deleteRow",dg1.datagrid("getRowIndex",index));
-												}
+												//}
 											});
 										}else{
 											$.messager.show({title:"提示",msg:"更新失败",showType:"show"});
@@ -208,10 +213,10 @@
 </script>
 <div class="easyui-layout" data-options="fit:true" id="${dg}_layout">
 	<div
-		data-options="region:'west',title:'班级更新',split:true"	style="width: 450px;">
+		data-options="region:'center',title:'班级更新',split:true"	style="width: 450px;">
 		<table id="${dg}_remote"></table>
 	</div>
-	<div data-options="region:'center',title:'科目列表'">
+	<!-- <div data-options="region:'center',title:'科目列表'">
 		<div class="easyui-layout" data-options="fit:true" id="${dg}_layout">
 			<div
 				data-options="region:'west',title:'所属考试',split:true,tools: [{
@@ -236,5 +241,5 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div> -->
 </div>

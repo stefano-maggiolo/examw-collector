@@ -154,13 +154,13 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 			if(local_s == null){
 				s.setStatus("新增");
 				add.add(s);
-			}else if(local_s.equals(s)){
+			}else if(s.equals(local_s)){
 				continue;
 			}else{
 				s.setStatus("新的");
-				local_s.setStatus("旧的");
+				//local_s.setStatus("旧的");
 				add.add(s);
-				add.add(local_s);
+				//add.add(local_s);
 			}
 		}
 		if(existIds.length()>0)

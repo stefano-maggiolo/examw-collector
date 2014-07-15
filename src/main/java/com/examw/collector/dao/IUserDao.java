@@ -3,7 +3,7 @@ package com.examw.collector.dao;
 import java.util.List;
 
 import com.examw.collector.domain.User;
-import com.examw.collector.domain.UserInfo;
+import com.examw.collector.model.UserInfo;
 
 /**
  * 用户数据接口。

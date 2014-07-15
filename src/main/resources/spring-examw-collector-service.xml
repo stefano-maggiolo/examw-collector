@@ -49,6 +49,10 @@
 	<bean id="loginLogService"  class="com.examw.collector.service.impl.LoginLogServiceImpl">
 		<property name="loginLogDao" ref="loginLogDao" />
 	</bean>
+	<!-- 操作日志服务 -->
+	<bean id="operateLogService"  class="com.examw.collector.service.impl.OperateLogServiceImpl">
+		<property name="operateLogDao" ref="operateLogDao" />
+	</bean>
 	<!-- 系统服务 End -->
 	<!-- 远程数据代理服务 -->
 	<bean id="remoteDataProxy" class="com.examw.collector.service.impl.RemoteDataProxyImpl">
