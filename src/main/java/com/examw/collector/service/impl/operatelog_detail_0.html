@@ -1,0 +1,20 @@
+<!-- 更改code -->
+<#assign module="security_operatelog"/>
+<form id="${module}_edit_form" style="padding:10px;margin: 0 auto">
+	<div style="float:left;margin-top:12px;width:100%;">
+		<label style="width:75px;">操作人：</label>
+		<input type="text" name="account" style="width:300px;" readonly="readonly"/>
+	</div>
+	<div style="float:left;margin-top:12px;width:100%;">
+		<label style="width:75px;">操作时间：</label>
+		<input type="text" name="addTime" style="width:300px;" readonly="readonly"/>
+	</div>
+	<div style="float:left;margin-top:12px;width:100%;">
+		<label style="width:75px;">操作类型：</label>
+		<input type="text" name="typeName" style="width:300px;" readonly="readonly"/>
+	</div>
+	<div style="float:left;margin-top:12px;width:100%;">
+		<label style="width:75px;">操作内容：</label>
+		<textarea name="content"  rows="4" cols="10" style="width:300px;" readonly="readonly"/>
+	</div>
+</form>

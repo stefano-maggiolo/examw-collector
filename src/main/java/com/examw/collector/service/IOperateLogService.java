@@ -1,5 +1,7 @@
 package com.examw.collector.service;
 
+import java.util.Map;
+
 import com.examw.collector.model.OperateLogInfo;
 
 /**
@@ -18,4 +20,15 @@ public interface IOperateLogService extends IBaseDataService<OperateLogInfo> {
 	 * 浏览器信息。
 	 */
 	void addLog(String account,String ip,String browser);
+	/**
+	 * 获取日志类型的名称
+	 * @param type
+	 * @return
+	 */
+	String getTypeName(Integer type);
+	/**
+	 * 获取类型名称映射
+	 * @return
+	 */
+	Map<String,String> getTypeMap();
 }

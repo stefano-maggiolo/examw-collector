@@ -1,0 +1,63 @@
+<!-- 套餐数据更新 -->
+<#assign module="security_operatelog"/>
+<#assign dg="${module}_package_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	var dg=$("#${dg}").datagrid({
+		url:"<@s.url '/admin/security/operatelog/pack/subject'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		pagination:true,
+		pagePosition:"bottom",
+		pageSize:20,
+		pageList:[20,30,40],
+		border:true,
+		striped:true,
+		sortName:"id",
+		idField:"code",
+		columns:[[{
+			field:"check",
+			checkbox:true
+		},{
+			title:"套餐代码",
+			field:"code",
+			width:10,
+			align:"left",
+			sortable:true
+		},{
+			title:"名称",
+			field:"name",
+			width:20,
+			align:"left",
+			sortable:true
+		},{
+			title:"状态",
+			field:"status",
+			width:10,
+			align:"left",
+			styler: function(value,row,index){
+				if (value == "被删"){
+					return 'background-color:#ffee00;color:red;';
+				}
+			}
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
+		}]],
+		toolbar:"#${dg}_toobar",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+		onCheck:function(index,data){
+			if(data.status == "旧的"){
+				dg.datagrid("uncheckRow",index);	//取消选择
+			}
+		}
+	});
+});
+-->
+</script>
+<table id="${dg}" title="套餐数据更新记录"></table>

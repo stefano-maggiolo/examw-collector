@@ -21,7 +21,8 @@ public class OperateLog implements Serializable {
 						TYPE_UPDATE_CATALOG = 1,	//更新课程分类
 					TYPE_UPDATE_SUBJECT = 2,		//更新科目
 				TYPE_UPDATE_GRADE = 3,				//更新班级
-			TYPE_UPDATE_PACKAGE =4;					//更新套餐
+			TYPE_UPDATE_PACKAGE =4,					//更新套餐
+		TYPE_CHECK_UPDATE = 5;						//检查更新
 	/**
 	 * 获取 ID
 	 * @return id
@@ -33,7 +34,6 @@ public class OperateLog implements Serializable {
 	/**
 	 * 设置 ID
 	 * @param id
-	 * 
 	 */
 	public void setId(String id) {
 		this.id = id;
@@ -41,7 +41,6 @@ public class OperateLog implements Serializable {
 	/**
 	 * 获取 帐号
 	 * @return account
-	 * 
 	 */
 	public String getAccount() {
 		return account;
@@ -49,7 +48,6 @@ public class OperateLog implements Serializable {
 	/**
 	 * 设置 帐号
 	 * @param account
-	 * 
 	 */
 	public void setAccount(String account) {
 		this.account = account;

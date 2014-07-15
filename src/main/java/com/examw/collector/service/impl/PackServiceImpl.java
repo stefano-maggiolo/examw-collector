@@ -1,16 +1,20 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.ICatalogDao;
+import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.IPackDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Subject;
 import com.examw.collector.model.PackInfo;
@@ -32,6 +36,15 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 //	private ISubClassDao subClassDao;
 	private ISubjectDao subjectDao;
 	private ICatalogDao catalogDao;
+	private IOperateLogDao operateLogDao;
+	/**
+	 * 设置操作日志数据接口
+	 * @param operateLogDao
+	 * 
+	 */
+	public void setOperateLogDao(IOperateLogDao operateLogDao) {
+		this.operateLogDao = operateLogDao;
+	}
 	/**
 	 * 设置 班级数据接口
 	 * 
@@ -160,10 +173,10 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 		}
 	}
 	@Override
-	public DataGrid<PackInfo> dataGridUpdate(PackInfo info) {
+	public DataGrid<PackInfo> dataGridUpdate(PackInfo info,String account) {
 		if(StringUtils.isEmpty(info.getCatalogId()))
 			return null;
-		List<Pack> list = this.findChangedPack(info);
+		List<Pack> list = this.findChangedPack(info,account);
 		DataGrid<PackInfo> grid = new DataGrid<PackInfo>();
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
@@ -174,7 +187,8 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	 * @param info
 	 * @return
 	 */
-	private List<Pack> findChangedPack(PackInfo info){
+	private List<Pack> findChangedPack(PackInfo info,String account){
+		Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
 		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(), info.getSubjectId());
 		List<Pack> add = new ArrayList<Pack>();
 		StringBuffer existIds = new StringBuffer();
@@ -187,6 +201,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 			}else if(p.equals(local_p)){
 				continue;
 			}else{
+				//TODO 套餐价格不同的情况 要进行题型
 				p.setStatus("新的");
 				//local_p.setStatus("旧的");
 				add.add(p);
@@ -206,6 +221,15 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 				add.addAll(deleteList);
 			}
 		}
+		//添加操作日志
+		OperateLog log = new OperateLog();
+		log.setId(UUID.randomUUID().toString());
+		log.setType(OperateLog.TYPE_CHECK_UPDATE);
+		log.setName("检测套餐数据更新");
+		log.setAddTime(new Date());
+		log.setAccount(account);
+		log.setContent("检测 "+catalog.getName()+"("+catalog.getCode()+")的套餐数据更新");
+		this.operateLogDao.save(log);
 		return add;
 	}
 	

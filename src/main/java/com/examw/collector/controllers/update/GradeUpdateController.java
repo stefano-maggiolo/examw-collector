@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.examw.aware.IUserAware;
 import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IGradeUpdateService;
 import com.examw.collector.service.ISubClassService;
@@ -26,8 +27,9 @@ import com.examw.model.Json;
  */
 @Controller
 @RequestMapping("/admin/update/grade")
-public class GradeUpdateController {
+public class GradeUpdateController implements IUserAware{
 	private static Logger logger  = Logger.getLogger(GradeUpdateController.class);
+	private String account;
 	@Resource
 	private IGradeUpdateService gradeUpdateService;
 	@Resource
@@ -46,7 +48,7 @@ public class GradeUpdateController {
 			data.setRows(new ArrayList<SubClassInfo>());
 			return data;
 		}
-		return this.subClassService.dataGridUpdate(info);
+		return this.subClassService.dataGridUpdate(info,account);
 	}
 	
 	@RequestMapping(value="/update", method = RequestMethod.POST)
@@ -54,7 +56,7 @@ public class GradeUpdateController {
 	public Json update(@RequestBody List<SubClassInfo> subClasses){
 		Json result = new Json();
 		try {
-			this.gradeUpdateService.update(subClasses);
+			this.gradeUpdateService.update(subClasses,account);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);
@@ -62,5 +64,15 @@ public class GradeUpdateController {
 			logger.error("更新考试类型数据发生异常", e);
 		}
 		return result;
+	}
+	@Override
+	public void setUserId(String userId) {
+	}
+	@Override
+	public void setUserName(String userName) {
+	}
+	@Override
+	public void setUserNickName(String userNickName) {
+		this.account = userNickName;
 	}
 }

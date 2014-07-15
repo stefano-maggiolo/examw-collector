@@ -21,7 +21,7 @@ public interface ISubjectService extends IBaseDataService<SubjectInfo>{
 	 * 获取新增或更新的集合
 	 * @return
 	 */
-	DataGrid<SubjectInfo> dataGridUpdate();
+	DataGrid<SubjectInfo> dataGridUpdate(String account);
 	/**
 	 * 更新一个集合
 	 * @param subjects

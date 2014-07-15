@@ -52,6 +52,16 @@
 	<!-- 操作日志服务 -->
 	<bean id="operateLogService"  class="com.examw.collector.service.impl.OperateLogServiceImpl">
 		<property name="operateLogDao" ref="operateLogDao" />
+		<property name="typeMap">
+			<map>
+	   			<entry key="0"  value="环球code比对" />
+	   			<entry key="1"  value="更新科目数据" />
+	   			<entry key="2"  value="更新科目数据" />
+	   			<entry key="3"  value="更新班级数据" />
+	   			<entry key="4"  value="更新套餐数据" />
+	   			<entry key="5"  value="检测数据更新" />
+	   		</map>
+		</property>
 	</bean>
 	<!-- 系统服务 End -->
 	<!-- 远程数据代理服务 -->
@@ -79,12 +89,14 @@
 	    <property name="catalogDao" ref="catalogDao"/>
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="dataServer" ref="dataServer"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<!-- 科目服务 -->
 	<bean id="subjectService" class="com.examw.collector.service.impl.SubjectServiceImpl">
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	    <property name="catalogDao" ref="catalogDao"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<!-- 班级服务 -->
 	<bean id="subClassService" class="com.examw.collector.service.impl.SubClassServiceImpl">
@@ -92,6 +104,7 @@
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="adVideoDao" ref="adVideoDao"/>
 	    <property name="dataServer" ref="dataServer"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<!-- 课节服务 -->
 	<bean id="relateService" class="com.examw.collector.service.impl.RelateServiceImpl">
@@ -109,11 +122,13 @@
 	    <property name="catalogDao" ref="catalogDao"/>
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="dataServer" ref="dataServer"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	
 	<!-- 本地数据服务Start -->
 	<bean id="catalogEntityService" class="com.examw.collector.service.impl.CatalogEntityServiceImpl">
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<bean id="subjectEntityService" class="com.examw.collector.service.impl.SubjectEntityServiceImpl">
 	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
@@ -155,6 +170,7 @@
 	    <property name="subjectDao" ref="subjectDao"/>
 	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<!-- 班级更新 -->
 	<bean id="gradeUpdateService" class="com.examw.collector.service.impl.GradeUpdateServiceImpl">
@@ -165,6 +181,7 @@
 	    <property name="listenEntityDao" ref="listenEntityDao"/>
 	    <property name="dataServer" ref="dataServer"/>
 	    <property name="relateDao" ref="relateDao"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<!-- 套餐更新 -->
 	<bean id="packageUpdateService" class="com.examw.collector.service.impl.PackageUpdateServiceImpl">
@@ -174,6 +191,7 @@
 	    <property name="packageEntityDao" ref="packageEntityDao"/>
 	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<!-- 数据更新服务end -->
 	

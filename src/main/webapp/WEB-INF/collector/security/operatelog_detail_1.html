@@ -1,0 +1,45 @@
+<!-- 课程分类数据更新 -->
+<#assign module="security_operatelog"/>
+<#assign dg="${module}_catalog_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	var dg1 = $("#${dg}").treegrid({
+		url:"",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		idField:"id",
+		treeField:"name",
+		singleSelect:false,
+		animate:true,
+		border:true,
+		striped:true,
+		columns:[[{
+			field:"children",
+			checkbox:true
+		},{
+			title:"类别名称",
+			field:"name",
+			width:15
+		},{
+			title:"类别代码",
+			field:"id",
+			width:10
+		},{
+			title:"状态",
+			field:"status",
+			width:10
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
+		}]],
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		}
+	});
+});
+-->
+</script>
+<table id="${dg}" title="课程分类数据更新记录"></table>

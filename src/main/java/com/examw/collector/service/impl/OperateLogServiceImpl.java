@@ -2,6 +2,7 @@ package com.examw.collector.service.impl;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
@@ -18,6 +19,7 @@ import com.examw.collector.service.IOperateLogService;
  */
 public class OperateLogServiceImpl extends BaseDataServiceImpl<OperateLog, OperateLogInfo> implements IOperateLogService {
 	private IOperateLogDao operateLogDao;
+	private	Map<String,String> typeMap;
 	/**
 	 * 设置登录日志数据接口。
 	 * @param loginLogDao
@@ -26,6 +28,25 @@ public class OperateLogServiceImpl extends BaseDataServiceImpl<OperateLog, Opera
 	public void setOperateLogDao(IOperateLogDao operateLogDao) {
 		this.operateLogDao = operateLogDao;
 	}
+	
+	/**
+	 * 获取 类型名称映射
+	 * @return typeMap
+	 * 
+	 */
+	public Map<String, String> getTypeMap() {
+		return typeMap;
+	}
+
+	/**
+	 * 设置 类型名称映射
+	 * @param typeMap
+	 * 
+	 */
+	public void setTypeMap(Map<String, String> typeMap) {
+		this.typeMap = typeMap;
+	}
+
 	/*
 	 * 添加登录日志。
 	 */
@@ -54,6 +75,7 @@ public class OperateLogServiceImpl extends BaseDataServiceImpl<OperateLog, Opera
 		if(data == null) return null;
 		OperateLogInfo info = new OperateLogInfo();
 		BeanUtils.copyProperties(data, info);
+		info.setTypeName(this.getTypeName(data.getType()));
 		return info;
 	}
 	/*
@@ -93,4 +115,12 @@ public class OperateLogServiceImpl extends BaseDataServiceImpl<OperateLog, Opera
 			if(data != null) this.operateLogDao.delete(data);
 		}
 	}
+	
+	@Override
+	public String getTypeName(Integer type) {
+		if(typeMap == null ||type == null)
+		return null;
+		return this.typeMap.get(type.toString());
+	}
+	
 }

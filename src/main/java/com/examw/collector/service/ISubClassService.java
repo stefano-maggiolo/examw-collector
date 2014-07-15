@@ -20,7 +20,7 @@ public interface ISubClassService  extends IBaseDataService<SubClassInfo>{
 	 * 获取新增或更新的集合
 	 * @return
 	 */
-	DataGrid<SubClassInfo> dataGridUpdate(SubClassInfo info);
+	DataGrid<SubClassInfo> dataGridUpdate(SubClassInfo info,String account);
 	/**
 	 * 更新一个集合
 	 * @param subClasses

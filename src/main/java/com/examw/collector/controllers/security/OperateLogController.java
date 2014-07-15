@@ -45,7 +45,7 @@ public class OperateLogController {
 	
 	@RequestMapping(value="/edit", method = RequestMethod.GET)
 	public String edit(Integer type,String id, Model model){
-		return "security/operate_detail_"+type;
+		return "security/operatelog_detail_"+type;
 	}
 	/**
 	 * 删除数据。

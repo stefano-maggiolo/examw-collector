@@ -38,29 +38,35 @@ $(function(){
 		},{
 			title:"名称",
 			field:"name",
-			width:120,
+			width:40,
 			align:"left",
 			sortable:true
 		},{
 			title:"操作时间",
 			field:"addTime",
-			width:25,
+			width:20,
 			align:"center"
+		},{
+			title:"内容",
+			field:"content",
+			width:40,
+			align:"left",
+			sortable:true
 		}]],
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
 		toolbar:"#${dg}_toobar",
 		onDblClickRow:function(index,row){
-			detail_window(row.type,row.id);
+			detail_window(row);
 		}
 	});
-	function detail_window(type,id){
+	function detail_window(row){
 		var d = $("<div/>").dialog({
-			title:title,
+			title:'操作详情',
 			width:800,
 			height:600,
-			href:"<@s.url '/admin/security/operatelog/edit'/>?id="+id+"&type=" + type,
+			href:"<@s.url '/admin/security/operatelog/edit'/>?id="+row.id+"&type=" + row.type,
 			modal:true,
 			buttons:[
 			{
@@ -96,7 +102,7 @@ $(function(){
 					ids.push(rows[i].id);
 				}
 				$.ajax({
-					url:"<@s.url '/admin/security/log/delete'/>",
+					url:"<@s.url '/admin/security/operatelog/delete'/>",
 					type:"POST",
 					data:{
 						id:ids.join("|")

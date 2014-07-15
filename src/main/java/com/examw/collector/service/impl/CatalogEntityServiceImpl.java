@@ -1,15 +1,19 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.ICatalogEntityDao;
+import com.examw.collector.dao.IOperateLogDao;
+import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.model.local.CatalogEntityInfo;
 import com.examw.collector.service.ICatalogEntityService;
@@ -24,7 +28,7 @@ import com.examw.model.TreeNode;
 public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity, CatalogEntityInfo> implements ICatalogEntityService{
 	private static Logger logger = Logger.getLogger(MenuServiceImpl.class);
 	private ICatalogEntityDao catalogEntityDao;
-	
+	private IOperateLogDao operateLogDao;
 	/**
 	 * 设置 考试类别数据接口
 	 * @param catalogEntityDao
@@ -33,6 +37,15 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 	public void setCatalogEntityDao(ICatalogEntityDao catalogEntityDao) {
 		this.catalogEntityDao = catalogEntityDao;
 	}
+	/**
+	 * 设置操作日志数据接口
+	 * @param operateLogDao
+	 * 
+	 */
+	public void setOperateLogDao(IOperateLogDao operateLogDao) {
+		this.operateLogDao = operateLogDao;
+	}
+
 	@Override
 	protected List<CatalogEntity> find(CatalogEntityInfo info) {
 		return this.catalogEntityDao.findCatalogs(info);
@@ -64,6 +77,10 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 	}
 	@Override
 	public CatalogEntityInfo update(CatalogEntityInfo info) {
+		return null;
+	}
+	@Override
+	public CatalogEntityInfo update(CatalogEntityInfo info,String account) {
 		if(info == null)	return null;
 		if(!StringUtils.isEmpty(info.getId())){
 			CatalogEntity data = this.catalogEntityDao.load(CatalogEntity.class, info.getId());
@@ -71,6 +88,15 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 			//BeanUtils.copyProperties(info, data);
 			//只设置Code
 			data.setCode(info.getCode());
+			//添加操作日志
+			OperateLog log = new OperateLog();
+			log.setId(UUID.randomUUID().toString());
+			log.setType(OperateLog.TYPE_COMPARECODE);
+			log.setName("设置课程分类中环球的code");
+			log.setAddTime(new Date());
+			log.setAccount(account);
+			log.setContent("设置课程分类("+data.getCname()+")中环球的Code为"+info.getCode());
+			this.operateLogDao.save(log);
 			return info;
 		}
 		logger.info("更新失败");

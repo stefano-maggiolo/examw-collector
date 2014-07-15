@@ -88,4 +88,22 @@ public class OperateLogInfo	extends OperateLog implements IPaging {
 	public void setOrder(String order) {
 		 this.order = order;
 	}
+	private String typeName;
+	/**
+	 * 获取  类型名称
+	 * @return typeName
+	 * 
+	 */
+	public String getTypeName() {
+		return typeName;
+	}
+	/**
+	 * 设置 类型名称
+	 * @param typeName
+	 * 
+	 */
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+	
 }

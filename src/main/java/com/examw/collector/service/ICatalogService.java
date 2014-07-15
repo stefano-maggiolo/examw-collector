@@ -1,7 +1,6 @@
 package com.examw.collector.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.examw.collector.model.CatalogInfo;
 import com.examw.model.DataGrid;
@@ -26,15 +25,15 @@ public interface ICatalogService extends IBaseDataService<CatalogInfo>{
 	 * 找出有变化的集合
 	 * @return
 	 */
-	Map<String,Object> findChanged();
+//	Map<String,Object> findChanged();
 	/**
 	 * 获取新增或更新的集合
 	 * @return
 	 */
-	DataGrid<CatalogInfo> dataGridUpdate();
+	DataGrid<CatalogInfo> dataGridUpdate(String account);
 	/**
 	 * 更新一个集合
 	 * @param subjects
 	 */
-	void update(List<CatalogInfo> catalogs);
+	void update(List<CatalogInfo> catalogs,String account);
 }

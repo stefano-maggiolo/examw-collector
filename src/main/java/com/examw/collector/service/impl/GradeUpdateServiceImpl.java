@@ -1,17 +1,21 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.dao.IListenEntityDao;
+import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.IRelateDao;
 import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
+import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
@@ -21,6 +25,7 @@ import com.examw.collector.domain.local.SubjectEntity;
 import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IGradeUpdateService;
+import com.examw.collector.support.JSONUtil;
 
 /**
  * 班级数据更新服务接口实现类
@@ -35,6 +40,15 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	private IListenEntityDao listenEntityDao;
 	private IDataServer dataServer;
 	private IRelateDao relateDao;
+	private IOperateLogDao operateLogDao;
+	/**
+	 * 设置操作日志数据接口
+	 * @param operateLogDao
+	 * 
+	 */
+	public void setOperateLogDao(IOperateLogDao operateLogDao) {
+		this.operateLogDao = operateLogDao;
+	}
 	/**
 	 * 设置 远程班级数据接口
 	 * @param subClassDao
@@ -98,41 +112,62 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	}
 
 	@Override
-	public void update(List<SubClassInfo> subClasses) {
-		//更新本地副本
-		updateRemote(subClasses);
-		//更新实际数据
-		updateLocal(subClasses);
-	}
-	
-	private void updateRemote(List<SubClassInfo> subClasses){
+	public void update(List<SubClassInfo> subClasses,String account) {
 		if(subClasses == null ||subClasses.size()==0) return;
-		StringBuffer buf = new StringBuffer();
+		List<SubClassInfo> list = new ArrayList<SubClassInfo>();
 		for(SubClassInfo info:subClasses){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
 			}
 			if(info.getStatus().equals("被删")){
-				buf.append(info.getCode()).append(",");
-				continue;
-			}
-			this.subClassDao.saveOrUpdate(changeRemoteModel(info));
-		}
-		if(buf.length()>0)
-		{
-			String[] ids = buf.toString().split(",");
-			if(ids == null ||ids.length==0) return;
-			for(String id:ids){
-				SubClass data = this.subClassDao.load(SubClass.class, id);
-				if(data != null){
+				//本地副本
+				SubClass data1 = this.subClassDao.load(SubClass.class, info.getCode());
+				if(data1 != null){
 					//要先删课节
-					this.relateDao.delete(data.getCode());
-					this.subClassDao.delete(data);
+					this.relateDao.delete(data1.getCode());
+					this.subClassDao.delete(data1);
 					//TODO 是否连删
 				}
+				//实际数据
+				GradeEntity data2 = this.gradeEntityDao.load(GradeEntity.class, info.getCode());
+				if(data2 != null){
+					//先删课节
+					this.listenEntityDao.delete(data2.getId());
+					this.gradeEntityDao.delete(data2);
+					list.add(info);
+					//TODO 是否连删
+				}
+				continue;
+			}
+			SubClass sc = this.changeRemoteModel(info);
+			if(sc!=null)
+			{
+				this.subClassDao.saveOrUpdate(changeRemoteModel(info));
+			}
+			GradeEntity g = changeLocalModel(info);
+			if(g!=null)
+			{
+				this.gradeEntityDao.saveOrUpdate(g);
+				//删除原来班级带的课节地址,重新插入新的
+				this.deleteOldAndInsertNewListen(info.getCode());
+				list.add(info);
 			}
 		}
+		// 添加操作日志
+		OperateLog log = new OperateLog();
+		log.setId(UUID.randomUUID().toString());
+		log.setType(OperateLog.TYPE_UPDATE_GRADE);
+		log.setName("更新班级数据");
+		log.setAddTime(new Date());
+		log.setAccount(account);
+		log.setContent(JSONUtil.ObjectToJson(list));
+		this.operateLogDao.save(log);
 	}
+	/**
+	 * 本地数据模型转换
+	 * @param info
+	 * @return
+	 */
 	private SubClass changeRemoteModel(SubClassInfo info){
 		if(info == null) return null;
 		SubClass data = new SubClass();
@@ -148,37 +183,48 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		return data;
 	}
 	
-	private void updateLocal(List<SubClassInfo> subClasses) {
+	/*private void updateLocal(List<SubClassInfo> subClasses) {
 		if(subClasses == null ||subClasses.size()==0) return;
-		StringBuffer buf = new StringBuffer();
+		List<SubClassInfo> list = new ArrayList<SubClassInfo>();
 		for(SubClassInfo info:subClasses){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
 			}
 			if(info.getStatus().equals("被删")){
-				buf.append(info.getCode()).append(",");
-				continue;
-			}
-			this.gradeEntityDao.saveOrUpdate(changeLocalModel(info));
-			//删除原来班级带的课节地址,重新插入新的
-			this.deleteOldAndInsertNewListen(info.getCode());
-		}
-		if(buf.length()>0)
-		{
-			String[] ids = buf.toString().split(",");
-			if(ids == null ||ids.length==0) return;
-			for(String id:ids){
-				GradeEntity data = this.gradeEntityDao.load(GradeEntity.class, id);
+				GradeEntity data = this.gradeEntityDao.load(GradeEntity.class, info.getCode());
 				if(data != null){
 					//先删课节
 					this.listenEntityDao.delete(data.getId());
 					this.gradeEntityDao.delete(data);
+					list.add(info);
 					//TODO 是否连删
 				}
+				continue;
+			}
+			GradeEntity g = changeLocalModel(info);
+			if(g!=null)
+			{
+				this.gradeEntityDao.saveOrUpdate(g);
+				//删除原来班级带的课节地址,重新插入新的
+				this.deleteOldAndInsertNewListen(info.getCode());
+				list.add(info);
 			}
 		}
-		
-	}
+		// 添加操作日志
+		OperateLog log = new OperateLog();
+		log.setId(UUID.randomUUID().toString());
+		log.setType(OperateLog.TYPE_UPDATE_GRADE);
+		log.setName("更新班级数据(实际数据)");
+		log.setAddTime(new Date());
+		log.setContent(JSONUtil.ObjectToJson(list));
+		this.operateLogDao.save(log);
+	}*/
+	
+	/**
+	 * 实际班级数据模型转换
+	 * @param info
+	 * @return
+	 */
 	private GradeEntity changeLocalModel(SubClassInfo info){
 		if(info == null) return null;
 		GradeEntity data = new GradeEntity();
@@ -193,7 +239,10 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		}
 		return data;
 	}
-	
+	/**
+	 * 删除实际班级数据,然后插入新进数据
+	 * @param gradeId
+	 */
 	private void deleteOldAndInsertNewListen(String gradeId){
 		//删除
 		this.listenEntityDao.delete(gradeId);

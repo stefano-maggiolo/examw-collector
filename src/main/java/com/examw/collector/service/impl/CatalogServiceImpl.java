@@ -2,24 +2,27 @@ package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.ICatalogDao;
+import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Subject;
 import com.examw.collector.model.CatalogInfo;
 import com.examw.collector.service.ICatalogService;
 import com.examw.collector.service.IDataServer;
+import com.examw.collector.support.JSONUtil;
 import com.examw.model.DataGrid;
 import com.examw.model.TreeNode;
 
@@ -33,7 +36,15 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 	private ICatalogDao catalogDao;
 	private ISubjectDao subjectDao;
 	private IDataServer dataServer;
-	
+	private IOperateLogDao operateLogDao;
+	/**
+	 * 设置操作日志数据接口
+	 * @param operateLogDao
+	 * 
+	 */
+	public void setOperateLogDao(IOperateLogDao operateLogDao) {
+		this.operateLogDao = operateLogDao;
+	}
 	/**
 	 * 设置 分类数据接口
 	 * @param catalogDao
@@ -188,38 +199,38 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 		return node;
 	}
 	
-	@Override
-	public Map<String, Object> findChanged() {
-		List<Catalog> remote = this.dataServer.loadCatalogs();	//远程的数据
-		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
-		Map<String,Object> map = new HashMap<String,Object>();
-		List<Catalog> add = new ArrayList<Catalog>();
-		List<Catalog> update = new ArrayList<Catalog>();
-		for(Catalog c:remote){
-			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
-			if(local_c == null){
-				add.add(c);
-			}else if(c.equals(local_c)){
-				if(c.getChildren()!=null&&c.getChildren().size()>0){
-					for(Catalog child:c.getChildren()){
-						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
-						if(child.equals(local_child)) continue;
-						else{
-							update.add(c);
-							break;
-						}
-					}
-				}
-			}else{
-				update.add(c);
-			}
-		}
-		map.put("ADD", add);
-		map.put("UPDATE", update);
-		return map;
-	}
+//	@Override
+//	public Map<String, Object> findChanged() {
+//		List<Catalog> remote = this.dataServer.loadCatalogs();	//远程的数据
+//		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
+//		Map<String,Object> map = new HashMap<String,Object>();
+//		List<Catalog> add = new ArrayList<Catalog>();
+//		List<Catalog> update = new ArrayList<Catalog>();
+//		for(Catalog c:remote){
+//			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
+//			if(local_c == null){
+//				add.add(c);
+//			}else if(c.equals(local_c)){
+//				if(c.getChildren()!=null&&c.getChildren().size()>0){
+//					for(Catalog child:c.getChildren()){
+//						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
+//						if(child.equals(local_child)) continue;
+//						else{
+//							update.add(c);
+//							break;
+//						}
+//					}
+//				}
+//			}else{
+//				update.add(c);
+//			}
+//		}
+//		map.put("ADD", add);
+//		map.put("UPDATE", update);
+//		return map;
+//	}
 	
-	public List<Catalog> findChangedCatalog() {
+	public List<Catalog> findChangedCatalog(String account) {
 		List<Catalog> remote = this.dataServer.loadCatalogs();	//远程的数据
 		//List<Catalog> local = this.find(new CatalogInfo());		//本地的所有数据
 		logger.info("查找有变化的考试分类");
@@ -297,6 +308,15 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 			pbuf = null;
 		}
 //		logger.info(add.size());
+		//添加操作日志
+		OperateLog log = new OperateLog();
+		log.setId(UUID.randomUUID().toString());
+		log.setType(OperateLog.TYPE_CHECK_UPDATE);
+		log.setName("检测课程分类数据更新");
+		log.setAddTime(new Date());
+		log.setAccount(account);
+		log.setContent("检测课程分类数据更新");
+		this.operateLogDao.save(log);
 		return add;
 	}
 	/*
@@ -304,9 +324,9 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 	 * @see com.examw.collector.service.ICatalogService#dataGridUpdate()
 	 */
 	@Override
-	public DataGrid<CatalogInfo> dataGridUpdate() {
+	public DataGrid<CatalogInfo> dataGridUpdate(String account) {
 		try{
-		List<Catalog> list = this.findChangedCatalog();
+		List<Catalog> list = this.findChangedCatalog(account);
 		DataGrid<CatalogInfo> grid = new DataGrid<CatalogInfo>();
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
@@ -321,31 +341,38 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 	 * @see com.examw.collector.service.ICatalogService#update(java.util.List)
 	 */
 	@Override
-	public void update(List<CatalogInfo> catalogs) {
+	public void update(List<CatalogInfo> catalogs,String account) {
 		if(catalogs == null ||catalogs.size()==0) return;
-		StringBuilder buf = new StringBuilder();
+		List<CatalogInfo> list = new ArrayList<CatalogInfo>();
 		for(CatalogInfo info:catalogs){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
 			}
 			if(info.getStatus().equals("被删")){
-				buf.append(info.getId()).append(",");
-				continue;
-			}
-			this.catalogDao.saveOrUpdate(changeModel(info));
-		}
-		if(buf.length()>0)
-		{
-			String[] ids = buf.toString().split(",");
-			if(ids == null ||ids.length==0) return;
-			for(String id:ids){
-				Catalog data = this.catalogDao.load(Catalog.class, id);
+				Catalog data = this.catalogDao.load(Catalog.class, info.getId());
 				if(data != null){
 					//删除[子类级联.]
 					this.catalogDao.delete(data);
+					list.add(info);
 				}
+				continue;
+			}
+			Catalog c = this.changeModel(info);
+			if(c!=null)
+			{
+				this.catalogDao.saveOrUpdate(c);
+				list.add(info);
 			}
 		}
+		//添加操作日志
+		OperateLog log = new OperateLog();
+		log.setId(UUID.randomUUID().toString());
+		log.setType(OperateLog.TYPE_UPDATE_CATALOG);
+		log.setName("更新课程分类数据(本地副本)");
+		log.setAddTime(new Date());
+		log.setAccount(account);
+		log.setContent(JSONUtil.ObjectToJson(list));
+		this.operateLogDao.save(log);		
 	}
 	//转换数据模型
 	private Catalog changeModel(CatalogInfo info){

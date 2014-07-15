@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.examw.aware.IUserAware;
 import com.examw.collector.controllers.edu24.CatalogController;
 import com.examw.collector.model.PackInfo;
 import com.examw.collector.service.IPackService;
@@ -27,12 +28,13 @@ import com.examw.model.Json;
  */
 @Controller
 @RequestMapping("/admin/update/pack")
-public class PackageUpdateController {
+public class PackageUpdateController implements IUserAware{
 	private static Logger logger  = Logger.getLogger(CatalogController.class);
 	@Resource
 	private IPackageUpdateService packageUpdateService;
 	@Resource
 	private IPackService packService;
+	private String account;
 	
 	@RequestMapping(value={"","/list"}, method = RequestMethod.GET)
 	public String list(Model model){
@@ -47,7 +49,7 @@ public class PackageUpdateController {
 			data.setRows(new ArrayList<PackInfo>());
 			return data;
 		}
-		return this.packService.dataGridUpdate(info);
+		return this.packService.dataGridUpdate(info,account);
 	}
 	
 	@RequestMapping(value="/update", method = RequestMethod.POST)
@@ -55,7 +57,7 @@ public class PackageUpdateController {
 	public Json update(@RequestBody List<PackInfo> packs){
 		Json result = new Json();
 		try {
-			this.packageUpdateService.update(packs);
+			this.packageUpdateService.update(packs,account);
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);
@@ -63,5 +65,15 @@ public class PackageUpdateController {
 			logger.error("更新考试类型数据发生异常", e);
 		}
 		return result;
+	}
+	@Override
+	public void setUserId(String userId) {
+	}
+	@Override
+	public void setUserName(String userName) {
+	}
+	@Override
+	public void setUserNickName(String userNickName) {
+		this.account = userNickName;
 	}
 }

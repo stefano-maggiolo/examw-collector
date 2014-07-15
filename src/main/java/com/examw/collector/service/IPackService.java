@@ -20,7 +20,7 @@ public interface IPackService extends IBaseDataService<PackInfo>{
 	 * 获取新增或更新的集合
 	 * @return
 	 */
-	DataGrid<PackInfo> dataGridUpdate(PackInfo info);
+	DataGrid<PackInfo> dataGridUpdate(PackInfo info,String account);
 	/**
 	 * 更新集合
 	 * @param info

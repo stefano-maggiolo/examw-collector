@@ -1,0 +1,44 @@
+<!-- 科目数据更新 -->
+<#assign module="security_operatelog"/>
+<#assign dg="${module}_subject_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	var dg1 = $("#${dg}").datagrid({
+		url:"<@s.url '/admin/security/operatelog/datagrid/subject'/>",
+		fit : true,
+		fitColumns : true,
+		rownumbers : true,
+		border : true,
+		striped : true,
+		idField : "code",
+		columns:[[{
+			field:"children",
+			checkbox:true
+		},{
+			title:"科目名称",
+			field:"name",
+			width:25
+		},{
+			title:"科目代码",
+			field:"code",
+			width:15
+		},{
+			title:"状态",
+			field:"status",
+			width:15,
+			styler: function(value,row,index){
+				if (value == "被删"){
+					return 'background-color:#ffee00;color:red;';
+				}
+			}
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
+		}]]
+	});
+});
+-->
+</script>
+<table id="${dg}" title="科目数据更新记录"></table>

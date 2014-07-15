@@ -1,16 +1,22 @@
 package com.examw.collector.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.IAdVideoDao;
+import com.examw.collector.dao.ICatalogDao;
+import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.AdVideo;
+import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
 import com.examw.collector.model.SubClassInfo;
@@ -29,7 +35,24 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	private IAdVideoDao adVideoDao;
 	private IDataServer dataServer;
 	private ISubjectDao subjectDao;
-	
+	private ICatalogDao catalogDao;
+	private IOperateLogDao operateLogDao;
+	/**
+	 * 设置操作日志数据接口
+	 * @param operateLogDao
+	 * 
+	 */
+	public void setOperateLogDao(IOperateLogDao operateLogDao) {
+		this.operateLogDao = operateLogDao;
+	}
+	/**
+	 * 设置 课程分类数据接口
+	 * @param catalogDao
+	 * 
+	 */
+	public void setCatalogDao(ICatalogDao catalogDao) {
+		this.catalogDao = catalogDao;
+	}
 	/**
 	 * 设置 班级数据接口
 	 * @param subClassDao
@@ -133,10 +156,10 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	}
 	
 	@Override
-	public DataGrid<SubClassInfo> dataGridUpdate(SubClassInfo info) {
+	public DataGrid<SubClassInfo> dataGridUpdate(SubClassInfo info,String account) {
 		if(StringUtils.isEmpty(info.getCatalogId()))
 			return null;
-		List<SubClass> list = this.findChangedSubClass(info);
+		List<SubClass> list = this.findChangedSubClass(info,account);
 		DataGrid<SubClassInfo> grid = new DataGrid<SubClassInfo>();
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
@@ -144,7 +167,9 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 		
 		
 	}
-	private List<SubClass> findChangedSubClass(SubClassInfo info){
+	private List<SubClass> findChangedSubClass(SubClassInfo info,String account){
+		Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
+		//Subject subject = this.subjectDao.load(Subject.class, info.getSubjectId());
 		List<SubClass> data = this.dataServer.loadClasses(info.getCatalogId(), info.getSubjectId());
 		List<SubClass> add = new ArrayList<SubClass>();
 		StringBuffer existIds = new StringBuffer();
@@ -175,6 +200,15 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 				add.addAll(deleteList);
 			}
 		}
+		//添加操作日志
+		OperateLog log = new OperateLog();
+		log.setId(UUID.randomUUID().toString());
+		log.setType(OperateLog.TYPE_CHECK_UPDATE);
+		log.setName("检测班级数据更新");
+		log.setAddTime(new Date());
+		log.setAccount(account);
+		log.setContent("检测 "+catalog.getName()+"("+catalog.getCode()+")的班级数据更新 ");
+		this.operateLogDao.save(log);
 		return add;
 	}
 	@Override

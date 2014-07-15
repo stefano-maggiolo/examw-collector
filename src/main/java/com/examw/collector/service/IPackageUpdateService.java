@@ -14,5 +14,5 @@ public interface IPackageUpdateService {
 	 * 更新集合
 	 * @param info
 	 */
-	void update(List<PackInfo> packs);
+	void update(List<PackInfo> packs,String account);
 }

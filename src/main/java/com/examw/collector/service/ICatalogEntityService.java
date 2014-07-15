@@ -17,8 +17,8 @@ public interface ICatalogEntityService extends IBaseDataService<CatalogEntityInf
 	 */
 	List<TreeNode> loadAllCatalogs();
 	/**
-	 * 更新一个集合
+	 * 更新数据
 	 * @param subjects
 	 */
-//	void update(List<CatalogInfo> catalogs);
+	CatalogEntityInfo update(CatalogEntityInfo catalogs,String account);
 }
