@@ -123,4 +123,9 @@ public class Subject extends BaseDomain implements Serializable {
 		return flag;
 	}
 	
+	@Override
+	public String toString() {
+		if(catalog==null) return "";
+		return "所属类别:"+catalog.getName()+"("+catalog.getCode()+")";
+	}
 }

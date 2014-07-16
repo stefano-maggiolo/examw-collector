@@ -140,7 +140,6 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			PackageEntity p = changeLocalModel(info);
 			if(p != null)
 			{
-				//TODO	套餐价格不同的情况,要酌情更新
 				this.packageEntityDao.saveOrUpdate(p);
 				list.add(info);
 			}
@@ -230,7 +229,14 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 	private PackageEntity changeLocalModel(PackInfo info) {
 		if (info == null)
 			return null;
-		PackageEntity data = new PackageEntity();
+		PackageEntity data = this.packageEntityDao.load(PackageEntity.class, info.getCode());
+		if(data==null)
+			data = new PackageEntity();
+		//	套餐价格不同的情况,要酌情更新,售价高于环球的售价,改
+		else if(data.getDiscount() <= info.getDiscount())
+		{
+			info.setDiscount(data.getDiscount());	//售价比环球售价要低[这里没有进行价格修改]
+		}
 		BeanUtils.copyProperties(info, data);
 		data.setId(info.getCode());
 		if (StringUtils.isEmpty(info.getCatalogId())) {

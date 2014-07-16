@@ -152,6 +152,7 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 			Subject local_s = this.subjectDao.load(Subject.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
+				s.setUpdateInfo(s.toString());
 				add.add(s);
 			}else if(s.equals(local_s)){
 				continue;
@@ -171,6 +172,7 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 			{
 				for(Subject s:deleteList){
 					s.setStatus("被删");
+					s.setUpdateInfo(s.toString());
 				}
 				add.addAll(deleteList);
 			}

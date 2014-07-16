@@ -11,6 +11,7 @@ import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.IAdVideoDao;
 import com.examw.collector.dao.ICatalogDao;
+import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
@@ -19,6 +20,7 @@ import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
+import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.ISubClassService;
@@ -37,6 +39,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	private ISubjectDao subjectDao;
 	private ICatalogDao catalogDao;
 	private IOperateLogDao operateLogDao;
+	private IGradeEntityDao gradeEntityDao;
 	/**
 	 * 设置操作日志数据接口
 	 * @param operateLogDao
@@ -85,6 +88,15 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	 */
 	public void setDataServer(IDataServer dataServer) {
 		this.dataServer = dataServer;
+	}
+	
+	/**
+	 * 设置 班级数据接口
+	 * @param gradeEntityDao
+	 * 
+	 */
+	public void setGradeEntityDao(IGradeEntityDao gradeEntityDao) {
+		this.gradeEntityDao = gradeEntityDao;
 	}
 	@Override
 	protected List<SubClass> find(SubClassInfo info) {
@@ -174,16 +186,26 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 		List<SubClass> add = new ArrayList<SubClass>();
 		StringBuffer existIds = new StringBuffer();
 		for(SubClass s:data){
+			s.setCatalog(catalog);
 			if(!StringUtils.isEmpty(s.getCode())) existIds.append(s.getCode()).append(",");
 			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
+				s.setUpdateInfo(s.toString());
 				add.add(s);
 			}else if(s.equals(local_s)){
 				continue;
 			}else{
 				s.setStatus("新的");
 				//local_s.setStatus("旧的");
+				if(s.getSalePrice() != local_s.getSalePrice())
+				{
+					//查询实际数据比较价格
+					GradeEntity real_s = this.gradeEntityDao.load(GradeEntity.class, s.getCode());
+					if(real_s != null){
+						s.setUpdateInfo("<span color='color:red'>！价格变化,我们的售价为:"+real_s.getSalePrice()+";新售价:"+s.getSalePrice()+"</span>"+s.getUpdateInfo());
+					}
+				}
 				add.add(s);
 				//add.add(local_s);
 			}
@@ -196,6 +218,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 			{
 				for(SubClass s:deleteList){
 					s.setStatus("被删");
+					s.setUpdateInfo(s.toString());
 				}
 				add.addAll(deleteList);
 			}

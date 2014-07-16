@@ -1,16 +1,18 @@
 <!-- 套餐数据更新 -->
+<#include "ftl/comm.ftl"/>
 <#assign module="security_operatelog"/>
 <#assign dg="${module}_package_dg"/>
 <script type="text/javascript">
 <!--
 $(function(){
 	var dg=$("#${dg}").datagrid({
-		url:"<@s.url '/admin/security/operatelog/pack/subject'/>",
+		url:"<@s.url '/admin/security/operatelog/datagrid/package'/>",
 		fit:true,
 		fitColumns:true,
 		rownumbers:true,
 		pagination:true,
 		pagePosition:"bottom",
+		queryParams:{id:"${LOGID}"},
 		pageSize:20,
 		pageList:[20,30,40],
 		border:true,

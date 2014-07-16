@@ -254,4 +254,15 @@ public class Pack extends BaseDomain implements Serializable {
 		}
 		return flag;
 	}
+	
+	@Override
+	public String toString() {
+		String s = "";
+		if(catalog!=null)
+			s += ("所属类别:"+catalog.getName()+"("+catalog.getCode()+");");
+		if(subject!=null)
+			s += ("所属科目:"+subject.getName()+"("+subject.getCode()+");");
+		s += ("原价:"+source+";优惠价:"+discount+";包含班级ID:"+classCodes);
+		return s;
+	}
 }

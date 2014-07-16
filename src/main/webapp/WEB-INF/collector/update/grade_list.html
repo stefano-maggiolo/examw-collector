@@ -9,6 +9,8 @@ $(function(){
 	//catalog-exam-tree
 	var t = $("#${module}_list_catalog_exam_tree").tree({
 		url:"<@s.url '/admin/local/catalog/tree'/>",
+		checkbox:true,
+		onlyLeafCheck:true,
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
@@ -109,10 +111,13 @@ $(function(){
 			<@error_dialog "e"/>
 		},
 		onCheck:function(index,data){
-			if(data.status == "旧的"){
+			/* if(data.status == "旧的"){
 				dg.datagrid("uncheckRow",index);	//取消选择
-			}
-		}
+			} */
+		},
+		onLoadSuccess:function(data){   
+	        dg.datagrid('doCellTip',{delay:100});   
+	    }  
 	});
 	//search
 	${dg}_search = function(){
@@ -166,7 +171,7 @@ $(function(){
 							//	dg.datagrid("deleteRow",index);
 							//}else{
 								var index = dg.datagrid("getRowIndex",rows[i]);
-								dg.datagrid("deleteRow",dg.datagrid("getRowIndex",index));
+								dg.datagrid("deleteRow",index);
 							//}
 						});
 					}else{
@@ -235,8 +240,6 @@ $(function(){
 					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">检查更新</a>
 					<span>|</span>
 					<a href="#" class="easyui-linkbutton" onclick="${dg}_update()" data-options="iconCls:'icon-reload',plain:true">更新数据</a>
-					<span>|</span>
-					<a href="#" class="easyui-linkbutton" onclick="${dg}_ignore()" data-options="iconCls:'icon-remove',plain:true">忽略更新</a>
 					<label>班级名称:</label>
 					<input name="name" type="text" style="width:198px;"/>
 

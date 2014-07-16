@@ -175,6 +175,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 		if(info == null) return null;
 		SubjectEntity data = new SubjectEntity();
 		BeanUtils.copyProperties(info, data);
+		data.setId(info.getCode());
 		if(StringUtils.isEmpty(info.getCatalogId())){
 			return null;
 		}else{

@@ -1,17 +1,19 @@
 <!-- 课程分类数据更新 -->
+<#include "ftl/comm.ftl"/>
 <#assign module="security_operatelog"/>
 <#assign dg="${module}_catalog_dg"/>
 <script type="text/javascript">
 <!--
 $(function(){
 	var dg1 = $("#${dg}").treegrid({
-		url:"",
+		url:"<@s.url '/admin/security/operatelog/datagrid/catalog'/>",
 		fit:true,
 		fitColumns:true,
 		rownumbers:true,
 		idField:"id",
 		treeField:"name",
 		singleSelect:false,
+		queryParams:{id:"${LOGID}"},
 		animate:true,
 		border:true,
 		striped:true,

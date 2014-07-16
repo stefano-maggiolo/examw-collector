@@ -38,6 +38,17 @@ $(function(){
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
+		onLoadSuccess:function(data){   
+	        dg1.datagrid('doCellTip',{delay:100});   
+	    },
+		onCheck:function(rowData){
+			//级联选中
+			dg1.treegrid("cascadeCheck",{id:rowData.id,deepCascade:false});
+		},
+		onUncheck:function(rowData){
+			//级联选中
+			dg1.treegrid("cascadeCheck",{id:rowData.id,deepCascade:false});
+		},
 		toolbar:[
 		{
 			iconCls:"icon-add",

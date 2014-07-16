@@ -36,6 +36,9 @@ $(function(){
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
+		onCheck:function(row){
+			console.info(dg.treegrid("getParent",row.id));
+		},
 		toolbar:[
 		{
 			iconCls:"icon-add",

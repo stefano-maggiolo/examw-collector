@@ -12,11 +12,13 @@ import org.springframework.util.StringUtils;
 import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.IPackDao;
+import com.examw.collector.dao.IPackageEntityDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Subject;
+import com.examw.collector.domain.local.PackageEntity;
 import com.examw.collector.model.PackInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IPackService;
@@ -37,6 +39,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	private ISubjectDao subjectDao;
 	private ICatalogDao catalogDao;
 	private IOperateLogDao operateLogDao;
+	private IPackageEntityDao packageEntityDao;
 	/**
 	 * 设置操作日志数据接口
 	 * @param operateLogDao
@@ -81,6 +84,15 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	 */
 	public void setCatalogDao(ICatalogDao catalogDao) {
 		this.catalogDao = catalogDao;
+	}
+	
+	/**
+	 * 设置 套餐数据接口
+	 * @param packageEntityDao
+	 * 
+	 */
+	public void setPackageEntityDao(IPackageEntityDao packageEntityDao) {
+		this.packageEntityDao = packageEntityDao;
 	}
 
 	/**
@@ -193,16 +205,27 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 		List<Pack> add = new ArrayList<Pack>();
 		StringBuffer existIds = new StringBuffer();
 		for(Pack p:data){
+			p.setCatalog(catalog);
 			if(!StringUtils.isEmpty(p.getCode())) existIds.append(p.getCode()).append(",");
 			Pack local_p = this.packDao.load(Pack.class, p.getCode());
 			if(local_p == null){
 				p.setStatus("新增");
+				p.setUpdateInfo(p.toString());
 				add.add(p);
 			}else if(p.equals(local_p)){
 				continue;
 			}else{
-				//TODO 套餐价格不同的情况 要进行题型
+				//TODO 套餐价格不同的情况 要进行提醒
 				p.setStatus("新的");
+				//价格变化,特别提醒
+				if(p.getDiscount() != local_p.getDiscount())
+				{
+					//查询实际数据比较价格
+					PackageEntity real_p = this.packageEntityDao.load(PackageEntity.class, p.getCode());
+					if(real_p != null){
+						p.setUpdateInfo("<span style='color:red'>！价格变化,我们的售价为:"+real_p.getDiscount()+";新售价:"+p.getDiscount()+"</span>"+p.getUpdateInfo());
+					}
+				}
 				//local_p.setStatus("旧的");
 				add.add(p);
 				//add.add(local_p);
@@ -217,6 +240,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 			{
 				for(Pack s:deleteList){
 					s.setStatus("被删");
+					s.setUpdateInfo(s.toString());
 				}
 				add.addAll(deleteList);
 			}

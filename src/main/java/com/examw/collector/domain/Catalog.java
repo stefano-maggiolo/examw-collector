@@ -173,4 +173,12 @@ public class Catalog extends BaseDomain implements Serializable {
 //			updateInfo += (" 上级分类变更:"+other.parent.name+"-->"+parent.name);
 //		}
 //	}
+	@Override
+	public String toString() {
+		if(parent == null)
+		{
+			return "顶级类别";
+		}
+		return "上级类别:"+parent.name+"("+parent.code+")";
+	}
 }

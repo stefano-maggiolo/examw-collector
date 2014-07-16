@@ -412,4 +412,14 @@ public class SubClass extends BaseDomain implements Serializable {
 		this.teacherId = teacherId;
 	}
 	
+	@Override
+	public String toString() {
+		String s = "";
+		if(catalog!=null)
+			s += ("所属类别:"+catalog.getName()+"("+catalog.getCode()+");");
+		if(subject!=null)
+			s += ("所属科目:"+subject.getName()+"("+subject.getCode()+");");
+		s += ("原价:"+sourcePrice+";优惠价:"+salePrice+";老师:"+teacherName);
+		return s;
+	}
 }

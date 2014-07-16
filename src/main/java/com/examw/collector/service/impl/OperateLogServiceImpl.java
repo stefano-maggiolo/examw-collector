@@ -1,5 +1,6 @@
 package com.examw.collector.service.impl;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,8 @@ import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.model.OperateLogInfo;
 import com.examw.collector.service.IOperateLogService;
+import com.examw.collector.support.JSONUtil;
+import com.examw.model.DataGrid;
 /**
  * 登录日志服务实现。
  * @author yangyong.
@@ -123,4 +126,24 @@ public class OperateLogServiceImpl extends BaseDataServiceImpl<OperateLog, Opera
 		return this.typeMap.get(type.toString());
 	}
 	
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> DataGrid<T> datagridForShow(OperateLogInfo info, Class<T> c) {
+		if(StringUtils.isEmpty(info.getId()))
+			return null;
+		DataGrid<T> grid = new DataGrid<T>();
+		List<T> rows = new ArrayList<T>();
+		try{
+			OperateLog log = this.operateLogDao.load(OperateLog.class, info.getId());
+			if(log != null){
+				rows = JSONUtil.JsonToCollection(log.getContent(), ArrayList.class, c);
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		grid.setRows(rows);
+		grid.setTotal((long) rows.size());
+		return grid;
+	}
 }

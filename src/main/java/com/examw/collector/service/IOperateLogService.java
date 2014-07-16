@@ -3,6 +3,7 @@ package com.examw.collector.service;
 import java.util.Map;
 
 import com.examw.collector.model.OperateLogInfo;
+import com.examw.model.DataGrid;
 
 /**
  * 登录日志服务接口。
@@ -31,4 +32,11 @@ public interface IOperateLogService extends IBaseDataService<OperateLogInfo> {
 	 * @return
 	 */
 	Map<String,String> getTypeMap();
+	/**
+	 * 转换数据
+	 * @param info
+	 * @param c
+	 * @return
+	 */
+	<T>DataGrid<T> datagridForShow(OperateLogInfo info,Class<T> c);
 }

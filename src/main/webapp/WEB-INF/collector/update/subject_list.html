@@ -5,35 +5,14 @@
 <script type="text/javascript">
 <!--
 	$(function() {
-		var current_catalog_id = "";
-		//catalog-exam-tree
-		var t = $("#${module}_list_catalog_exam_tree").tree({
-			url : "<@s.url '/admin/local/catalog/tree'/>",
-			onLoadError : function(e) {
-				<@error_dialog "e"/>
-			},
-			onBeforeLoad : function() {
-				current_catalog_id = "";
-			},
-			onClick : function(node) {
-				if(node.attributes == undefined)
-				{
-					return;
-				}else
-				{
-					if(node.attributes.code)
-						current_catalog_id = node.attributes.code;
-				}
-				//search;
-				//${dg}_search();
-			}
-		});
 		var dg1 = $("#${dg}_remote").datagrid({
 			url:"<@s.url '/admin/update/subject/datagrid'/>",
 			fit : true,
 			fitColumns : true,
 			rownumbers : true,
 			border : true,
+			//pagination:true,
+			//pageSize:10,
 			striped : true,
 			idField : "code",
 			columns:[[{
@@ -46,6 +25,10 @@
 			},{
 				title:"科目代码",
 				field:"code",
+				width:15
+			},{
+				title:"所属分类",
+				field:"catalogName",
 				width:15
 			},{
 				title:"状态",
@@ -98,7 +81,7 @@
 												//	dg1.datagrid("deleteRow",index+1);
 												//}else{
 													var index = dg1.datagrid("getRowIndex",rows[i]);
-													dg1.datagrid("deleteRow",dg1.datagrid("getRowIndex",index));
+													dg1.datagrid("deleteRow",index);
 												//}
 											});
 										}else{
@@ -117,97 +100,43 @@
 				if(data.status == "旧的"){
 					dg1.datagrid("uncheckRow",index);	//取消选择
 				}
-			}
+			},
+			onLoadSuccess:function(data){   
+		        dg.datagrid('doCellTip',{delay:100});   
+		    }
 		});
-		//dg
-		var dg = $("#${dg}").datagrid({
-			url : "<@s.url '/admin/local/subject/datagrid'/>",
-			fit : true,
-			fitColumns : true,
-			rownumbers : true,
-			pagination : true,
-			pagePosition : "bottom",
-			pageSize : 20,
-			pageList : [ 20, 30, 40 ],
-			border : true,
-			striped : true,
-			idField : "code",
-			sortName : "id",
-			sortOrder : "asc",
-			columns : [ [ {
-				field : "check",
-				checkbox : true
-			}, {
-				title : "科目代码",
-				field : "code",
-				width : 10,
-				align : "left",
-				sortable : true
-			}, {
-				title : "科目名称",
-				field : "name",
-				width : 40,
-				align : "left",
-				sortable : true
-			}, {
-				title : "所属考试类别",
-				field : "catalogName",
-				width : 20,
-				align : "left"
-			} ] ],
-			toolbar : "#${dg}_toobar",
-			onLoadError : function(e) {
-				<@error_dialog "e"/>
+		/*数据本地分页
+		function pagerFilter(data){
+			if (typeof data.length == 'number' && typeof data.splice == 'function'){	// is array
+				data = {
+					total: data.length,
+					rows: data
+				}
 			}
-		});
-		//search
-		${dg}_search = function() {
-			dg.datagrid("load", {
-				name : $("#${dg}_toobar input[name='name']").val(),
-				catalogId : current_catalog_id,
+			var dg = $(this);
+			var opts = dg.datagrid('options');
+			var pager = dg.datagrid('getPager');
+			pager.pagination({
+				onSelectPage:function(pageNum, pageSize){
+					opts.pageNumber = pageNum;
+					opts.pageSize = pageSize;
+					pager.pagination('refresh',{
+						pageNumber:pageNum,
+						pageSize:pageSize
+					});
+					dg.datagrid('loadData',data);
+				}
 			});
-		};
-		//导入班级数据
-		${dg}_add = function() {
-			if (!current_catalog_id) {
-				$.messager.alert("提示", "请先选择环球的分类");
-				return;
+			if (!data.originalRows){
+				data.originalRows = (data.rows);
 			}
-			$.messager.confirm("确认", "您是否确认初始化科目数据?", function(r) {
-				if (!r)
-					return;
-				$.messager.progress();
-				$.ajax({
-					url : "<@s.url '/admin/local/subject/init'/>",
-					type : "POST",
-					data : {
-						"catalogId" : current_catalog_id
-					},
-					dataType : "json",
-					error : function(e) {
-						$.messager.progress("close");
-						<@error_dialog "e"/>
-					},
-					success : function(data, textStatus) {
-						$.messager.progress("close");
-						if (data.success) {
-							dg.datagrid("load");
-							dg.datagrid("unselectAll");
-							$.messager.show({
-								title : '提示',
-								msg : '班级数据导入成功',
-								showType : 'show'
-							});
-						} else {
-							$.messager.show({
-								title : "提示",
-								msg : data.msg
-							});
-						}
-					}
-				});
-			});
-		};
+			var start = (opts.pageNumber-1)*parseInt(opts.pageSize);
+			var end = start + parseInt(opts.pageSize);
+			data.rows = (data.originalRows.slice(start, end));
+			return data;
+		}
+		dg1.datagrid({loadFilter:pagerFilter}).datagrid('loadData', dg1.datagrid("getRows"));
+		*/
 	});
 //-->
 </script>
