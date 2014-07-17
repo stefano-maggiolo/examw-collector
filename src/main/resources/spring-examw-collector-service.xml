@@ -106,6 +106,7 @@
 	    <property name="dataServer" ref="dataServer"/>
 	    <property name="operateLogDao" ref="operateLogDao"/>
 	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
+	    <property name="catalogDao" ref="catalogDao"/>
 	</bean>
 	<!-- 课节服务 -->
 	<bean id="relateService" class="com.examw.collector.service.impl.RelateServiceImpl">

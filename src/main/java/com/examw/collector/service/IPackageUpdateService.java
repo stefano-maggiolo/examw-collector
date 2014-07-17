@@ -13,6 +13,7 @@ public interface IPackageUpdateService {
 	/**
 	 * 更新集合
 	 * @param info
+	 * @return 返回实际更新的集合
 	 */
-	void update(List<PackInfo> packs,String account);
+	List<PackInfo> update(List<PackInfo> packs,String account);
 }

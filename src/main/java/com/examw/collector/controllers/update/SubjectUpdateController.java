@@ -57,7 +57,7 @@ public class SubjectUpdateController implements IUserAware{
 	public Json update(@RequestBody List<SubjectInfo> subjects){
 		Json result = new Json();
 		try {
-			this.subjectUpdateService.update(subjects,account);
+			result.setData(this.subjectUpdateService.update(subjects,account));
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);

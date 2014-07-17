@@ -5,8 +5,7 @@
 <script type="text/javascript">
 <!--
 $(function(){
-	var current_catalog_id = "",current_subject_id="";
-	//catalog-exam-tree
+	var current_catalog_id = [];
 	var t = $("#${module}_list_catalog_exam_tree").tree({
 		url:"<@s.url '/admin/local/catalog/tree'/>",
 		checkbox:true,
@@ -15,52 +14,57 @@ $(function(){
 			<@error_dialog "e"/>
 		},
 		onBeforeLoad:function(){
-			current_catalog_id = "";
+			current_catalog_id = [];
 		},
-		onClick:function(node){
+		onSelect:function(node){
 			if(t.tree("isLeaf",node.target))
 			{
 				if(node.attributes == undefined)
 				{
-					current_catalog_id = "";
-					current_subject_id = "";
-					s.tree("loadData",[]);
 					return;
 				}else
 				{
 					if(node.attributes.code)
-					{
-						current_catalog_id = node.attributes.code;
-						current_subject_id = "";
-					}
+						if(current_catalog_id.indexOf(node.attributes.code)!=-1)
+						{
+							t.tree("uncheck",node.target);
+						}else{
+							t.tree("check",node.target);
+						}
 					else{
-						current_catalog_id = "";
-						current_subject_id = "";
-						s.tree("loadData",[]);
 						return;
 					}
 				}
-				if(s){
-					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
-				}
-				//search;
-				//${dg}_search();
 			}
-		}
-	});
-	//subject-tree
-	var s =  $("#${module}_list_subject_tree").tree({
-		url:"<@s.url '/admin/local/subject/tree'/>",
-		onLoadError:function(e){
-			<@error_dialog "e"/>
 		},
-		onBeforeLoad:function(){
-			current_subject_id = "";
-		},
-		onClick:function(node){
-			current_subject_id = node.id;
-			//search;
-			//${dg}_search();
+		onCheck:function(node,checked){
+			if(t.tree("isLeaf",node.target))
+			{
+				if(node.attributes == undefined)
+				{
+					if(checked)
+					{
+						t.tree("uncheck",node.target);
+						return;
+					}
+				}else
+				{
+					if(node.attributes.code)
+						if(checked)
+							current_catalog_id.push(node.attributes.code);
+						else
+							current_catalog_id.remove(node.attributes.code);
+					else{
+						if(checked)
+						{
+							t.tree("uncheck",node.target);
+							return;
+						}
+					}
+				}
+			}else
+				if(checked)
+					t.tree("uncheck",node.target);
 		}
 	});
 	//dg
@@ -110,39 +114,21 @@ $(function(){
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
-		onCheck:function(index,data){
-			/* if(data.status == "旧的"){
-				dg.datagrid("uncheckRow",index);	//取消选择
-			} */
-		},
 		onLoadSuccess:function(data){   
 	        dg.datagrid('doCellTip',{delay:100});   
 	    }  
 	});
-	//search
-	${dg}_search = function(){
-		dg.datagrid("load",{
-			  catalogId:current_catalog_id,
-			  subjectId:current_subject_id,
-			  name:$("#${dg}_toobar input[name='name']").val()
-		});
-	};
 	//检查班级数据更新
 	${dg}_add = function(){
 		if(!current_catalog_id){
 			$.messager.alert("提示","请先选择环球的分类");
 			return;
 		}
-		if(s.tree("getRoots").length == 0){
-			$.messager.alert("提示","请先导入科目");
-			return;
-		}
 		$.messager.confirm("确认","您是否确认检查班级数据更新?",function(r){
 			if(!r)return;
 			dg.datagrid("load",{
 				action:"1",
-				catalogId:current_catalog_id,
-				subjectId:current_subject_id
+				catalogId:current_catalog_id.join(","),
 			});
 		});
 	};
@@ -163,54 +149,25 @@ $(function(){
 				dataType:"json",
 				success:function(data){
 					if(data.success){
-						$.messager.show({title:"提示",msg:"更新成功",showType:"show"});
-						$.each(rows,function(i){
-							//if(rows[i].status == "新的"){
-							//	var index = dg.datagrid("getRowIndex",rows[i]);
-							//	dg.datagrid("deleteRow",index+1);
-							//	dg.datagrid("deleteRow",index);
-							//}else{
-								var index = dg.datagrid("getRowIndex",rows[i]);
+						var msg = "更新成功";
+						if(!data.data || data.data.length == 0) 
+						{
+							msg = "没有更新进去,失败原因可能是科目数据没有导入";
+						}
+						else if(data.data.length < rows.length)
+						{
+							msg = "部分更新成功,部分失败原因可能是科目数据没有导入";
+						}
+						$.messager.show({title:"提示",msg:msg,showType:"show"});
+						if(data.data && data.data.length > 0)
+						{
+							$.each(data.data,function(i){
+								var index = dg.datagrid("getRowIndex",data.data[i].code);
 								dg.datagrid("deleteRow",index);
-							//}
-						});
+							});
+						}
 					}else{
 						$.messager.show({title:"提示",msg:"更新失败",showType:"show"});
-					}
-				}
-			});
-		});
-	}
-	//导入课节数据
-	${dg}_init_relate = function(classId)
-	{
-		$.messager.confirm("确认","您是否确认初始化课节数据?",function(r){
-			if(!r)return;
-			$.messager.progress();
-			$.ajax({
-				url:"<@s.url '/admin/local/listen/init'/>",
-				type:"POST",
-				data:{"classId":classId},
-				dataType:"json",
-				error:function(e){
-					$.messager.progress("close");
-					<@error_dialog "e"/>
-				},
-				success:function(data,textStatus){
-					$.messager.progress("close");
-					if(data.success){
-						dg.datagrid("load");
-						dg.datagrid("unselectAll");
-						$.messager.show({
-							title:'提示',
-							msg:'课节数据导入成功',
-							showType:'show'
-						});
-					}else{
-						$.messager.show({
-							title:"提示",
-							msg:data.msg
-						});
 					}
 				}
 			});
@@ -226,26 +183,15 @@ $(function(){
 			 		$('#${module}_list_catalog_exam_tree').tree('reload');
 			 		${dg}_search();
 		 	}
-	 	}]" style="padding:5px;width:190px;">
+	 	}]" style="padding:5px;width:300px;">
 	 	<ul id="${module}_list_catalog_exam_tree"></ul>
 	 </div>
 	 <div data-options="region:'center',title:'班级列表'">
-		<div class="easyui-layout" data-options="fit:true" id="${dg}_layout_2">
-	 		<div data-options="region:'west',title:'所属考试',split:true" style="padding:5px;width:190px;">
-	 			<ul id="${module}_list_subject_tree"></ul>
-	 		</div>
-	 		<div data-options="region:'center',title:'班级列表'">
-				<table id="${dg}"></table>
-				<div id="${dg}_toobar">
-					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">检查更新</a>
-					<span>|</span>
-					<a href="#" class="easyui-linkbutton" onclick="${dg}_update()" data-options="iconCls:'icon-reload',plain:true">更新数据</a>
-					<label>班级名称:</label>
-					<input name="name" type="text" style="width:198px;"/>
-
-					<a href="#" class="easyui-linkbutton" style="margin-left:10px;"  onclick="${dg}_search()" data-options="iconCls:'icon-search',plain:true">查询</a>
-				</div>
+		<table id="${dg}"></table>
+			<div id="${dg}_toobar">
+				<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">检查更新</a>
+				<span>|</span>
+				<a href="#" class="easyui-linkbutton" onclick="${dg}_update()" data-options="iconCls:'icon-reload',plain:true">更新数据</a>
 			</div>
-		</div>
-	</div>
+	 </div>
 </div>

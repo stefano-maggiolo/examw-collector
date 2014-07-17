@@ -64,7 +64,7 @@ public class ListenEntityDaoImpl extends BaseDaoImpl<ListenEntity> implements IL
 	
 	@Override
 	public void delete(String gradeId) {
-		String hql = "delete from Listen l where l.grade.id = :gradeId";
+		String hql = "delete from ListenEntity l where l.grade.id = :gradeId";
 		Query query = this.getCurrentSession().createQuery(hql);
 		query.setParameter("gradeId", gradeId);
 		query.executeUpdate();

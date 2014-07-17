@@ -74,16 +74,23 @@
 									dataType:"json",
 									success:function(data){
 										if(data.success){
-											$.messager.show({title:"提示",msg:"更新成功",showType:"show"});
-											$.each(rows,function(i){
-												//if(rows[i].status == "新的"){
-												//	var index = dg1.datagrid("getRowIndex",rows[i]);
-												//	dg1.datagrid("deleteRow",index+1);
-												//}else{
-													var index = dg1.datagrid("getRowIndex",rows[i]);
+											var msg = "更新成功";
+											if(!data.data || data.data.length == 0) 
+											{
+												msg = "没有更新进去,失败原因可能是科目数据没有导入";
+											}
+											else if(data.data.length < rows.length)
+											{
+												msg = "部分更新成功,部分失败原因可能是科目数据没有导入";
+											}
+											$.messager.show({title:"提示",msg:msg,showType:"show"});
+											if(data.data && data.data.length > 0)
+											{
+												$.each(data.data,function(i){
+													var index = dg1.datagrid("getRowIndex",data.data[i].code);
 													dg1.datagrid("deleteRow",index);
-												//}
-											});
+												});
+											}
 										}else{
 											$.messager.show({title:"提示",msg:"更新失败",showType:"show"});
 										}
@@ -96,13 +103,8 @@
 			onLoadError:function(e){
 				<@error_dialog "e"/>
 			},
-			onCheck:function(index,data){
-				if(data.status == "旧的"){
-					dg1.datagrid("uncheckRow",index);	//取消选择
-				}
-			},
 			onLoadSuccess:function(data){   
-		        dg.datagrid('doCellTip',{delay:100});   
+		        dg1.datagrid('doCellTip',{delay:100});   
 		    }
 		});
 		/*数据本地分页

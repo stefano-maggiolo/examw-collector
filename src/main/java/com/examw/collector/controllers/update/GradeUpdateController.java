@@ -56,7 +56,7 @@ public class GradeUpdateController implements IUserAware{
 	public Json update(@RequestBody List<SubClassInfo> subClasses){
 		Json result = new Json();
 		try {
-			this.gradeUpdateService.update(subClasses,account);
+			result.setData(this.gradeUpdateService.update(subClasses,account));
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);

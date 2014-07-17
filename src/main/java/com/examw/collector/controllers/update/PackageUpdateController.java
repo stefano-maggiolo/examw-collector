@@ -57,7 +57,7 @@ public class PackageUpdateController implements IUserAware{
 	public Json update(@RequestBody List<PackInfo> packs){
 		Json result = new Json();
 		try {
-			this.packageUpdateService.update(packs,account);
+			result.setData(this.packageUpdateService.update(packs,account));
 			result.setSuccess(true);
 		} catch (Exception e) {
 			result.setSuccess(false);
@@ -66,6 +66,7 @@ public class PackageUpdateController implements IUserAware{
 		}
 		return result;
 	}
+	
 	@Override
 	public void setUserId(String userId) {
 	}

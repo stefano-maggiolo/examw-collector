@@ -276,6 +276,7 @@ public class DataServerImpl implements IDataServer {
 					continue;
 				Subject subject = new Subject();
 				subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				subject.setName(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_name"));
 				NodeList list = XmlUtil.selectNodes(lessonList.item(j),".//class");
 				for (int i = 0; i < list.getLength(); i++) {
 					if (list.item(i) == null)
@@ -466,6 +467,7 @@ public class DataServerImpl implements IDataServer {
 					continue;
 				Subject subject = new Subject();
 				subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				subject.setName(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_name"));
 				//如果lesson_code == 子类别的ID表示全科套餐
 				if(lesson_type_code.equals(subject.getCode())){
 					subject = null;

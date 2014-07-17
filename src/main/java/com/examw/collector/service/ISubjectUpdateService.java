@@ -14,5 +14,5 @@ public interface ISubjectUpdateService {
 	 * 数据更新
 	 * @param subjects
 	 */
-	void update(List<SubjectInfo> subjects,String account);
+	List<SubjectInfo> update(List<SubjectInfo> subjects,String account);
 }

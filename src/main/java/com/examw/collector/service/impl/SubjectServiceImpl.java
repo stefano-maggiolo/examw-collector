@@ -152,13 +152,14 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 			Subject local_s = this.subjectDao.load(Subject.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
-				s.setUpdateInfo(s.toString());
+				s.setUpdateInfo("<span style='color:blue'>[新增]</span>"+s.toString());
 				add.add(s);
 			}else if(s.equals(local_s)){
 				continue;
 			}else{
 				s.setStatus("新的");
 				//local_s.setStatus("旧的");
+				s.setUpdateInfo("<span style='color:red'>[更新]</span>"+s.getUpdateInfo());
 				add.add(s);
 				//add.add(local_s);
 			}

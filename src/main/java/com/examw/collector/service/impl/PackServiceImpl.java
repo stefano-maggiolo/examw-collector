@@ -188,7 +188,14 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 	public DataGrid<PackInfo> dataGridUpdate(PackInfo info,String account) {
 		if(StringUtils.isEmpty(info.getCatalogId()))
 			return null;
-		List<Pack> list = this.findChangedPack(info,account);
+		String[] ids = info.getCatalogId().split(",");	//多个考试同时检测更新
+		if(ids.length == 0) return null;
+		List<Pack> list = new ArrayList<Pack>();
+		for(String id:ids)
+		{
+			info.setCatalogId(id);
+			list.addAll(this.findChangedPack(info,account));
+		}
 		DataGrid<PackInfo> grid = new DataGrid<PackInfo>();
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
@@ -210,7 +217,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 			Pack local_p = this.packDao.load(Pack.class, p.getCode());
 			if(local_p == null){
 				p.setStatus("新增");
-				p.setUpdateInfo(p.toString());
+				p.setUpdateInfo("<span style='color:blue'>[新增]</span>"+p.toString());
 				add.add(p);
 			}else if(p.equals(local_p)){
 				continue;
@@ -218,7 +225,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 				//TODO 套餐价格不同的情况 要进行提醒
 				p.setStatus("新的");
 				//价格变化,特别提醒
-				if(p.getDiscount() != local_p.getDiscount())
+				if(!p.getDiscount().equals(local_p.getDiscount()))
 				{
 					//查询实际数据比较价格
 					PackageEntity real_p = this.packageEntityDao.load(PackageEntity.class, p.getCode());
@@ -227,6 +234,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 					}
 				}
 				//local_p.setStatus("旧的");
+				p.setUpdateInfo("<span style='color:red'>[更新]</span>"+p.getUpdateInfo());
 				add.add(p);
 				//add.add(local_p);
 			}

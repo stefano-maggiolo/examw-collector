@@ -112,8 +112,8 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	}
 
 	@Override
-	public void update(List<SubClassInfo> subClasses,String account) {
-		if(subClasses == null ||subClasses.size()==0) return;
+	public List<SubClassInfo> update(List<SubClassInfo> subClasses,String account) {
+		if(subClasses == null ||subClasses.size()==0) return null;
 		List<SubClassInfo> list = new ArrayList<SubClassInfo>();
 		for(SubClassInfo info:subClasses){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
@@ -122,14 +122,14 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			if(info.getStatus().equals("被删")){
 				//本地副本
 				SubClass data1 = this.subClassDao.load(SubClass.class, info.getCode());
-				if(data1 != null){
+				GradeEntity data2 = this.gradeEntityDao.load(GradeEntity.class, info.getCode());
+				if(data1 != null && data2!=null){
 					//要先删课节
 					this.relateDao.delete(data1.getCode());
 					this.subClassDao.delete(data1);
 					//TODO 是否连删
 				}
 				//实际数据
-				GradeEntity data2 = this.gradeEntityDao.load(GradeEntity.class, info.getCode());
 				if(data2 != null){
 					//先删课节
 					this.listenEntityDao.delete(data2.getId());
@@ -140,11 +140,11 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				continue;
 			}
 			SubClass sc = this.changeRemoteModel(info);
-			if(sc!=null)
+			GradeEntity g = changeLocalModel(info);
+			if(sc!=null && g!=null)
 			{
 				this.subClassDao.saveOrUpdate(changeRemoteModel(info));
 			}
-			GradeEntity g = changeLocalModel(info);
 			if(g!=null)
 			{
 				this.gradeEntityDao.saveOrUpdate(g);
@@ -162,6 +162,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		log.setAccount(account);
 		log.setContent(JSONUtil.ObjectToJson(list));
 		this.operateLogDao.save(log);
+		return list;
 	}
 	/**
 	 * 本地数据模型转换

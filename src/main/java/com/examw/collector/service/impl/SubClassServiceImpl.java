@@ -171,7 +171,14 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 	public DataGrid<SubClassInfo> dataGridUpdate(SubClassInfo info,String account) {
 		if(StringUtils.isEmpty(info.getCatalogId()))
 			return null;
-		List<SubClass> list = this.findChangedSubClass(info,account);
+		String[] ids = info.getCatalogId().split(",");	//多个考试同时检测更新
+		if(ids.length == 0) return null;
+		List<SubClass> list = new ArrayList<SubClass>();
+		for(String id:ids)
+		{
+			info.setCatalogId(id);
+			list.addAll(this.findChangedSubClass(info,account));
+		}
 		DataGrid<SubClassInfo> grid = new DataGrid<SubClassInfo>();
 		grid.setRows(this.changeModel(list));
 		grid.setTotal((long) list.size());
@@ -191,21 +198,22 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
-				s.setUpdateInfo(s.toString());
+				s.setUpdateInfo("<span style='color:blue'>[新增]</span>"+s.toString());
 				add.add(s);
 			}else if(s.equals(local_s)){
 				continue;
 			}else{
 				s.setStatus("新的");
 				//local_s.setStatus("旧的");
-				if(s.getSalePrice() != local_s.getSalePrice())
+				if(!s.getSalePrice().equals(local_s.getSalePrice()))
 				{
 					//查询实际数据比较价格
 					GradeEntity real_s = this.gradeEntityDao.load(GradeEntity.class, s.getCode());
 					if(real_s != null){
-						s.setUpdateInfo("<span color='color:red'>！价格变化,我们的售价为:"+real_s.getSalePrice()+";新售价:"+s.getSalePrice()+"</span>"+s.getUpdateInfo());
+						s.setUpdateInfo("<span style='color:red'>！价格变化,我们的售价为:"+real_s.getSalePrice()+";新售价:"+s.getSalePrice()+"</span>"+s.getUpdateInfo());
 					}
 				}
+				s.setUpdateInfo("<span style='color:red'>[更新]</span>"+s.getUpdateInfo());
 				add.add(s);
 				//add.add(local_s);
 			}

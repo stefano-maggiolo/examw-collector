@@ -112,9 +112,9 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 	}
 
 	@Override
-	public void update(List<PackInfo> packs,String account) {
+	public List<PackInfo> update(List<PackInfo> packs,String account) {
 		if (packs == null || packs.size() == 0)
-			return;
+			return null;
 		List<PackInfo> list = new ArrayList<PackInfo>();
 		for (PackInfo info : packs) {
 			if (StringUtils.isEmpty(info.getStatus())
@@ -123,11 +123,11 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			}
 			if (info.getStatus().equals("被删")) {
 				Pack data1= this.packDao.load(Pack.class, info.getCode());
-				if (data1 != null) {
-					this.packDao.delete(data1);
-				}
 				PackageEntity data2 = this.packageEntityDao.load(
 						PackageEntity.class, info.getCode());
+				if (data2!=null && data1 != null) {
+					this.packDao.delete(data1);
+				}
 				if (data2 != null) {
 					this.packageEntityDao.delete(data2);
 					list.add(info);
@@ -135,9 +135,9 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				continue;
 			}
 			Pack pack = this.changeRemoteModel(info);
-			if(pack!=null)
-				this.packDao.saveOrUpdate(pack);
 			PackageEntity p = changeLocalModel(info);
+			if(pack!=null && p!=null)
+				this.packDao.saveOrUpdate(pack);
 			if(p != null)
 			{
 				this.packageEntityDao.saveOrUpdate(p);
@@ -153,6 +153,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		log.setAccount(account);
 		log.setContent(JSONUtil.ObjectToJson(list));
 		this.operateLogDao.save(log);
+		return list;
 	}
 	/**
 	 * 本地套餐数据模型转换

@@ -76,8 +76,8 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 		this.catalogEntityDao = catalogEntityDao;
 	}
 	@Override
-	public void update(List<SubjectInfo> subjects,String account) {
-		if(subjects == null ||subjects.size()==0) return;
+	public List<SubjectInfo> update(List<SubjectInfo> subjects,String account) {
+		if(subjects == null ||subjects.size()==0) return null;
 		List<SubjectInfo> list = new ArrayList<SubjectInfo>();
 		for(SubjectInfo info:subjects){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
@@ -86,12 +86,12 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			if(info.getStatus().equals("被删")){
 				//本地副本
 				Subject data1 = this.subjectDao.load(Subject.class, info.getCode());
+				SubjectEntity data2 = this.subjectEntityDao.load(SubjectEntity.class, info.getCode());
 				if(data1 != null){
 					this.subjectDao.delete(data1);
 					//TODO 是否连删
 				}
 				//实际数据
-				SubjectEntity data2 = this.subjectEntityDao.load(SubjectEntity.class, info.getCode());
 				if(data2 != null){
 					this.subjectEntityDao.delete(data2);
 					list.add(info);
@@ -101,12 +101,12 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			}
 			//本地副本
 			Subject s = changeRemoteModel(info);
+			SubjectEntity se = changeLocalModel(info);
 			if(s != null)
 			{
 				this.subjectDao.saveOrUpdate(s);
 			}
 			//实际数据
-			SubjectEntity se = changeLocalModel(info);
 			if(se !=null)
 			{
 				this.subjectEntityDao.saveOrUpdate(se);
@@ -122,6 +122,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 		log.setAccount(account);
 		log.setContent(JSONUtil.ObjectToJson(list));
 		this.operateLogDao.save(log);
+		return list;
 	}
 	//本地科目数据模型转换
 	private Subject changeRemoteModel(SubjectInfo info){

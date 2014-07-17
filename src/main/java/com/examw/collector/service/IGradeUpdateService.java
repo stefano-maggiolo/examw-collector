@@ -14,5 +14,5 @@ public interface IGradeUpdateService {
 	 * 更新数据集合
 	 * @param subClasses
 	 */
-	void update(List<SubClassInfo> subClasses,String account);
+	List<SubClassInfo> update(List<SubClassInfo> subClasses,String account);
 }
