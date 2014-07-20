@@ -137,47 +137,86 @@ $(function(){
 		},
 		onDblClickRow:function(row)
 		{
-			if(row.schoolId != "1")
-			{
-				return;
-			}
-			if (editingId != undefined){
-				dg.treegrid('select', editingId);
-				return;
-			}
-			var row = dg.treegrid('getSelected');
-			if (row){
-				editingId = row.id;
-				currentCode = row.code;
-				dg.treegrid('beginEdit', editingId);
-			}
-		},
-		onClickRow:function(row){
-			if (editingId != undefined){
-				dg.treegrid('endEdit', editingId);
-				var row = dg.treegrid('find',editingId);
-				//console.info(currentCode + "----" + row.code);
-				if((currentCode == undefined && row.code=="")||(currentCode != undefined && currentCode == row.code)){
-					dg.treegrid('endEdit',editingId);
-					editingId = undefined;
-					currentCode = undefined;
-					return;
-				}
-				$.ajax({
-					url:"<@s.url '/admin/local/catalog/update'/>",
-					type:"POST",
-					data:{"id":editingId,"code":row.code},
-					dataType:"json",
-					success:function(data){
-						if(data.success){
-							editingId = undefined;
-							dg.treegrid('reloadFooter');
-						}
-					}
-				});
-			}
+			edit_window(row);
 		}
 	});
+	function edit_window(row)
+	{
+		var current_code = row.code;
+		var d = $("<div/>").dialog({
+			title:"设置环球的CODE",
+			width:300,
+			height:200,
+			href:"<@s.url '/admin/local/catalog/edit'/>",
+			modal:true,
+			buttons:[
+			{
+				text:"保存",
+				iconCls:"icon-save",
+				handler:function(){
+					$.messager.progress();
+					var real_code = $.trim($("#local_catalog_edit_form input[name='code']").val());
+					if((!current_code && real_code!="") ||(current_code && current_code!=real_code)){
+						$.ajax({
+							url:"<@s.url '/admin/local/catalog/update'/>",
+							type:"POST",
+							data:{id:row.id,code:real_code},
+							dataType:"json",
+							success:function(data)
+							{
+								$.messager.progress("close");
+								if(data.success){
+									dg.treegrid("update",{
+										id:row.id,
+										row:data.data
+									});
+									d.dialog("close");
+									$.messager.show({
+										title:"提示",
+										msg:"更新成功",
+										showType:"show"
+									});
+								}else{
+									$.messager.show({
+										title:"提示",
+										msg:"更新失败",
+										showType:"show"
+									});
+								}
+							},
+							error:function(e)
+							{
+								$.messager.progress("close");
+								d.dialog("close");
+								$.messager.show({
+									title:"提示",
+									msg:"系统错误",
+									showType:"show"
+								});
+							}
+						});
+					}else{
+						$.messager.progress("close");
+					}
+				}
+			},
+			{
+				text:"关闭",
+				iconCls:"icon-cancel",
+				handler:function(){
+					d.dialog("close");
+				}
+			}],
+			onClose:function(){
+				$(this).dialog("destroy");
+			},
+			onLoad:function(){
+				if(row) {
+					$("#local_catalog_edit_form").form("load",row);
+				}
+			}
+	  });
+	}
 });
 //-->
 </script>

@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.examw.collector.service.ILoginLogService;
 import com.examw.collector.service.IMenuService;
+import com.examw.collector.support.JSONUtil;
 import com.examw.model.Json;
 import com.examw.utils.VerifyCodeUtil;
 
@@ -90,7 +91,7 @@ public class ShiroController {
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	@ResponseBody
-	public Json authentication(HttpServletRequest request){
+	public String authentication(HttpServletRequest request){
 		Json result = new Json();
 		try{
 			String account = WebUtils.getCleanParam(request, "account"),
@@ -142,7 +143,7 @@ public class ShiroController {
 			result.setSuccess(false);
 			result.setMsg(e.getMessage());
 		}
-		return result;
+		return JSONUtil.ObjectToJson(result);
 	}
 	/**
 	 * 用户登出。

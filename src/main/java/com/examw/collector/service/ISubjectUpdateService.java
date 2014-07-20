@@ -3,6 +3,7 @@ package com.examw.collector.service;
 import java.util.List;
 
 import com.examw.collector.model.SubjectInfo;
+import com.examw.model.DataGrid;
 
 /**
  * 科目数据更新服务接口
@@ -15,4 +16,9 @@ public interface ISubjectUpdateService {
 	 * @param subjects
 	 */
 	List<SubjectInfo> update(List<SubjectInfo> subjects,String account);
+	/**
+	 * 获取新增或更新的集合
+	 * @return
+	 */
+	DataGrid<SubjectInfo> dataGridUpdate(String account);
 }

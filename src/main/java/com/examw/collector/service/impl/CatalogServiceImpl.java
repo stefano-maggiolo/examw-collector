@@ -241,6 +241,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 			Catalog local_c = this.catalogDao.load(Catalog.class, c.getCode());
 			if(local_c == null){
 				c.setStatus("新增");
+				c.setUpdateInfo("<span style='color:blue'>[新增]</span>"+c.toString());
 				add.add(c);
 			}else if(c.equals(local_c)){
 				if(c.getChildren()!=null&&c.getChildren().size()>0){
@@ -263,10 +264,12 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 						Catalog local_child = this.catalogDao.load(Catalog.class, child.getCode());
 						if(local_child == null){
 							child.setStatus("新增");
+							child.setUpdateInfo("<span style='color:blue'>[新增]</span>"+child.toString());
 							children.add(child);
 						}else if(child.equals(local_child)) continue;
 						else{
 							child.setStatus("新的");
+							child.setUpdateInfo("<span style='color:red'>[新增]</span>"+child.getUpdateInfo());
 							children.add(child);
 							//local_child.setStatus("旧的");
 							//children.add(local_child);
@@ -290,6 +293,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 				}
 			}else{
 				c.setStatus("新的");
+				c.setUpdateInfo("<span style='color:blue'>[新增]</span>"+c.getUpdateInfo());
 				//local_c.setStatus("旧的");
 				add.add(c);
 				//add.add(local_c);

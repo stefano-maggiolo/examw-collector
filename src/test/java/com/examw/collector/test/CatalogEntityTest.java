@@ -1,7 +1,5 @@
 package com.examw.collector.test;
 
-import java.util.List;
-
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -9,8 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.examw.collector.model.local.CatalogEntityInfo;
-import com.examw.collector.service.ICatalogEntityService;
+import com.examw.collector.dao.ICatalogEntityDao;
 
 /**
  * 
@@ -21,10 +18,10 @@ import com.examw.collector.service.ICatalogEntityService;
 @ContextConfiguration(locations = {"classpath:spring-examw-collector.xml"})
 public class CatalogEntityTest {
 	@Resource
-	private ICatalogEntityService catalogEntityService;
+	private ICatalogEntityDao catalogEntityDao;
 	@Test
 	public void loadCatalogs(){
-		List<CatalogEntityInfo>  list = this.catalogEntityService.datagrid(new CatalogEntityInfo()).getRows();
-		System.out.println(list.size());
+		//List<String>  list = this.catalogEntityDao.findAllCodes();
+		//System.out.println(list.size());
 	}
 }

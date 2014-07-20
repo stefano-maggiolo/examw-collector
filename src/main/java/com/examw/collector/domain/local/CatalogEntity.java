@@ -15,7 +15,7 @@ public class CatalogEntity implements Serializable {
 	private String schoolId;
 	private CatalogEntity parent;
 	private Set<CatalogEntity> children;
-	public static String SCHOOLID_EDU24 = "1";	//环球网校的学校代码
+	public static String SCHOOLID_EDU24 = ",1,2,";	//环球网校的学校代码
 	/**
 	 * 获取 ID
 	 * @return id

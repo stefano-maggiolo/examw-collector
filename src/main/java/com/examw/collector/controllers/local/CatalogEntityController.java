@@ -40,6 +40,12 @@ public class CatalogEntityController implements IUserAware{
 	public DataGrid<CatalogEntityInfo> datagrid(CatalogEntityInfo info){
 		return this.catalogEntityService.datagrid(info);
 	}
+	
+	@RequestMapping(value="edit", method = RequestMethod.GET)
+	public String edit(Model model){
+		return "local/catalog_update_code";
+	}
+	
 	@RequestMapping(value="/update", method = RequestMethod.POST)
 	@ResponseBody
 	public Json update(CatalogEntityInfo info){

@@ -23,4 +23,9 @@ public interface ICatalogEntityDao extends IBaseDao<CatalogEntity>{
 	 * @return
 	 */
 	CatalogEntity find(String edu24_code);
+	/**
+	 * 返回带有环球code的所有考试分类
+	 * @return
+	 */
+	List<CatalogEntity> findAllWithCode();
 }

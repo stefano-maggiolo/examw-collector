@@ -61,7 +61,7 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 			for(CatalogEntity m : data.getChildren()){
 				CatalogEntityInfo c = this.changeModel(m);
 				//非环球的子类不加载
-				if(c != null && CatalogEntity.SCHOOLID_EDU24.equals(c.getSchoolId())){
+				if(c != null && !StringUtils.isEmpty(c.getSchoolId()) && CatalogEntity.SCHOOLID_EDU24.contains(","+c.getSchoolId()+",")){
 					c.setPid(data.getId());
 					children.add(c);
 				}
@@ -97,6 +97,7 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 			log.setAccount(account);
 			log.setContent("设置课程分类("+data.getCname()+")中环球的Code为"+info.getCode());
 			this.operateLogDao.save(log);
+			info = this.changeModel(data);
 			return info;
 		}
 		logger.info("更新失败");

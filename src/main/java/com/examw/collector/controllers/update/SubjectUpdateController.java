@@ -66,6 +66,15 @@ public class SubjectUpdateController implements IUserAware{
 		}
 		return result;
 	}
+	/**
+	 * 一键直接更新
+	 * @return
+	 */
+	@RequestMapping(value="/onekeyupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public DataGrid<SubjectInfo> oneKeyUpdate(){
+		return this.subjectUpdateService.dataGridUpdate(account);
+	}
 	@Override
 	public void setUserId(String userId) {
 	}
