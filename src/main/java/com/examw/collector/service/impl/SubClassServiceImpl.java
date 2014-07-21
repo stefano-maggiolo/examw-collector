@@ -194,7 +194,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 		StringBuffer existIds = new StringBuffer();
 		for(SubClass s:data){
 			s.setCatalog(catalog);
-			if(!StringUtils.isEmpty(s.getCode())) existIds.append(s.getCode()).append(",");
+			if(!StringUtils.isEmpty(s.getCode())) existIds.append("'"+s.getCode()+"'").append(",");
 			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
@@ -220,7 +220,7 @@ public class SubClassServiceImpl extends BaseDataServiceImpl<SubClass, SubClassI
 		}
 		if(existIds.length()>0)
 		{
-			existIds.append("0");
+			existIds.append("'0'");
 			List<SubClass> deleteList = this.subClassDao.findDeleteSubClasss(existIds.toString(),info);
 			if(deleteList!=null && deleteList.size()>0)
 			{

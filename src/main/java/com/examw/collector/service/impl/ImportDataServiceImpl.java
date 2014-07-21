@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.IAdVideoDao;
+import com.examw.collector.dao.ICatalogEntityDao;
 import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.dao.IListenEntityDao;
 import com.examw.collector.dao.IPackDao;
@@ -53,6 +54,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 	private ITeacherEntityDao teacherEntityDao;
 	private IAdVideoDao adVideoDao;
 	
+	private ICatalogEntityDao catalogEntityDao;
 	/**
 	 * 设置 科目副本数据接口
 	 * @param subjectDao
@@ -142,6 +144,15 @@ public class ImportDataServiceImpl implements IImportDataService {
 	public void setAdVideoDao(IAdVideoDao adVideoDao) {
 		this.adVideoDao = adVideoDao;
 	}
+	
+	/**
+	 * 设置 分类数据接口
+	 * @param catalogEntityDao
+	 * 
+	 */
+	public void setCatalogEntityDao(ICatalogEntityDao catalogEntityDao) {
+		this.catalogEntityDao = catalogEntityDao;
+	}
 
 	@Override
 	public void init(String[] catalogIds) {
@@ -161,6 +172,19 @@ public class ImportDataServiceImpl implements IImportDataService {
 		}
 	}
 
+	@Override
+	public void initAll() {
+		List<CatalogEntity> list = this.catalogEntityDao.findAllWithCode();
+		for(CatalogEntity c : list){
+			if(c==null) continue;
+			// 导入本地科目数据
+			importLocalSubject(c.getCode());
+			// 导入班级以及课节数据
+			importLocalGrade(c.getCode());
+			// 导入套餐数据
+			importLocalPackage(c.getCode());
+		}
+	}
 	/**
 	 * 插入科目数据
 	 * 
@@ -226,6 +250,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 					if(s.getAdVideo()!=null){
 						this.adVideoDao.saveOrUpdate(s.getAdVideo());
 					}
+					s.setSubject(subject);
 					this.subClassDao.saveOrUpdate(s);
 					GradeEntity grade = changeGradeModel(s);
 					if (grade != null) {
@@ -261,7 +286,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 			Set<String> keys = teacherMap.keySet();
 			List<TeacherEntity> list = new ArrayList<TeacherEntity>();
 			for(String id :keys){
-				TeacherEntity t = this.teacherEntityDao.load(TeacherEntity.class, id);
+				TeacherEntity t = this.teacherEntityDao.load(TeacherEntity.class, "e"+id); //老师id加e处理
 				if(t!=null){
 					if(StringUtils.isEmpty(t.getCatalogId())){
 						t.setCatalogId(calalogId);
@@ -303,7 +328,9 @@ public class ImportDataServiceImpl implements IImportDataService {
 			return null;
 		ListenEntity data = new ListenEntity();
 		BeanUtils.copyProperties(relate, data);
-		data.setId(relate.getNum().toString());
+		//==============加e处理=========================
+		data.setId("e"+relate.getNum().toString());
+		//==============加e处理=========================
 		if (relate.getSubclass() == null)
 			return null;
 		GradeEntity grade = new GradeEntity();
@@ -322,6 +349,15 @@ public class ImportDataServiceImpl implements IImportDataService {
 		if(list == null ||list.size()==0) return;
 		for(Pack p:list){
 			if(p==null)	continue;
+			if(p.getSubject()!=null){
+				Subject subject = this.subjectDao.load(Subject.class, p
+						.getSubject().getCode());
+				if(subject!=null){
+					p.setSubject(subject);
+				}else{
+					continue;
+				}
+			}
 			this.packDao.saveOrUpdate(p);
 			PackageEntity data = this.changePackageModel(p);
 			if(data!=null)

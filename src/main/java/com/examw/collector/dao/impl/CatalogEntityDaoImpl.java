@@ -36,7 +36,9 @@ public class CatalogEntityDaoImpl extends BaseDaoImpl<CatalogEntity> implements 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CatalogEntity> findAllWithCode() {
-		String hql = "from CatalogEntity c where c.code is not null and c.code != ''";
+		//只用一个进行测试测试用
+		String hql = "from CatalogEntity c where c.code ='1235'";
+		//String hql = "from CatalogEntity c where c.code is not null and c.code != ''";
 		Query query = this.getCurrentSession().createQuery(hql);
 		return query.list();
 	}

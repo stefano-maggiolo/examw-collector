@@ -148,7 +148,7 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 		StringBuffer existIds = new StringBuffer();
 		System.out.println(subjects.size());
 		for(Subject s:subjects){
-			if(!StringUtils.isEmpty(s.getCode())) existIds.append(s.getCode()).append(",");
+			if(!StringUtils.isEmpty(s.getCode())) existIds.append("'"+s.getCode()+"'").append(",");
 			Subject local_s = this.subjectDao.load(Subject.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
@@ -166,9 +166,9 @@ public class SubjectServiceImpl extends BaseDataServiceImpl<Subject, SubjectInfo
 		}
 		if(existIds.length()>0)
 		{
-			existIds.append("0");
+			existIds.append("'0'");
 			System.out.println(existIds);
-			List<Subject> deleteList = this.subjectDao.findDeleteSubjects(existIds.toString());
+			List<Subject> deleteList = this.subjectDao.findDeleteSubjects(existIds.toString(),null);
 			if(deleteList!=null && deleteList.size()>0)
 			{
 				for(Subject s:deleteList){

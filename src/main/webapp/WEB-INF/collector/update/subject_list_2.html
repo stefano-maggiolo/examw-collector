@@ -1,0 +1,63 @@
+<#--科目数据更新列表--> 
+<#include "ftl/comm.ftl"/> 
+<#assign module="update_subject"/> 
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+	$(function() {
+		var dg1 = $("#${dg}_remote").datagrid({
+			url:"<@s.url '/admin/update/subject/onekeyupdate'/>",
+			fit : true,
+			fitColumns : true,
+			loadMsg :"正在比对更新科目数据请稍候...",
+			rownumbers : true,
+			border : true,
+			//pagination:true,
+			//pageSize:10,
+			striped : true,
+			idField : "code",
+			columns:[[{
+				field:"children",
+				checkbox:true
+			},{
+				title:"科目名称",
+				field:"name",
+				width:25
+			},{
+				title:"科目代码",
+				field:"code",
+				width:15
+			},{
+				title:"所属分类",
+				field:"catalogName",
+				width:15
+			},{
+				title:"状态",
+				field:"status",
+				width:15,
+				styler: function(value,row,index){
+					if (value == "被删"){
+						return 'background-color:#ffee00;color:red;';
+					}
+				}
+			},{
+				title:"变更提醒",
+				field:"updateInfo",
+				width:40
+			}]],
+			onLoadError:function(e){
+				<@error_dialog "e"/>
+			},
+			onLoadSuccess:function(data){   
+		        dg1.datagrid('doCellTip',{delay:100});   
+		    }
+		});
+	});
+//-->
+</script>
+<div class="easyui-layout" data-options="fit:true" id="${dg}_layout">
+	<div
+		data-options="region:'center',title:'班级更新',split:true"	style="width: 450px;">
+		<table id="${dg}_remote"></table>
+	</div>
+</div>

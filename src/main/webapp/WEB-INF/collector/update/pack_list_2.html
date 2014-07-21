@@ -1,0 +1,64 @@
+<#--套餐数据更新列表-->
+<#include "ftl/comm.ftl"/>
+<#assign module="update_pack"/>
+<#assign dg="${module}_list_dg"/>
+<script type="text/javascript">
+<!--
+$(function(){
+	//dg
+	var dg=$("#${dg}").datagrid({
+		url:"<@s.url '/admin/update/pack/onekeyupdate'/>",
+		fit:true,
+		fitColumns:true,
+		rownumbers:true,
+		pagination:true,
+		loadMsg :"正在比对更新套餐数据请稍候...",
+		pagePosition:"bottom",
+		pageSize:20,
+		pageList:[20,30,40],
+		border:true,
+		striped:true,
+		sortName:"id",
+		idField:"code",
+		columns:[[{
+			field:"check",
+			checkbox:true
+		},{
+			title:"套餐代码",
+			field:"code",
+			width:10,
+			align:"left",
+			sortable:true
+		},{
+			title:"名称",
+			field:"name",
+			width:20,
+			align:"left",
+			sortable:true
+		},{
+			title:"状态",
+			field:"status",
+			width:10,
+			align:"left",
+			styler: function(value,row,index){
+				if (value == "被删"){
+					return 'background-color:#ffee00;color:red;';
+				}
+			}
+		},{
+			title:"变更提醒",
+			field:"updateInfo",
+			width:40
+		}]],
+		toolbar:"#${dg}_toobar",
+		onLoadError:function(e){
+			<@error_dialog "e"/>
+		},
+	    onLoadSuccess:function(data){   
+	        dg.datagrid('doCellTip',{delay:100});   
+	    }  
+	});
+});
+//-->
+</script>
+<table id="${dg}"></table>

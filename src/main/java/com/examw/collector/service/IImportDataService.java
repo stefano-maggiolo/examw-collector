@@ -10,4 +10,6 @@ public interface IImportDataService {
 	 * @param catalogId 课程分类的集合
 	 */
 	void init(String[] catalogId);
+	
+	void initAll();
 }

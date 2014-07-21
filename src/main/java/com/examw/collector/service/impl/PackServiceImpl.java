@@ -213,7 +213,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 		StringBuffer existIds = new StringBuffer();
 		for(Pack p:data){
 			p.setCatalog(catalog);
-			if(!StringUtils.isEmpty(p.getCode())) existIds.append(p.getCode()).append(",");
+			if(!StringUtils.isEmpty(p.getCode())) existIds.append("'"+p.getCode()+"'").append(",");
 			Pack local_p = this.packDao.load(Pack.class, p.getCode());
 			if(local_p == null){
 				p.setStatus("新增");
@@ -241,7 +241,7 @@ public class PackServiceImpl extends BaseDataServiceImpl<Pack, PackInfo>
 		}
 		if(existIds.length()>0)
 		{
-			existIds.append("0");
+			existIds.append("'0'");
 			System.out.println(existIds);
 			List<Pack> deleteList = this.packDao.findDeletePacks(existIds.toString(),info);
 			if(deleteList!=null && deleteList.size()>0)

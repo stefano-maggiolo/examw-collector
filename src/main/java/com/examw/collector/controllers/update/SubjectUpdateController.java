@@ -37,7 +37,7 @@ public class SubjectUpdateController implements IUserAware{
 	private String account;
 	@RequestMapping(value={"","/list"}, method = RequestMethod.GET)
 	public String list(Model model){
-		return "update/subject_list";
+		return "update/subject_list_2";
 	}
 	
 	@RequestMapping(value="/datagrid", method = RequestMethod.POST)

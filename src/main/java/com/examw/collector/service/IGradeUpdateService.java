@@ -3,6 +3,7 @@ package com.examw.collector.service;
 import java.util.List;
 
 import com.examw.collector.model.SubClassInfo;
+import com.examw.model.DataGrid;
 
 /**
  * 班级数据更新服务接口
@@ -15,4 +16,9 @@ public interface IGradeUpdateService {
 	 * @param subClasses
 	 */
 	List<SubClassInfo> update(List<SubClassInfo> subClasses,String account);
+	/**
+	 * 获取新增或更新的集合
+	 * @return
+	 */
+	DataGrid<SubClassInfo> dataGridUpdate(String account);
 }

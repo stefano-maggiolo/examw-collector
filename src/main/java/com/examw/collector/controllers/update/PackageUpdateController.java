@@ -38,7 +38,7 @@ public class PackageUpdateController implements IUserAware{
 	
 	@RequestMapping(value={"","/list"}, method = RequestMethod.GET)
 	public String list(Model model){
-		return "update/pack_list";
+		return "update/pack_list_2";
 	}
 	@RequestMapping(value="/datagrid", method = RequestMethod.POST)
 	@ResponseBody
@@ -66,7 +66,15 @@ public class PackageUpdateController implements IUserAware{
 		}
 		return result;
 	}
-	
+	/**
+	 * 一键直接更新
+	 * @return
+	 */
+	@RequestMapping(value="/onekeyupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public DataGrid<PackInfo> oneKeyUpdate(){
+		return this.packageUpdateService.dataGridUpdate(account);
+	}
 	@Override
 	public void setUserId(String userId) {
 	}

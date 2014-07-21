@@ -165,6 +165,9 @@ public class DataServerImpl implements IDataServer {
 			return null;
 		Subject subject = new Subject();
 		subject.setCode(XmlUtil.getNodeStringValue(node, "./lesson_code"));
+		//======================================code加e处理
+		if(!StringUtils.isEmpty(subject.getCode())) subject.setCode("e"+subject.getCode());
+		//======================================
 		subject.setName(XmlUtil.getNodeStringValue(node, "./lesson_name"));
 		subject.setClassTotal(Integer.parseInt(XmlUtil.getNodeStringValue(node,
 				"./class_num")));
@@ -205,7 +208,10 @@ public class DataServerImpl implements IDataServer {
 			Subject subject = null;
 			if (!StringUtils.isEmpty(lesson_code)) {
 				subject = new Subject();
-				subject.setCode(lesson_code);
+				//===========code 加  e==============
+				//subject.setCode(lesson_code);
+				subject.setCode("e"+lesson_code);
+				//===========code 加  e==============
 			}
 			// ====================================
 			for (int i = 0; i < list.getLength(); i++) {
@@ -216,7 +222,10 @@ public class DataServerImpl implements IDataServer {
 				data.setCatalog(catalog);
 				data.setSubject(subject);
 				// ==============================
-				data.setCode(XmlUtil.getNodeStringValue(list.item(i),"./class_code"));
+				//===========code 加  e==============
+				//data.setCode(XmlUtil.getNodeStringValue(list.item(i),"./class_code"));
+				data.setCode("e"+XmlUtil.getNodeStringValue(list.item(i),"./class_code"));
+				//===========code 加  e==============
 				data.setName(XmlUtil.getNodeStringValue(list.item(i),"./class_name"));
 				data.setIsLive(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_live")));
 				data.setLongDay(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./long_day")));
@@ -275,7 +284,10 @@ public class DataServerImpl implements IDataServer {
 				if (lessonList.item(j) == null)
 					continue;
 				Subject subject = new Subject();
-				subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				//================code 加 e======================
+				//subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				subject.setCode("e"+XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				//================code 加 e======================
 				subject.setName(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_name"));
 				NodeList list = XmlUtil.selectNodes(lessonList.item(j),".//class");
 				for (int i = 0; i < list.getLength(); i++) {
@@ -286,7 +298,10 @@ public class DataServerImpl implements IDataServer {
 					data.setCatalog(catalog);
 					data.setSubject(subject);
 					// ==============================
-					data.setCode(XmlUtil.getNodeStringValue(list.item(i),"./class_code"));
+					//================code 加 e======================
+					//data.setCode(XmlUtil.getNodeStringValue(list.item(i),"./class_code"));
+					data.setCode("e" + XmlUtil.getNodeStringValue(list.item(i),"./class_code"));
+					//================code 加 e======================
 					data.setName(XmlUtil.getNodeStringValue(list.item(i),"./class_name"));
 					data.setIsLive(Boolean.parseBoolean(XmlUtil.getNodeStringValue(list.item(i), "./is_live")));
 					data.setLongDay(Integer.parseInt(XmlUtil.getNodeStringValue(list.item(i), "./long_day")));
@@ -333,7 +348,7 @@ public class DataServerImpl implements IDataServer {
 			if (StringUtils.isEmpty(class_code))
 				return null;
 			String xml = this.remoteDataProxy.loadLesson(3, null, null,
-					class_code);
+					class_code.replace("e", ""));	//code做减e处理
 			if (StringUtils.isEmpty(xml))
 				return null;
 			Document document = XmlUtil.loadDocument(xml);
@@ -344,7 +359,10 @@ public class DataServerImpl implements IDataServer {
 			List<Relate> relates = new ArrayList<>();
 			// ==================================================
 			SubClass grade = new SubClass();
-			grade.setCode(class_code);
+			//================code 加 e======================
+			//grade.setCode(class_code);
+			grade.setCode(class_code);	//class_code本身带有e
+			//================code 加 e======================
 			// ==================================================
 			for (int i = 0; i < list.getLength(); i++) {
 				if (list.item(i) == null)
@@ -409,7 +427,10 @@ public class DataServerImpl implements IDataServer {
 			Subject subject = null;
 			if (!StringUtils.isEmpty(lesson_code)) {
 				subject = new Subject();
-				subject.setCode(lesson_code);
+				//================code 加 e======================
+				//subject.setCode(lesson_code);
+				subject.setCode("e"+lesson_code);
+				//================code 加 e======================
 			}
 			// ==================================================
 			for (int i = 0; i < list.getLength(); i++) {
@@ -420,8 +441,10 @@ public class DataServerImpl implements IDataServer {
 				data.setCatalog(catalog);
 				data.setSubject(subject);
 				// ==================================================
-				data.setCode(XmlUtil.getNodeStringValue(list.item(i),
-						"./discount_code"));
+				//================code 加 e======================
+//				data.setCode(XmlUtil.getNodeStringValue(list.item(i),"./discount_code"));
+				data.setCode("e" + XmlUtil.getNodeStringValue(list.item(i),"./discount_code"));
+				//================code 加 e======================
 				data.setName(XmlUtil.getNodeStringValue(list.item(i),
 						"./discount_name"));
 				data.setSource(Integer.parseInt(XmlUtil.getNodeStringValue(
@@ -432,8 +455,9 @@ public class DataServerImpl implements IDataServer {
 						list.item(i), "./is_show")));
 				// data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
 				// "./class_code").split(","));
-				data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
-						"./class_code"));
+				//===============这里进行了 加e处理 ======================
+				data.setClassCodes(classCodesAdd_e(XmlUtil.getNodeStringValue(list.item(i),
+						"./class_code")));
 				packs.add(data);
 			}
 			return packs;
@@ -466,10 +490,13 @@ public class DataServerImpl implements IDataServer {
 				if (lessonList.item(j) == null)
 					continue;
 				Subject subject = new Subject();
-				subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				//================code 加 e======================
+//				subject.setCode(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				subject.setCode("e"+XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_code"));
+				//================code 加 e======================
 				subject.setName(XmlUtil.getNodeStringValue(lessonList.item(j),"./lesson_name"));
 				//如果lesson_code == 子类别的ID表示全科套餐
-				if(lesson_type_code.equals(subject.getCode())){
+				if(lesson_type_code.equals(subject.getCode().replace("e", ""))){//这里要做减e处理
 					subject = null;
 				}
 				//其下的套餐
@@ -482,8 +509,10 @@ public class DataServerImpl implements IDataServer {
 					data.setCatalog(catalog);
 					data.setSubject(subject);
 					// ==================================================
-					data.setCode(XmlUtil.getNodeStringValue(list.item(i),
-							"./discount_code"));
+					//===================code 加 e================================
+//					data.setCode(XmlUtil.getNodeStringValue(list.item(i),"./discount_code"));
+					data.setCode("e"+XmlUtil.getNodeStringValue(list.item(i),"./discount_code"));
+					//===================code 加 e================================
 					data.setName(XmlUtil.getNodeStringValue(list.item(i),
 							"./discount_name"));
 					data.setSource(Integer.parseInt(XmlUtil.getNodeStringValue(
@@ -494,8 +523,9 @@ public class DataServerImpl implements IDataServer {
 							list.item(i), "./is_show")));
 					// data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
 					// "./class_code").split(","));
-					data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
-							"./class_code"));
+					//===============这里进行了 加e处理 ======================
+					data.setClassCodes(classCodesAdd_e(XmlUtil.getNodeStringValue(list.item(i),
+							"./class_code")));
 					packs.add(data);
 				}
 			}
@@ -836,7 +866,9 @@ public class DataServerImpl implements IDataServer {
 		try
 		{
 			teacher = new TeacherEntity();
-			teacher.setId(id);
+			//==================老师id 加e ===============================
+			teacher.setId("e"+id);
+			//==================老师id 加e ===============================
 			String html = this.remoteDataProxy.loadTeacher(id);
 			html = html.replaceAll("\\s", "");
 			Pattern teacherName = Pattern.compile("<h2><dl><dt>(.+)</dt><ddclass=\"ms_itdt_dd1\"(.+)");
@@ -931,5 +963,22 @@ public class DataServerImpl implements IDataServer {
                 e.printStackTrace();  
         }  
 		return path;
+	}
+	/**
+	 * classCode中的ID里加e
+	 * @return
+	 */
+	private String classCodesAdd_e(String classCodes){
+		StringBuilder result = new StringBuilder();
+		if(!StringUtils.isEmpty(classCodes)){
+			String[] codes = classCodes.split(",");
+			for(String code : codes)
+			{
+				result.append("e"+code).append(",");
+			}
+		}
+		if(result.length()>0)
+			return result.substring(0, result.length()-1);	//去最后一个逗号
+		return null;
 	}
 }

@@ -31,5 +31,5 @@ public interface ISubjectDao extends IBaseDao<Subject>{
 	 * @param existIds
 	 * @return
 	 */
-	List<Subject> findDeleteSubjects(String existIds);
+	List<Subject> findDeleteSubjects(String existIds,String codes);
 }

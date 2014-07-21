@@ -37,7 +37,7 @@ public class GradeUpdateController implements IUserAware{
 	
 	@RequestMapping(value={"","/list"}, method = RequestMethod.GET)
 	public String list(Model model){
-		return "update/grade_list";
+		return "update/grade_list_2";
 	}
 	@RequestMapping(value="/datagrid", method = RequestMethod.POST)
 	@ResponseBody
@@ -74,5 +74,15 @@ public class GradeUpdateController implements IUserAware{
 	@Override
 	public void setUserNickName(String userNickName) {
 		this.account = userNickName;
+	}
+	
+	/**
+	 * 一键直接更新
+	 * @return
+	 */
+	@RequestMapping(value="/onekeyupdate", method = RequestMethod.POST)
+	@ResponseBody
+	public DataGrid<SubClassInfo> oneKeyUpdate(){
+		return this.gradeUpdateService.dataGridUpdate(account);
 	}
 }

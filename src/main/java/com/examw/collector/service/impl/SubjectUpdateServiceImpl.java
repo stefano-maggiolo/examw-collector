@@ -79,6 +79,15 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	public void setCatalogEntityDao(ICatalogEntityDao catalogEntityDao) {
 		this.catalogEntityDao = catalogEntityDao;
 	}
+	
+	/**
+	 * 设置 设置远程数据接口
+	 * @param dataServer
+	 * 
+	 */
+	public void setDataServer(IDataServer dataServer) {
+		this.dataServer = dataServer;
+	}
 	@Override
 	public List<SubjectInfo> update(List<SubjectInfo> subjects,String account) {
 		if(subjects == null ||subjects.size()==0) return null;
@@ -198,7 +207,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 		StringBuffer existIds = new StringBuffer();
 		//比对科目
 		for(Subject s:subjects){
-			if(!StringUtils.isEmpty(s.getCode())) existIds.append(s.getCode()).append(",");
+			if(!StringUtils.isEmpty(s.getCode())) existIds.append("'"+s.getCode()+"'").append(",");
 			Subject local_s = this.subjectDao.load(Subject.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
@@ -210,15 +219,15 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 				s.setStatus("新的");
 				//local_s.setStatus("旧的");
 				s.setUpdateInfo("<span style='color:red'>[更新]</span>"+s.getUpdateInfo());
-				add.add(s);
+				BeanUtils.copyProperties(s, local_s);	//已经存在的,必须用原有的数据进行更新,不然会出错
+				add.add(local_s);
 				//add.add(local_s);
 			}
 		}
 		if(existIds.length()>0)
 		{
-			existIds.append("0");
-			System.out.println(existIds);
-			List<Subject> deleteList = this.subjectDao.findDeleteSubjects(existIds.toString());
+			existIds.append("'0'");
+			List<Subject> deleteList = this.subjectDao.findDeleteSubjects(existIds.toString(),getCodes(this.catalogEntityDao.findAllWithCode()));
 			if(deleteList!=null && deleteList.size()>0)
 			{
 				for(Subject s:deleteList){
@@ -267,7 +276,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	private List<SubjectInfo> update(String account) {
 		//找出需要查找并且有变化的科目集合
 		List<Subject> subjects = this.findChangedSubject();
-		if(subjects == null ||subjects.size()==0) return null;
+		if(subjects == null ||subjects.size()==0) return new ArrayList<SubjectInfo>();
 		for(Subject info:subjects){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
@@ -353,5 +362,17 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 				info.setCatalogName(data.getCatalog().getName());
 		}
 		return info;
+	}
+	
+	private String getCodes(List<CatalogEntity> list){
+		StringBuilder s = new StringBuilder();
+		for(CatalogEntity entity:list)
+		{
+			s.append("'"+entity.getCode()+"'").append(",");
+		}
+		if(s.length()>0){
+			s.append("'0'");
+		}
+		return s.toString();
 	}
 }
