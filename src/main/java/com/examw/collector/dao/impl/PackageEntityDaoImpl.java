@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.IPackageEntityDao;
@@ -61,5 +62,12 @@ public class PackageEntityDaoImpl extends BaseDaoImpl<PackageEntity> implements 
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		return hql;
+	}
+	@Override
+	public void delete(String subjectId) {
+		String hql = "delete from PackageEntity p where p.subject.id = :subjectId";
+		Query query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("subjectId", subjectId);
+		query.executeUpdate();
 	}
 }

@@ -26,4 +26,9 @@ public interface IPackageEntityDao extends IBaseDao<PackageEntity>{
 	 * 数据总数。
 	 */
 	Long total(PackInfo info);
+	/**
+	 * 根据科目id删除班级
+	 * @param subjectId
+	 */
+	void delete(String subjectId);
 }

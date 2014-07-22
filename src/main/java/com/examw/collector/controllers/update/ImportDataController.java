@@ -42,4 +42,10 @@ public class ImportDataController {
 		}
 		return result;
 	}
+	
+	@RequestMapping(value = "/getIds", method = RequestMethod.POST)
+	@ResponseBody
+	public String getIds(){
+		return this.importDataService.getIds();
+	}
 }

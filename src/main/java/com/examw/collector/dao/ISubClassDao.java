@@ -32,4 +32,9 @@ public interface ISubClassDao  extends IBaseDao<SubClass>{
 	 * @return
 	 */
 	List<SubClass> findDeleteSubClasss(String existIds,SubClassInfo info);
+	/**
+	 * 根据科目id删除班级
+	 * @param subjectId
+	 */
+	void delete(String subjectId);
 }

@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.ISubClassDao;
@@ -76,5 +77,13 @@ public class SubClassDaoImpl extends BaseDaoImpl<SubClass> implements ISubClassD
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.find(hql, parameters, null, null);
+	}
+	
+	@Override
+	public void delete(String subjectId) {
+		String hql = "delete from SubClass sc where sc.subject.id = :subjectId";
+		Query query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("subjectId", subjectId);
+		query.executeUpdate();
 	}
 }

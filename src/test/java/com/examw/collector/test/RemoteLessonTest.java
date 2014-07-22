@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -60,9 +61,9 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	//@Test
+	@Test
 	public void loadRelates(){
-		List<Relate> list = this.dataServer.loadRelates("491");
+		List<Relate> list = this.dataServer.loadRelates("608");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);

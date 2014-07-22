@@ -172,5 +172,29 @@ public class TeacherEntity implements Serializable {
 	public void setCatalogId(String catalogId) {
 		this.catalogId = catalogId;
 	}
-	
+	@Override
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		if(id!=null)
+		{
+			buf.append(id).append(":").append(id.length()).append("; ");
+		}
+		if(name!=null)
+		{
+			buf.append(name).append(":").append(name.length()).append("; ");
+		}
+		if(lessons!=null)
+		{
+			buf.append(lessons).append(":").append(lessons.length()).append("; ");
+		}
+		if(catalogId!=null)
+		{
+			buf.append(catalogId).append(":").append(catalogId.length()).append("; ");
+		}
+		if(imgurl!=null)
+		{
+			buf.append(imgurl).append(":").append(imgurl.length()).append("; ");
+		}
+		return buf.toString();
+	}
 }

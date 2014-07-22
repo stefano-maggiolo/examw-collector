@@ -288,7 +288,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		if(relate == null) return null;
 		ListenEntity data = new ListenEntity();
 		BeanUtils.copyProperties(relate, data);
-		data.setId(relate.getNum().toString());
+		data.setId(DataServerImpl.ID_PREFIX+relate.getNum().toString());	//进行加e处理
 		if(relate.getSubclass()==null) return null;
 		GradeEntity grade = new GradeEntity();
 		grade.setId(relate.getSubclass().getCode());
@@ -358,7 +358,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		//添加操作日志
 		OperateLog log = new OperateLog();
 		log.setId(UUID.randomUUID().toString());
-		log.setType(OperateLog.TYPE_UPDATE_SUBJECT);
+		log.setType(OperateLog.TYPE_UPDATE_GRADE);
 		log.setName("更新班级数据");
 		log.setAddTime(new Date());
 		log.setAccount(account);
@@ -386,7 +386,9 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		List<SubClass> data = this.dataServer.loadClasses(catalogId, null);
 		List<SubClass> add = new ArrayList<SubClass>();
 		StringBuffer existIds = new StringBuffer();
+		if(data == null) return add;
 		for(SubClass s:data){
+			if(s == null) continue;
 			s.setCatalog(catalog);
 			if(!StringUtils.isEmpty(s.getCode())) existIds.append("'"+s.getCode()+"'").append(",");
 			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());

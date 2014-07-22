@@ -1,0 +1,276 @@
+[INFO ] 2014-07-18 15:13:26,093 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector.xml]
+[INFO ] 2014-07-18 15:13:26,796 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-hibernate.xml]
+[INFO ] 2014-07-18 15:13:27,078 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-dao.xml]
+[INFO ] 2014-07-18 15:13:27,093 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-service.xml]
+[INFO ] 2014-07-18 15:13:27,140 org.springframework.beans.factory.xml.XmlBeanDefinitionReader     - Loading XML bean definitions from class path resource [spring-examw-collector-shiro.xml]
+[INFO ] 2014-07-18 15:13:27,250 org.springframework.context.support.GenericApplicationContext     - Refreshing org.springframework.context.support.GenericApplicationContext@30380: startup date [Fri Jul 18 15:13:27 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-18 15:13:28,468 org.springframework.beans.factory.config.PropertyPlaceholderConfigurer     - Loading properties file from class path resource [config.properties]
+[INFO ] 2014-07-18 15:13:28,828 org.springframework.context.support.GenericApplicationContext     - Bean 'org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0' of type [class org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:28,875 org.springframework.context.support.GenericApplicationContext     - Bean 'druid-stat-pointcut' of type [class org.springframework.aop.support.JdkRegexpMethodPointcut] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:29,203 org.springframework.context.support.GenericApplicationContext     - Bean 'org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1' of type [class org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[ERROR] 2014-07-18 15:13:29,593 com.alibaba.druid.pool.DruidAbstractDataSource     - maxIdle is deprecated
+[INFO ] 2014-07-18 15:13:29,765 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} inited
+[INFO ] 2014-07-18 15:13:29,765 org.springframework.context.support.GenericApplicationContext     - Bean 'dataSource' of type [class com.alibaba.druid.pool.DruidDataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:30,312 org.hibernate.annotations.common.Version     - HCANN000001: Hibernate Commons Annotations {4.0.2.Final}
+[INFO ] 2014-07-18 15:13:30,328                 org.hibernate.Version     - HHH000412: Hibernate Core {4.2.12.Final}
+[INFO ] 2014-07-18 15:13:30,343         org.hibernate.cfg.Environment     - HHH000206: hibernate.properties not found
+[INFO ] 2014-07-18 15:13:30,343         org.hibernate.cfg.Environment     - HHH000021: Bytecode provider name : javassist
+[INFO ] 2014-07-18 15:13:31,203         org.hibernate.dialect.Dialect     - HHH000400: Using dialect: org.hibernate.dialect.SQLServer2008Dialect
+[INFO ] 2014-07-18 15:13:31,218 org.hibernate.engine.jdbc.internal.LobCreatorBuilder     - HHH000423: Disabling contextual LOB creation as JDBC driver reported JDBC version [3] less than 4
+[INFO ] 2014-07-18 15:13:31,437 org.hibernate.engine.transaction.internal.TransactionFactoryInitiator     - HHH000399: Using default transaction strategy (direct JDBC transactions)
+[INFO ] 2014-07-18 15:13:31,437 org.hibernate.hql.internal.ast.ASTQueryTranslatorFactory     - HHH000397: Using ASTQueryTranslatorFactory
+[DEBUG] 2014-07-18 15:13:31,593 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - Creating EhCacheRegionFactory from a specified resource: spring-examw-collector-ehcache-hibernate.xml.  Resolved to URL: file:/D:/coller/examw-collector/target/classes/spring-examw-collector-ehcache-hibernate.xml
+[INFO ] 2014-07-18 15:13:31,953 org.hibernate.cache.spi.UpdateTimestampsCache     - HHH000250: Starting update timestamps cache at region: org.hibernate.cache.spi.UpdateTimestampsCache
+[WARN ] 2014-07-18 15:13:31,968 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.spi.UpdateTimestampsCache]; using defaults.
+[DEBUG] 2014-07-18 15:13:31,968 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.spi.UpdateTimestampsCache
+[INFO ] 2014-07-18 15:13:31,984 org.hibernate.cache.internal.StandardQueryCache     - HHH000248: Starting query cache at region: org.hibernate.cache.internal.StandardQueryCache
+[WARN ] 2014-07-18 15:13:31,984 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - HHH020003: Could not find a specific ehcache configuration for cache named [org.hibernate.cache.internal.StandardQueryCache]; using defaults.
+[DEBUG] 2014-07-18 15:13:31,984 org.hibernate.cache.ehcache.AbstractEhcacheRegionFactory     - started EHCache region: org.hibernate.cache.internal.StandardQueryCache
+[INFO ] 2014-07-18 15:13:32,078  org.hibernate.validator.util.Version     - Hibernate Validator 4.2.0.Final
+[INFO ] 2014-07-18 15:13:33,062 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000228: Running hbm2ddl schema update
+[INFO ] 2014-07-18 15:13:33,062 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000102: Fetching database metadata
+[INFO ] 2014-07-18 15:13:33,062 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000396: Updating schema
+[INFO ] 2014-07-18 15:13:33,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.FS_NewsClass
+[INFO ] 2014-07-18 15:13:33,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [schoolid, kstime, classename, youhui, parentid, gg728_90, gg230_90, softlist, checkcolumn, id, addtime, bookid, edu24_code, classcname, description, childnum, classtemp, classid, keywords, classtitle, menu, classlist, listname, baokaozhinan, daohang, listcontent, orderid, kstgl, delflag, ksmonth]
+[INFO ] 2014-07-18 15:13:33,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,109 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_fs_newsclass]
+[INFO ] 2014-07-18 15:13:33,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Course_2
+[INFO ] 2014-07-18 15:13:33,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [selecttf, baomingurl, diquid, adddate, pricea, priceb, coursename, content, id, fudao, endtimes, orderid, teacher, courseid, coursenum, classid]
+[INFO ] 2014-07-18 15:13:33,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,140 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_ns_course_2]
+[INFO ] 2014-07-18 15:13:33,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Listen_2
+[INFO ] 2014-07-18 15:13:33,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, title, listenurl, listenid, ordernum, adddate, nclassid]
+[INFO ] 2014-07-18 15:13:33,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,156 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_ns_listen_2]
+[INFO ] 2014-07-18 15:13:33,187 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_NClass_2
+[INFO ] 2014-07-18 15:13:33,187 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [goodprice, classname, nclassid, adddate, teacherid, id, content, price, ntype, subjectname, endtimes, enddate, coursenum, courseid, banname, teachername, studydate]
+[INFO ] 2014-07-18 15:13:33,187 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,187 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_ns_nclass_2]
+[INFO ] 2014-07-18 15:13:33,234 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_TaoCanList_2
+[INFO ] 2014-07-18 15:13:33,234 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [tcinfo, diquid, adddate, pricea, priceb, tempsofturl, pricec, classenddate, id, tcid, bugnumber, bookid, edu24_code, taocanname, groupid, baoming, coursenum, classid, studydate, picpath, tcenddate, tc_nclassid, taocanclass, discount, content, sortid, subjectname, taocanid, orderid, teacher, enddate, tempsoftid]
+[INFO ] 2014-07-18 15:13:33,234 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,234 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_ns_taocanlist_2]
+[INFO ] 2014-07-18 15:13:33,265 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.NS_Teacher
+[INFO ] 2014-07-18 15:13:33,265 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [rectf, id, lessons, schoolname, adddate, zhujiang, tname, tid, txueli, tjianjie, tpicpath, tinfo]
+[INFO ] 2014-07-18 15:13:33,265 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,265 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk_teacher]
+[INFO ] 2014-07-18 15:13:33,296 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Catalog
+[INFO ] 2014-07-18 15:13:33,296 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_total, name, pid]
+[INFO ] 2014-07-18 15:13:33,296 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_17u9hfruc8he44892lg6sq1n4]
+[INFO ] 2014-07-18 15:13:33,296 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4a8310c6]
+[INFO ] 2014-07-18 15:13:33,328 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Pack
+[INFO ] 2014-07-18 15:13:33,328 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, is_show, class_codes, source, subject_id, name, catalog_id, discount]
+[INFO ] 2014-07-18 15:13:33,328 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_98q0vyhmd8k7qg1g364wvp2ed, fk_5bbp6lr7br5t8tip5o3sblrn9]
+[INFO ] 2014-07-18 15:13:33,328 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4c6b5938]
+[INFO ] 2014-07-18 15:13:33,343 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_PackClasses
+[INFO ] 2014-07-18 15:13:33,343 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [class_id, pack_id]
+[INFO ] 2014-07-18 15:13:33,343 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_16tw67adxa2k0r6t9rj8sgsgf, fk_70q7b38uk36n12f31op75smyx]
+[INFO ] 2014-07-18 15:13:33,343 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__4e53a1aa]
+[INFO ] 2014-07-18 15:13:33,375 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Relate
+[INFO ] 2014-07-18 15:13:33,375 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, class_id, is_new, is_demo, num, address, name, update_date]
+[INFO ] 2014-07-18 15:13:33,390 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_8ukqw4s4vki8y85twspwrxhce]
+[INFO ] 2014-07-18 15:13:33,390 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__503bea1c]
+[INFO ] 2014-07-18 15:13:33,421 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_SubClass
+[INFO ] 2014-07-18 15:13:33,421 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [demo, total, long_day, sale_price, subject_id, source_price, id, is_show, end_time, teacher_name, name, start_time, video_id, is_live, teacher_id, catalog_id]
+[INFO ] 2014-07-18 15:13:33,421 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_dnvqbdie8i525lpxm5dernccf, fk_h8n4j39huyt6ntm1w6i8xui8x, fk_n1s789k4pluoaqgy5beamqay6]
+[INFO ] 2014-07-18 15:13:33,421 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__5224328e]
+[INFO ] 2014-07-18 15:13:33,437 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Remote_Subject
+[INFO ] 2014-07-18 15:13:33,437 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [classtotal, id, name, catalog_id]
+[INFO ] 2014-07-18 15:13:33,437 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: [fk_d45sm0y89hiedpuj4dp8t6dgv]
+[INFO ] 2014-07-18 15:13:33,437 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_re__540c7b00]
+[INFO ] 2014-07-18 15:13:33,468 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Security_LoginLog
+[INFO ] 2014-07-18 15:13:33,468 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, time, browser, account, ip]
+[INFO ] 2014-07-18 15:13:33,468 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,468 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_se__75cd617e]
+[INFO ] 2014-07-18 15:13:33,484 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Security_OperateLog
+[INFO ] 2014-07-18 15:13:33,484 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [content, id, addtime, name, account, type]
+[INFO ] 2014-07-18 15:13:33,484 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,484 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__tbl_collector_se__77b5a9f0]
+[INFO ] 2014-07-18 15:13:33,515 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.tbl_Collector_Security_Users
+[INFO ] 2014-07-18 15:13:33,515 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [createtime, id, phone, lastlogintime, email, status, name, gender, account, lastloginip, password, qq]
+[INFO ] 2014-07-18 15:13:33,515 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,515 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [uk_igcececbvocuaflf6lgfh9nu4, pk__tbl_collector_se__799df262]
+[INFO ] 2014-07-18 15:13:33,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000261: Table found: examw_collector.dbo.ttbl_Collector_Remote_AdVideo
+[INFO ] 2014-07-18 15:13:33,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000037: Columns: [id, address, name, type]
+[INFO ] 2014-07-18 15:13:33,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000108: Foreign keys: []
+[INFO ] 2014-07-18 15:13:33,531 org.hibernate.tool.hbm2ddl.TableMetadata     - HHH000126: Indexes: [pk__ttbl_collector_r__55f4c372]
+[ERROR] 2014-07-18 15:13:33,562 com.alibaba.druid.filter.stat.StatFilter     - merge sql error, dbType jtds, sql : 
+
+    alter table FS_NewsClass 
+        add constraint FK_3urxdhlcnnh2hrp0a3reed5oy 
+        foreign key (ParentID) 
+        references FS_NewsClass
+com.alibaba.druid.sql.parser.ParserException: TODO CONSTRAINT constraint
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseAlter(SQLStatementParser.java:664)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:166)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:108)
+	at com.alibaba.druid.sql.parser.SQLStatementParser.parseStatementList(SQLStatementParser.java:103)
+	at com.alibaba.druid.sql.visitor.ParameterizedOutputVisitorUtils.parameterize(ParameterizedOutputVisitorUtils.java:53)
+	at com.alibaba.druid.filter.stat.StatFilter.mergeSql(StatFilter.java:145)
+	at com.alibaba.druid.filter.stat.StatFilter.createSqlStat(StatFilter.java:629)
+	at com.alibaba.druid.filter.stat.StatFilter.internalBeforeStatementExecute(StatFilter.java:397)
+	at com.alibaba.druid.filter.stat.StatFilter.statementExecuteUpdateBefore(StatFilter.java:325)
+	at com.alibaba.druid.filter.FilterEventAdapter.statement_executeUpdate(FilterEventAdapter.java:324)
+	at com.alibaba.druid.filter.FilterChainImpl.statement_executeUpdate(FilterChainImpl.java:2375)
+	at com.alibaba.druid.proxy.jdbc.StatementProxyImpl.executeUpdate(StatementProxyImpl.java:225)
+	at com.alibaba.druid.pool.DruidPooledStatement.executeUpdate(DruidPooledStatement.java:169)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:227)
+	at org.hibernate.tool.hbm2ddl.SchemaUpdate.execute(SchemaUpdate.java:178)
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:509)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1797)
+	at org.hibernate.cfg.Configuration.buildSessionFactory(Configuration.java:1868)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBuilder.buildSessionFactory(LocalSessionFactoryBuilder.java:247)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.buildSessionFactory(LocalSessionFactoryBean.java:373)
+	at org.springframework.orm.hibernate4.LocalSessionFactoryBean.afterPropertiesSet(LocalSessionFactoryBean.java:358)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1541)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1479)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:521)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:194)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveReference(BeanDefinitionValueResolver.java:323)
+	at org.springframework.beans.factory.support.BeanDefinitionValueResolver.resolveValueIfNecessary(BeanDefinitionValueResolver.java:107)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.applyPropertyValues(AbstractAutowireCapableBeanFactory.java:1387)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.populateBean(AbstractAutowireCapableBeanFactory.java:1128)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:519)
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:458)
+	at org.springframework.beans.factory.support.AbstractBeanFactory$1.getObject(AbstractBeanFactory.java:295)
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:223)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:292)
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:198)
+	at org.springframework.context.support.AbstractApplicationContext.registerBeanPostProcessors(AbstractApplicationContext.java:753)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:464)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:120)
+	at org.springframework.test.context.support.AbstractGenericContextLoader.loadContext(AbstractGenericContextLoader.java:60)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.delegateLoading(AbstractDelegatingSmartContextLoader.java:100)
+	at org.springframework.test.context.support.AbstractDelegatingSmartContextLoader.loadContext(AbstractDelegatingSmartContextLoader.java:248)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContextInternal(CacheAwareContextLoaderDelegate.java:64)
+	at org.springframework.test.context.CacheAwareContextLoaderDelegate.loadContext(CacheAwareContextLoaderDelegate.java:91)
+	at org.springframework.test.context.TestContext.getApplicationContext(TestContext.java:122)
+	at org.springframework.test.context.web.ServletTestExecutionListener.setUpRequestContextIfNecessary(ServletTestExecutionListener.java:105)
+	at org.springframework.test.context.web.ServletTestExecutionListener.prepareTestInstance(ServletTestExecutionListener.java:74)
+	at org.springframework.test.context.TestContextManager.prepareTestInstance(TestContextManager.java:312)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.createTest(SpringJUnit4ClassRunner.java:211)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner$1.runReflectiveCall(SpringJUnit4ClassRunner.java:288)
+	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.methodBlock(SpringJUnit4ClassRunner.java:284)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:231)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.runChild(SpringJUnit4ClassRunner.java:88)
+	at org.junit.runners.ParentRunner$3.run(ParentRunner.java:238)
+	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:63)
+	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:236)
+	at org.junit.runners.ParentRunner.access$000(ParentRunner.java:53)
+	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:229)
+	at org.springframework.test.context.junit4.statements.RunBeforeTestClassCallbacks.evaluate(RunBeforeTestClassCallbacks.java:61)
+	at org.springframework.test.context.junit4.statements.RunAfterTestClassCallbacks.evaluate(RunAfterTestClassCallbacks.java:71)
+	at org.junit.runners.ParentRunner.run(ParentRunner.java:309)
+	at org.springframework.test.context.junit4.SpringJUnit4ClassRunner.run(SpringJUnit4ClassRunner.java:174)
+	at org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:50)
+	at org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:38)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:467)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:683)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:390)
+	at org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:197)
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table FS_NewsClass add constraint FK_3urxdhlcnnh2hrp0a3reed5oy foreign key (ParentID) references FS_NewsClass
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'FS_NewsClass.ID' 的数据类型与外键 'FK_3urxdhlcnnh2hrp0a3reed5oy' 中的引用列 'FS_NewsClass.ParentID' 的数据类型不同。
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_Course_2 add constraint FK_mort4mngkjjkp7hi66kosk6k0 foreign key (ClassID) references FS_NewsClass (edu24_code)
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 在被引用表 'FS_NewsClass' 中没有与外键 'FK_mort4mngkjjkp7hi66kosk6k0' 中的引用列列表匹配的主键或候选键。
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_Listen_2 add constraint FK_der55xp6lk0l24v5d5kulhypl foreign key (NClassID) references NS_NClass_2
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'NS_NClass_2.NClassID' 的数据类型与外键 'FK_der55xp6lk0l24v5d5kulhypl' 中的引用列 'NS_Listen_2.NClassID' 的数据类型不同。
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_NClass_2 add constraint FK_jck9cu0ufnpnkeuxh5sjce0gb foreign key (CourseID) references NS_Course_2
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'NS_Course_2.CourseID' 的数据类型与外键 'FK_jck9cu0ufnpnkeuxh5sjce0gb' 中的引用列 'NS_NClass_2.CourseID' 的数据类型不同。
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_TaoCanList_2 add constraint FK_ehnfqvli1vqc44eq2yxwaxi5h foreign key (ClassID) references NS_Course_2
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 列 'NS_Course_2.CourseID' 的数据类型与外键 'FK_ehnfqvli1vqc44eq2yxwaxi5h' 中的引用列 'NS_TaoCanList_2.ClassID' 的数据类型不同。
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000388: Unsuccessful: alter table NS_TaoCanList_2 add constraint FK_g4037vtvktsbr3ddij002spp3 foreign key (edu24_code) references FS_NewsClass (edu24_code)
+[ERROR] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - 在被引用表 'FS_NewsClass' 中没有与外键 'FK_g4037vtvktsbr3ddij002spp3' 中的引用列列表匹配的主键或候选键。
+[INFO ] 2014-07-18 15:13:33,578 org.hibernate.tool.hbm2ddl.SchemaUpdate     - HHH000232: Schema update complete
+[INFO ] 2014-07-18 15:13:33,593 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionFactory' of type [class org.springframework.orm.hibernate4.LocalSessionFactoryBean] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,593 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionFactory' of type [class org.hibernate.internal.SessionFactoryImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,625 org.springframework.context.support.GenericApplicationContext     - Bean 'userDao' of type [class com.examw.collector.dao.impl.UserDaoImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,625 org.springframework.context.support.GenericApplicationContext     - Bean 'passwordHelper' of type [class com.examw.collector.support.PasswordHelper] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,640 org.springframework.context.support.GenericApplicationContext     - Bean 'userService' of type [class com.examw.collector.service.impl.UserServiceImpl] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,734 org.springframework.orm.hibernate4.HibernateTransactionManager     - Using DataSource [{
+	CreateTime:"2014-07-18 15:13:29",
+	ActiveCount:0,
+	PoolingCount:1,
+	CreateCount:1,
+	DestroyCount:0,
+	CloseCount:2,
+	ConnectCount:2,
+	Connections:[
+		{ID:676393, ConnectTime:"2014-07-18 15:13:31", UseCount:2, LastActiveTime:"2014-07-18 15:13:33"}
+	]
+}] of Hibernate SessionFactory for HibernateTransactionManager
+[INFO ] 2014-07-18 15:13:33,734 org.springframework.context.support.GenericApplicationContext     - Bean 'transactionManager' of type [class org.springframework.orm.hibernate4.HibernateTransactionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,750 org.springframework.context.support.GenericApplicationContext     - Bean '(inner bean)' of type [class org.springframework.transaction.interceptor.NameMatchTransactionAttributeSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,750 org.springframework.context.support.GenericApplicationContext     - Bean 'transactionAdvice' of type [class org.springframework.transaction.interceptor.TransactionInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,781 org.springframework.context.support.GenericApplicationContext     - Bean 'druid-stat-interceptor' of type [class com.alibaba.druid.support.spring.stat.DruidStatInterceptor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,937 org.springframework.context.support.GenericApplicationContext     - Bean 'cacheManager' of type [class org.apache.shiro.cache.ehcache.EhCacheManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,937 org.apache.shiro.cache.ehcache.EhCacheManager     - Using existing EHCache named [passwordRetryCache]
+[INFO ] 2014-07-18 15:13:33,953 org.springframework.context.support.GenericApplicationContext     - Bean 'credentialsMatcher' of type [class com.examw.collector.shiro.RetryLimitHashedCredentialsMatcher] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:33,953 org.apache.shiro.realm.AuthorizingRealm     - No cache or cacheManager properties have been set.  Authorization cache cannot be obtained.
+[INFO ] 2014-07-18 15:13:33,953 org.springframework.context.support.GenericApplicationContext     - Bean 'userRealm' of type [class com.examw.collector.shiro.UserRealm] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,000 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionValidationScheduler' of type [class org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,015 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionIdGenerator' of type [class org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,015 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionDao' of type [class org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,031 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionIdCookie' of type [class org.apache.shiro.web.servlet.SimpleCookie] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,031 org.springframework.context.support.GenericApplicationContext     - Bean 'sessionManager' of type [class org.apache.shiro.web.session.mgt.DefaultWebSessionManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,031 org.apache.shiro.cache.ehcache.EhCacheManager     - Using existing EHCache named [authenticationCache]
+[INFO ] 2014-07-18 15:13:34,031 org.apache.shiro.cache.ehcache.EhCacheManager     - Using existing EHCache named [authorizationCache]
+[INFO ] 2014-07-18 15:13:34,031 org.springframework.context.support.GenericApplicationContext     - Bean 'securityManager' of type [class org.apache.shiro.web.mgt.DefaultWebSecurityManager] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+[INFO ] 2014-07-18 15:13:34,093 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Pre-instantiating singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@787c64: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,userDao,loginLogDao,operateLogDao,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,teacherEntityDao,menuService,passwordHelper,userService,loginLogService,operateLogService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,teacherEntityService,subjectUpdateService,gradeUpdateService,packageUpdateService,importDataService,cacheManager,credentialsMatcher,userRealm,sessionIdGenerator,sessionIdCookie,sessionDao,sessionManager,sessionValidationScheduler,securityManager,org.springframework.beans.factory.config.MethodInvokingFactoryBean#0,shiroFilter,lifecycleBeanPostProcessor,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-18 15:13:34,640 org.springframework.context.support.GenericApplicationContext     - Closing org.springframework.context.support.GenericApplicationContext@30380: startup date [Fri Jul 18 15:13:27 CST 2014]; root of context hierarchy
+[INFO ] 2014-07-18 15:13:34,640 org.springframework.beans.factory.support.DefaultListableBeanFactory     - Destroying singletons in org.springframework.beans.factory.support.DefaultListableBeanFactory@787c64: defining beans [org.springframework.beans.factory.config.PropertyPlaceholderConfigurer#0,dataSource,sessionFactory,transactionManager,transactionAdvice,org.springframework.aop.config.internalAutoProxyCreator,transactionPointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#0,druid-stat-interceptor,druid-stat-pointcut,org.springframework.aop.support.DefaultBeanFactoryPointcutAdvisor#1,userDao,loginLogDao,operateLogDao,catalogDao,subjectDao,subClassDao,adVideoDao,relateDao,packDao,catalogEntityDao,subjectEntityDao,gradeEntityDao,listenEntityDao,packageEntityDao,teacherEntityDao,menuService,passwordHelper,userService,loginLogService,operateLogService,remoteDataProxy,dataServer,catalogService,subjectService,subClassService,relateService,adVideoService,packService,catalogEntityService,subjectEntityService,gradeEntityService,listenEntityService,packageEntityService,teacherEntityService,subjectUpdateService,gradeUpdateService,packageUpdateService,importDataService,cacheManager,credentialsMatcher,userRealm,sessionIdGenerator,sessionIdCookie,sessionDao,sessionManager,sessionValidationScheduler,securityManager,org.springframework.beans.factory.config.MethodInvokingFactoryBean#0,shiroFilter,lifecycleBeanPostProcessor,org.springframework.context.annotation.internalConfigurationAnnotationProcessor,org.springframework.context.annotation.internalAutowiredAnnotationProcessor,org.springframework.context.annotation.internalRequiredAnnotationProcessor,org.springframework.context.annotation.internalCommonAnnotationProcessor,org.springframework.context.annotation.internalPersistenceAnnotationProcessor,org.springframework.context.annotation.ConfigurationClassPostProcessor.importAwareProcessor]; root of factory hierarchy
+[INFO ] 2014-07-18 15:13:34,843     org.quartz.simpl.SimpleThreadPool     - Job execution threads will use class loader of thread: Thread-5
+[INFO ] 2014-07-18 15:13:34,859 org.quartz.core.SchedulerSignalerImpl     - Initialized Scheduler Signaller of type: class org.quartz.core.SchedulerSignalerImpl
+[INFO ] 2014-07-18 15:13:34,859       org.quartz.core.QuartzScheduler     - Quartz Scheduler v.1.6.1 created.
+[INFO ] 2014-07-18 15:13:34,875          org.quartz.simpl.RAMJobStore     - RAMJobStore initialized.
+[INFO ] 2014-07-18 15:13:34,875   org.quartz.impl.StdSchedulerFactory     - Quartz scheduler 'DefaultQuartzScheduler' initialized from default resource file in Quartz package: 'quartz.properties'
+[INFO ] 2014-07-18 15:13:34,875   org.quartz.impl.StdSchedulerFactory     - Quartz scheduler version: 1.6.1
+[INFO ] 2014-07-18 15:13:34,875       org.quartz.core.QuartzScheduler     - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutting down.
+[INFO ] 2014-07-18 15:13:34,875       org.quartz.core.QuartzScheduler     - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED paused.
+[INFO ] 2014-07-18 15:13:34,875       org.quartz.core.QuartzScheduler     - Scheduler DefaultQuartzScheduler_$_NON_CLUSTERED shutdown complete.
+[INFO ] 2014-07-18 15:13:34,875 org.apache.shiro.session.mgt.AbstractValidatingSessionManager     - Disabled session validation scheduler.
+[INFO ] 2014-07-18 15:13:34,890 com.alibaba.druid.pool.DruidDataSource     - {dataSource-1} closed

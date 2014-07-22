@@ -1,5 +1,6 @@
 package com.examw.collector.service;
 
+import java.io.OutputStream;
 import java.util.Map;
 
 import com.examw.collector.model.OperateLogInfo;
@@ -39,4 +40,10 @@ public interface IOperateLogService extends IBaseDataService<OperateLogInfo> {
 	 * @return
 	 */
 	<T>DataGrid<T> datagridForShow(OperateLogInfo info,Class<T> c);
+	/**
+	 * 导出excel到输出流
+	 * @param list
+	 * @return
+	 */
+	void getExcel(OperateLogInfo info,OutputStream out);
 }

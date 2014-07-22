@@ -38,6 +38,21 @@ $(function(){
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
+		onLoadSuccess:function(row, data){
+			$.ajax({
+				url:"<@s.url '/admin/import/data/getIds'/>",
+				type:"POST",
+				dataType:"text",
+				success:function(data){
+					if(!data) return;
+					var arr = data.split(",");
+					for(var i=0;i<arr.length;i++)
+					{
+						dg.treegrid("select",arr[i]);
+					}
+				}
+			});
+		},
 		toolbar:[
 		{
 		 	iconCls:"icon-add",

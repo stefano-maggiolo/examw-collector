@@ -175,6 +175,11 @@
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	    <property name="operateLogDao" ref="operateLogDao"/>
 	    <property name="dataServer" ref="dataServer"/>
+	    <property name="subClassDao" ref="subClassDao"/>
+	    <property name="gradeEntityDao" ref="gradeEntityDao"/>
+	    <property name="listenEntityDao" ref="listenEntityDao"/>
+	    <property name="packDao" ref="packDao"/>
+	    <property name="packageEntityDao" ref="packageEntityDao"/>
 	</bean>
 	<!-- 班级更新 -->
 	<bean id="gradeUpdateService" class="com.examw.collector.service.impl.GradeUpdateServiceImpl">
@@ -214,5 +219,6 @@
 	    <property name="teacherEntityDao" ref="teacherEntityDao"/>
 	    <property name="adVideoDao" ref="adVideoDao"/>
 	    <property name="dataServer" ref="dataServer"/>
+	     <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	</bean>
 </beans>

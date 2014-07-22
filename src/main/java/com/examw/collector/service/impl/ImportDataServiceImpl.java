@@ -286,13 +286,15 @@ public class ImportDataServiceImpl implements IImportDataService {
 			Set<String> keys = teacherMap.keySet();
 			List<TeacherEntity> list = new ArrayList<TeacherEntity>();
 			for(String id :keys){
-				TeacherEntity t = this.teacherEntityDao.load(TeacherEntity.class, "e"+id); //老师id加e处理
+				TeacherEntity t = this.teacherEntityDao.load(TeacherEntity.class, id); //老师id已经加过e了
 				if(t!=null){
 					if(StringUtils.isEmpty(t.getCatalogId())){
 						t.setCatalogId(calalogId);
+						System.out.println(t.toString());
 						list.add(t);
 					}else if(!t.getCatalogId().contains(calalogId)){
 						t.setCatalogId(t.getCatalogId()+","+calalogId);
+						System.out.println(t.toString());
 						list.add(t);
 					}
 				}else{
@@ -300,6 +302,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 					if(t!=null)
 					{
 						t.setCatalogId(calalogId);
+						System.out.println(t.toString());
 						list.add(t);
 					}
 				}
@@ -329,7 +332,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 		ListenEntity data = new ListenEntity();
 		BeanUtils.copyProperties(relate, data);
 		//==============加e处理=========================
-		data.setId("e"+relate.getNum().toString());
+		data.setId(DataServerImpl.ID_PREFIX+relate.getNum().toString());
 		//==============加e处理=========================
 		if (relate.getSubclass() == null)
 			return null;
@@ -380,5 +383,18 @@ public class ImportDataServiceImpl implements IImportDataService {
 			data.setSubjectEntity(subject);
 		}
 		return data;
+	}
+	
+	public String getIds(){
+		StringBuilder codes = new StringBuilder();
+		List<CatalogEntity> list = this.catalogEntityDao.findAllWithCode();
+		System.out.println(list.size());
+		for(CatalogEntity c : list){
+			if(c==null) continue;
+			codes.append(c.getId()).append(",");
+		}
+		if(codes.length()>0)
+			return codes.substring(0,codes.length()-1);
+		return "";
 	}
 }

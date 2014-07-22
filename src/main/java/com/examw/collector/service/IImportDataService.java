@@ -12,4 +12,5 @@ public interface IImportDataService {
 	void init(String[] catalogId);
 	
 	void initAll();
+	String getIds();
 }

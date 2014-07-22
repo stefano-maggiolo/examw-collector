@@ -53,11 +53,9 @@ $(function(){
 		onLoadError:function(e){
 			<@error_dialog "e"/>
 		},
-		onCheck:function(index,data){
-			if(data.status == "旧的"){
-				dg.datagrid("uncheckRow",index);	//取消选择
-			}
-		}
+		onLoadSuccess:function(data){   
+	        dg.datagrid('doCellTip',{delay:100});   
+	    } 
 	});
 });
 -->

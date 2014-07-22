@@ -39,7 +39,10 @@ $(function(){
 		}]],
 		onLoadError:function(e){
 			<@error_dialog "e"/>
-		}
+		},
+		onLoadSuccess:function(data){   
+	        dg1.datagrid('doCellTip',{delay:100});   
+	    } 
 	});
 });
 -->

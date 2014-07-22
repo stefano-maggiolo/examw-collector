@@ -11,14 +11,21 @@ import org.springframework.beans.BeanUtils;
 
 import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.ICatalogEntityDao;
+import com.examw.collector.dao.IGradeEntityDao;
+import com.examw.collector.dao.IListenEntityDao;
 import com.examw.collector.dao.IOperateLogDao;
+import com.examw.collector.dao.IPackDao;
+import com.examw.collector.dao.IPackageEntityDao;
+import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Subject;
 import com.examw.collector.domain.local.CatalogEntity;
+import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.SubjectEntity;
+import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.model.SubjectInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.ISubjectUpdateService;
@@ -38,6 +45,11 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	private ICatalogEntityDao catalogEntityDao;
 	private IDataServer dataServer;
 	private IOperateLogDao operateLogDao;
+	private ISubClassDao subClassDao;
+	private IGradeEntityDao gradeEntityDao;
+	private IListenEntityDao listenEntityDao;
+	private IPackageEntityDao packageEntityDao;
+	private IPackDao packDao;
 	/**
 	 * 设置操作日志数据接口
 	 * @param operateLogDao
@@ -87,6 +99,47 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	 */
 	public void setDataServer(IDataServer dataServer) {
 		this.dataServer = dataServer;
+	}
+	
+	/**
+	 * 设置 班级数据接口
+	 * @param subClassDao
+	 * 
+	 */
+	public void setSubClassDao(ISubClassDao subClassDao) {
+		this.subClassDao = subClassDao;
+	}
+	/**
+	 * 设置 实际班级数据接口
+	 * @param gradeEntityDao
+	 * 
+	 */
+	public void setGradeEntityDao(IGradeEntityDao gradeEntityDao) {
+		this.gradeEntityDao = gradeEntityDao;
+	}
+	/**
+	 * 设置 试听数据接口
+	 * @param listenEntityDao
+	 * 
+	 */
+	public void setListenEntityDao(IListenEntityDao listenEntityDao) {
+		this.listenEntityDao = listenEntityDao;
+	}
+	/**
+	 * 设置 实际套餐数据接口
+	 * @param packEntityDao
+	 * 
+	 */
+	public void setPackageEntityDao(IPackageEntityDao packageEntityDao) {
+		this.packageEntityDao = packageEntityDao;
+	}
+	/**
+	 * 设置 套餐数据接口
+	 * @param packDao
+	 * 
+	 */
+	public void setPackDao(IPackDao packDao) {
+		this.packDao = packDao;
 	}
 	@Override
 	public List<SubjectInfo> update(List<SubjectInfo> subjects,String account) {
@@ -286,11 +339,13 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 				Subject data1 = this.subjectDao.load(Subject.class, info.getCode());
 				SubjectEntity data2 = this.subjectEntityDao.load(SubjectEntity.class, info.getCode());
 				if(data1 != null){
+					this.casecadeDelete(data1);	//级联删除
 					this.subjectDao.delete(data1);
 					//TODO 是否连删
 				}
 				if(data2 != null)
 				{
+					this.casecadeDelete(data2);	//级联删除
 					this.subjectEntityDao.delete(data2);
 				}else{
 					info.setUpdateInfo("<span style='color:purple'>删除失败</span>"+info.getUpdateInfo());
@@ -374,5 +429,39 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			s.append("'0'");
 		}
 		return s.toString();
+	}
+	/**
+	 * 级联删除科目下的班级,套餐
+	 * @param info
+	 */
+	private void casecadeDelete(Subject info){
+		//删除副本班级[副本没有试听,可以直接删]
+		this.subClassDao.delete(info.getCode());
+		//删除副本的套餐[没有关联数据直接删]
+		this.packDao.delete(info.getCode());
+	}
+	/**
+	 * 级联删除科目下的班级[带试听],套餐数据
+	 * @param info
+	 */
+	private void casecadeDelete(SubjectEntity info){
+		final String subjectId = info.getId();
+		List<GradeEntity> gradeList = this.gradeEntityDao.findSubClasses(new SubClassInfo(){
+			private static final long serialVersionUID = 1L;
+			@Override
+			public String getSubjectId() {
+				return subjectId;
+			}
+		});
+		if(gradeList!=null&&gradeList.size()>0)
+		{
+			for(GradeEntity e:gradeList)
+			{
+				if(e == null) continue;
+				this.listenEntityDao.delete(e.getId());
+				this.gradeEntityDao.delete(e);
+			}
+		}
+		this.packageEntityDao.delete(info.getId());
 	}
 }

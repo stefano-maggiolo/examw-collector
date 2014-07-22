@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.Query;
 import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.IPackDao;
@@ -69,5 +70,12 @@ public class PackDaoImpl extends BaseDaoImpl<Pack> implements IPackDao{
 		Map<String, Object> parameters = new HashMap<>();
 		hql = this.addWhere(info, hql, parameters);
 		return this.find(hql, parameters, null,null);
+	}
+	@Override
+	public void delete(String subjectId) {
+		String hql = "delete from Pack p where p.subject.id = :subjectId";
+		Query query = this.getCurrentSession().createQuery(hql);
+		query.setParameter("subjectId", subjectId);
+		query.executeUpdate();
 	}
 }

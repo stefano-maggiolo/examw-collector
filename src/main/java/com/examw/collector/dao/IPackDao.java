@@ -32,4 +32,9 @@ public interface IPackDao extends IBaseDao<Pack>{
 	 * @return
 	 */
 	List<Pack> findDeletePacks(String existIds,PackInfo info);
+	/**
+	 * 根据科目id删除套餐
+	 * @param subjectId
+	 */
+	void delete(String subjectId);
 }

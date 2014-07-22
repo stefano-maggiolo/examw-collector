@@ -105,7 +105,7 @@ public class ListenEntityServiceImpl extends BaseDataServiceImpl<ListenEntity, R
 			for(Relate r:list){
 				ListenEntity listen = new ListenEntity();
 				BeanUtils.copyProperties(r, listen,new String[]{"id"});
-				listen.setId(r.getNum().toString());
+				listen.setId(DataServerImpl.ID_PREFIX+r.getNum().toString());	//加e处理
 				if(r.getSubclass()!=null){
 					GradeEntity g = new GradeEntity();
 					g.setId(r.getSubclass().getCode());

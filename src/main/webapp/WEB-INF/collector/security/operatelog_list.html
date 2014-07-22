@@ -20,6 +20,7 @@ $(function(){
 		idField:"id",
 		sortName:"addTime",
 		sortOrder:"desc",
+		singleSelect:true,
 		columns:[[{
 			field:"id",
 			checkbox:true
@@ -90,52 +91,24 @@ $(function(){
 			account:$("#${dg}_toobar input[name='account']").val()
 		});
 	};
-	//delete
-	/* ${dg}_delete = function(){
+	//export
+	 ${dg}_export = function(){
 		var rows = dg.datagrid("getChecked");
 		if(rows && rows.length > 0){
-			$.messager.confirm("确认","您是否确认删除选中的数据?",function(r){
+			$.messager.confirm("确认","您是否确认导出选中的数据?",function(r){
 				if(!r)return;
-				$.messager.progress();
-				var ids = [];
-				for(var i = 0; i < rows.length; i++){
-					ids.push(rows[i].id);
-				}
-				$.ajax({
-					url:"<@s.url '/admin/security/operatelog/delete'/>",
-					type:"POST",
-					data:{
-						id:ids.join("|")
-					},
-					dataType:"json",
-					error:function(e){
-						$.messager.progress("close");
-						<@error_dialog "e"/>
-					},
-					success:function(data,textStatus){
-						$.messager.progress("close");
-						if(data.success){
-							dg.datagrid("load");
-							dg.datagrid("unselectAll");
-						}else{
-							$.messager.show({
-								title:"提示",
-								msg:data.msg
-							});
-						}
-					}
-				});
+				window.location = "<@s.url '/admin/security/operatelog/export'/>?id="+rows[0].id;
 			});
 		}else{
-			$.messager.alert("提示","未选中须删除的数据！");
+			$.messager.alert("提示","未选中须导出的数据！");
 		}
-	}; */
+	};
 });
 //-->
 </script> 
 <table id="${dg}"></table>
 <div id="${dg}_toobar">
-	<!-- <a href="#" class="easyui-linkbutton" onclick="${dg}_delete()" data-options="iconCls:'icon-remove',plain:true">删除</a>
-     --><label>用户账号：<input name="account" type="text" style="width:198px;"/></label>
+	<a href="#" class="easyui-linkbutton" onclick="${dg}_export()" data-options="iconCls:'icon-save',plain:true">导出到Excel</a>
+    <label>用户账号：<input name="account" type="text" style="width:198px;"/></label>
 	<a href="#" class="easyui-linkbutton" style="margin-left:10px;"  onclick="${dg}_search()" data-options="iconCls:'icon-search',plain:true">查询</a>
 </div>

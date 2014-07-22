@@ -38,7 +38,10 @@ $(function(){
 			title:"变更提醒",
 			field:"updateInfo",
 			width:40
-		}]]
+		}]],
+		onLoadSuccess:function(data){   
+	        dg1.datagrid('doCellTip',{delay:100});   
+	    } 
 	});
 });
 -->

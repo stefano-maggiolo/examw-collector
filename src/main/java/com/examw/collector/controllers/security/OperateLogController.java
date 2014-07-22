@@ -1,6 +1,10 @@
 package com.examw.collector.controllers.security;
 
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -8,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.examw.collector.model.CatalogInfo;
 import com.examw.collector.model.OperateLogInfo;
@@ -91,5 +96,20 @@ public class OperateLogController {
 	@ResponseBody
 	public DataGrid<PackInfo> datagridPackage(OperateLogInfo info){
 		return this.operateLogService.datagridForShow(info, PackInfo.class);
+	}
+	
+	@RequestMapping(value="/export", method = {RequestMethod.POST,RequestMethod.GET})
+	public ModelAndView export(OperateLogInfo info,HttpServletResponse response){
+		try {
+			OutputStream out = response.getOutputStream();
+			response.setContentType("application/vnd.ms-excel");
+			response.setHeader("Content-disposition", "attachment; filename=DataList.xls");
+			this.operateLogService.getExcel(info,out);
+			out.flush();
+			out.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 }

@@ -316,6 +316,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			}
 		}
 		List<PackInfo> result = this.changeModel(packs);
+		System.out.println(result.size());
 		// 添加操作日志
 		OperateLog log = new OperateLog();
 		log.setId(UUID.randomUUID().toString());
@@ -346,8 +347,10 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
 		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(), null);
 		List<Pack> add = new ArrayList<Pack>();
+		if(data == null) return add;
 		StringBuffer existIds = new StringBuffer();
 		for(Pack p:data){
+			if(p==null) continue;
 			p.setCatalog(catalog);
 			if(!StringUtils.isEmpty(p.getCode())) existIds.append("'"+p.getCode()+"'").append(",");
 			Pack local_p = this.packDao.load(Pack.class, p.getCode());
@@ -453,7 +456,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 	private List<PackInfo> changeModel(List<Pack> packs)
 	{
 		List<PackInfo> list = new ArrayList<>();
-		if(list != null && list.size() > 0){
+		if(packs != null && packs.size() > 0){
 			for(Pack data : packs){
 				PackInfo info = this.change2InfoModel(data);
 				if(info != null){
