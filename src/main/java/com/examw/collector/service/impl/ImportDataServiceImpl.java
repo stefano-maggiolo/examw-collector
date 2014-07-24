@@ -20,6 +20,7 @@ import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
 import com.examw.collector.dao.ITeacherEntityDao;
+import com.examw.collector.domain.AdVideo;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
@@ -194,7 +195,6 @@ public class ImportDataServiceImpl implements IImportDataService {
 		List<Subject> subjects = this.subjectDao
 				.findSubjects(new SubjectInfo() {
 					private static final long serialVersionUID = 1L;
-
 					@Override
 					public String getCatalogId() {
 						return id;
@@ -224,8 +224,11 @@ public class ImportDataServiceImpl implements IImportDataService {
 		data.setName(info.getName());
 		if (info.getCatalog() == null)
 			return null;
-		CatalogEntity catalog = new CatalogEntity();
-		catalog.setCode(info.getCatalog().getCode());
+//		CatalogEntity catalog = new CatalogEntity();
+//		catalog.setCode(info.getCatalog().getCode());
+//		data.setCatalogEntity(catalog);
+		CatalogEntity catalog = this.catalogEntityDao.find(info.getCatalog().getCode());
+		if(catalog == null) return null;
 		data.setCatalogEntity(catalog);
 		return data;
 
@@ -239,16 +242,31 @@ public class ImportDataServiceImpl implements IImportDataService {
 	private void importLocalGrade(String id) {
 		// 从远程获取数据
 		List<SubClass> list = this.dataServer.loadClasses(id, null);
-		// 整个科目下所有的数据
+		// 整个科目下所有的数据	
 		if (list == null || list.size() == 0)
 			return;
+		// 查询这个类别下所在环球页面的地址
+		CatalogEntity catalog = this.catalogEntityDao.find(id);
+		// 获取页面上所有的班级ID
+		String gradeIds = this.dataServer.loadPageGradeIds(catalog.getPageUrl());
 		for (SubClass s : list) {
+			if(!StringUtils.isEmpty(gradeIds)){ //能够获取到页面地址的ids
+				//如果没有卖的就不加
+				if(!gradeIds.contains(","+s.getCode()+",")){
+					//老师也不加
+					s.setTeacherId(null);
+					continue;
+				}
+			}
 			if (s.getSubject() != null) {
 				Subject subject = this.subjectDao.load(Subject.class, s
 						.getSubject().getCode());
 				if (subject != null) {
+					
 					if(s.getAdVideo()!=null){
-						this.adVideoDao.saveOrUpdate(s.getAdVideo());
+						AdVideo adVideo = this.adVideoDao.load(AdVideo.class, s.getAdVideo().getCode());
+						if(adVideo==null)
+							this.adVideoDao.saveOrUpdate(s.getAdVideo());
 					}
 					s.setSubject(subject);
 					this.subClassDao.saveOrUpdate(s);
@@ -289,20 +307,20 @@ public class ImportDataServiceImpl implements IImportDataService {
 				TeacherEntity t = this.teacherEntityDao.load(TeacherEntity.class, id); //老师id已经加过e了
 				if(t!=null){
 					if(StringUtils.isEmpty(t.getCatalogId())){
-						t.setCatalogId(calalogId);
-						System.out.println(t.toString());
+						CatalogEntity c = this.catalogEntityDao.find(calalogId);
+						t.setCatalogId(c.getId());
 						list.add(t);
 					}else if(!t.getCatalogId().contains(calalogId)){
-						t.setCatalogId(t.getCatalogId()+","+calalogId);
-						System.out.println(t.toString());
+						CatalogEntity c = this.catalogEntityDao.find(calalogId);
+						t.setCatalogId(t.getCatalogId()+","+c.getId());
 						list.add(t);
 					}
 				}else{
 					t = this.dataServer.loadTeacher(id);
 					if(t!=null)
 					{
-						t.setCatalogId(calalogId);
-						System.out.println(t.toString());
+						CatalogEntity c = this.catalogEntityDao.find(t.getCatalogId());
+						t.setCatalogId(c.getId());
 						list.add(t);
 					}
 				}
@@ -350,8 +368,18 @@ public class ImportDataServiceImpl implements IImportDataService {
 	private void importLocalPackage(String id) {
 		List<Pack> list = this.dataServer.loadPacks(id, null);
 		if(list == null ||list.size()==0) return;
+		// 查询这个类别下所在环球页面的地址
+		CatalogEntity catalog = this.catalogEntityDao.find(id);
+		// 获取页面上所有的套餐ID
+		String packIds = this.dataServer.loadPagePackIds(catalog.getPageUrl());
 		for(Pack p:list){
 			if(p==null)	continue;
+			if(!StringUtils.isEmpty(packIds)){ //能够获取到页面地址的ids
+				//如果没有卖的就不加
+				if(!packIds.contains(","+p.getCode()+",")){
+					continue;
+				}
+			}
 			if(p.getSubject()!=null){
 				Subject subject = this.subjectDao.load(Subject.class, p
 						.getSubject().getCode());
@@ -374,8 +402,11 @@ public class ImportDataServiceImpl implements IImportDataService {
 		BeanUtils.copyProperties(info, data);
 		data.setId(info.getCode());
 		if(info.getCatalog()==null) return null;
-		CatalogEntity catalog = new CatalogEntity();
-		catalog.setCode(info.getCatalog().getCode());
+//		CatalogEntity catalog = new CatalogEntity();
+//		catalog.setCode(info.getCatalog().getCode());
+//		data.setCatalogEntity(catalog);
+		CatalogEntity catalog = this.catalogEntityDao.find(info.getCatalog().getCode());
+		if(catalog == null) return null;
 		data.setCatalogEntity(catalog);
 		if(info.getSubject()!=null){
 			SubjectEntity subject = new SubjectEntity();

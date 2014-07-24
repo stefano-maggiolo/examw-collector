@@ -6,8 +6,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.examw.collector.dao.ICatalogEntityDao;
+import com.examw.collector.domain.local.CatalogEntity;
 
 /**
  * 
@@ -20,8 +22,9 @@ public class CatalogEntityTest {
 	@Resource
 	private ICatalogEntityDao catalogEntityDao;
 	@Test
+	@Transactional
 	public void loadCatalogs(){
-		//List<String>  list = this.catalogEntityDao.findAllCodes();
-		//System.out.println(list.size());
+		CatalogEntity entity = this.catalogEntityDao.find("955");
+		System.out.println(entity.getId());
 	}
 }

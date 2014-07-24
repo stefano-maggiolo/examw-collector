@@ -284,8 +284,11 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			if(deleteList!=null && deleteList.size()>0)
 			{
 				for(Subject s:deleteList){
-					s.setStatus("被删");
-					s.setUpdateInfo(s.toString());
+					if(StringUtils.isEmpty(s.getAdd()))	//如果不是自己加上的,没有就没有
+					{
+						s.setStatus("被删");
+						s.setUpdateInfo(s.toString());
+					}
 				}
 				add.addAll(deleteList);
 			}
@@ -307,7 +310,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 					for(CatalogEntity entity:needList)
 					{
 						//只比较子类的code
-						if(entity.getCode().equals(child.getCode()))
+						if((","+entity.getCode()+",").contains(","+child.getCode()+","))
 						{
 							if(child.getSubjects()!=null && child.getSubjects().size()>0){
 								data.addAll(child.getSubjects());
@@ -400,6 +403,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 		List<SubjectInfo> results = new ArrayList<>();
 		if(list != null && list.size() > 0){
 			for(Subject data : list){
+				if(data == null || StringUtils.isEmpty(data.getStatus())) continue;	//没有状态的不显示
 				SubjectInfo info = this.change2InfoModel(data);
 				if(info != null){
 					results.add(info);

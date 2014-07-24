@@ -39,6 +39,8 @@
 		<property name="classTotal"  type="integer" />
 		<!-- 所属考试 -->
 		<many-to-one name="catalog"  column="catalog_id" class="Catalog"/>
+		<!-- 是否后来加上,为空表示不是 -->
+		<property name="add" column="self_add" type="string"  length="10"/>
 	</class>
 	<!-- 科目班级 -->
 	<!-- 

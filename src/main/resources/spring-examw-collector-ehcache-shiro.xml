@@ -5,7 +5,7 @@
 	 <defaultCache
             	maxEntriesLocalHeap="2000"
 				 eternal="false"
-				 timeToIdleSeconds="3600"
+				 timeToIdleSeconds="18000"
 				 timeToLiveSeconds="0"
 				 overflowToDisk="true"
 				 statistics="true">
@@ -15,7 +15,7 @@
 	<cache name="passwordRetryCache"
 				 maxEntriesLocalHeap="2000"
 				 eternal="false"
-				 timeToIdleSeconds="3600"
+				 timeToIdleSeconds="18000"
 				 timeToLiveSeconds="0"
 				 overflowToDisk="false"
 				 statistics="true">
@@ -24,7 +24,7 @@
 	<cache name="authorizationCache"
 				 maxEntriesLocalHeap="2000"
 				 eternal="false"
-				 timeToIdleSeconds="3600"
+				 timeToIdleSeconds="18000"
 				 timeToLiveSeconds="0"
 				 overflowToDisk="false"
 				 statistics="true">
@@ -33,7 +33,7 @@
 	<cache name="authenticationCache"
 				 maxEntriesLocalHeap="2000"
 				 eternal="false"
-				 timeToIdleSeconds="3600"
+				 timeToIdleSeconds="18000"
 				 timeToLiveSeconds="0"
 				 overflowToDisk="false"
 				 statistics="true">
@@ -42,7 +42,7 @@
 	<cache name="shiro-activeSessionCache"
 				 maxEntriesLocalHeap="2000"
 				 eternal="false"
-				 timeToIdleSeconds="3600"
+				 timeToIdleSeconds="18000"
 				 timeToLiveSeconds="0"
 				 overflowToDisk="false"
 				 statistics="true">

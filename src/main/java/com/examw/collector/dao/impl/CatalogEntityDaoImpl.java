@@ -23,7 +23,8 @@ public class CatalogEntityDaoImpl extends BaseDaoImpl<CatalogEntity> implements 
 	
 	@Override
 	public CatalogEntity find(String edu24_code) {
-		String hql = "from CatalogEntity c where c.code = :code";
+		//使用charindex函数 
+		String hql = "from CatalogEntity c where c.code = :code or charindex(:code,c.code) > 0";
 		Query query = this.getCurrentSession().createQuery(hql);
 		query.setParameter("code", edu24_code);
 		@SuppressWarnings("unchecked")
@@ -37,8 +38,8 @@ public class CatalogEntityDaoImpl extends BaseDaoImpl<CatalogEntity> implements 
 	@Override
 	public List<CatalogEntity> findAllWithCode() {
 		//只用一个进行测试测试用
-		//String hql = "from CatalogEntity c where c.code in('1235','775')";
-		String hql = "from CatalogEntity c where c.code is not null and c.code != ''";
+		String hql = "from CatalogEntity c where c.code in('1235')";
+		//String hql = "from CatalogEntity c where c.code is not null and c.code != ''";
 		Query query = this.getCurrentSession().createQuery(hql);
 		return query.list();
 	}

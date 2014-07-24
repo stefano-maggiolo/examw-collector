@@ -86,8 +86,9 @@ public class CatalogEntityServiceImpl  extends BaseDataServiceImpl<CatalogEntity
 			CatalogEntity data = this.catalogEntityDao.load(CatalogEntity.class, info.getId());
 			if(data == null) return null;
 			//BeanUtils.copyProperties(info, data);
-			//只设置Code
+			//只设置Code 和 pageUrl
 			data.setCode(info.getCode());
+			data.setPageUrl(info.getPageUrl());
 			//添加操作日志
 			OperateLog log = new OperateLog();
 			log.setId(UUID.randomUUID().toString());

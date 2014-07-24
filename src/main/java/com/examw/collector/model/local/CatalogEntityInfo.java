@@ -149,4 +149,22 @@ public class CatalogEntityInfo extends Paging implements Serializable{
 		this.ename = ename;
 	}
 	
+	private String pageUrl;
+	/**
+	 * 获取 
+	 * @return pageUrl
+	 * 
+	 */
+	public String getPageUrl() {
+		return pageUrl;
+	}
+	/**
+	 * 设置 
+	 * @param pageUrl
+	 * 
+	 */
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+	}
+	
 }

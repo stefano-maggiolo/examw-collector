@@ -7,8 +7,10 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,6 +35,7 @@ import com.examw.collector.domain.Subject;
 import com.examw.collector.domain.local.TeacherEntity;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IRemoteDataProxy;
+import com.examw.utils.HttpUtil;
 import com.examw.utils.XmlUtil;
 
 /**
@@ -989,5 +992,58 @@ public class DataServerImpl implements IDataServer {
 		if(result.length()>0)
 			return result.substring(0, result.length()-1);	//去最后一个逗号
 		return null;
+	}
+	
+	/**
+	 * 采集页面的班级和套餐ID
+	 */
+	@Override
+	public Map<String, String> loadPageIds(String url) {
+		if(StringUtils.isEmpty(url)) return null;
+		try{
+			String html = HttpUtil.sendRequest(url, "GET", null,"GBK");	//获取页面源代码
+			html = html.replaceAll("<!--([\\w\\W](?<!-->))*-->", "");	//替换中间的注释
+			html = html.toUpperCase();	//全部转大写
+			//匹配所有的INPUT
+			Pattern input = Pattern.compile("([\\w\\W&&[^<]&&[^>]]*)<INPUT([\\w\\W&&[^<]&&[^>]]+)/?>([\\w\\W&&[^<]]*)");
+			Matcher m2 = input.matcher(html);
+			//找出所有的INPUT
+			List<String> inputList = new ArrayList<String>();
+			StringBuffer gradeIds = new StringBuffer();	
+			StringBuffer packIds = new StringBuffer();
+			while(m2.find()){
+				inputList.add(m2.group(2));
+			}
+			//循环INPUT,找出对应的DISCOUNTIDS和IDS的值	同时加上前缀e
+			for(String s:inputList){
+				if(s.contains("DISCOUNTIDS")){
+					packIds.append(ID_PREFIX).append(s.replaceAll("([\\w\\W]+)VALUE\\s?=\\s?\"?([\\d]+)([\\w\\W]+)", "$2")).append(",");
+				}
+				else if(s.contains("IDS")){
+					gradeIds.append(ID_PREFIX).append(s.replaceAll("([\\w\\W]+)VALUE\\s?=\\s?\"?([\\d]+)([\\w\\W]+)", "$2")).append(",");
+				}
+			}
+			Map<String,String> map = new HashMap<String,String>();
+			if(packIds.length()>0)
+				map.put("PACKIDS", ","+packIds.toString());	//类似 111,112,这种形式
+			if(gradeIds.length()>0)
+				map.put("GRADEIDS", ","+gradeIds.toString());
+			return map;
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public String loadPageGradeIds(String url) {
+		Map<String, String> map = this.loadPageIds(url);
+		if(map == null)	return null;
+		return map.get("GRADEIDS");
+	}
+	@Override
+	public String loadPagePackIds(String url) {
+		Map<String, String> map = this.loadPageIds(url);
+		if(map == null)	return null;
+		return map.get("PACKIDS");
 	}
 }

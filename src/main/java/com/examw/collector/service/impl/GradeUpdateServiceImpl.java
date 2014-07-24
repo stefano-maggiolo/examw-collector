@@ -337,6 +337,11 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				}
 				continue;
 			}
+			//如果页面中没有这个ID,不要进行操作
+			if(info.getStatus().equals("页面无此ID")){
+				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				continue;
+			}
 			//本地副本
 			SubClass s = judgeDataSafe(info);
 			GradeEntity se = changeModel(info);
@@ -375,17 +380,27 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		List<CatalogEntity> needList = this.catalogEntityDao.findAllWithCode();
 		List<SubClass> gradeList = new ArrayList<SubClass>();
 		for(CatalogEntity entity : needList){
-			gradeList.addAll(this.findChangedSubClass(entity.getCode()));
+			String[] arr = entity.getCode().split(",");
+			String[] pages = null;
+			if(!StringUtils.isEmpty(entity.getPageUrl()))
+				 pages = entity.getPageUrl().split(",");
+			for(int i=0;i<arr.length;i++)
+			{
+				if(StringUtils.isEmpty(arr[i])) continue;
+				String page = pages==null?"":pages[i];
+				gradeList.addAll(this.findChangedSubClass(arr[i],page));
+			}
 		}
 		return gradeList;
 	}
-	private List<SubClass> findChangedSubClass(String catalogId)
+	private List<SubClass> findChangedSubClass(String catalogId,String page)
 	{
 		Catalog catalog = this.catalogDao.load(Catalog.class, catalogId);
 		//Subject subject = this.subjectDao.load(Subject.class, info.getSubjectId());
 		List<SubClass> data = this.dataServer.loadClasses(catalogId, null);
 		List<SubClass> add = new ArrayList<SubClass>();
 		StringBuffer existIds = new StringBuffer();
+		String ids = this.dataServer.loadPageGradeIds(page);
 		if(data == null) return add;
 		for(SubClass s:data){
 			if(s == null) continue;
@@ -395,6 +410,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			if(local_s == null){
 				s.setStatus("新增");
 				s.setUpdateInfo("<span style='color:blue'>[新增]</span>"+s.toString());
+				addSubject(s,ids);
 				add.add(s);
 			}else if(s.equals(local_s)){
 				continue;
@@ -410,7 +426,8 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 					}
 				}
 				s.setUpdateInfo("<span style='color:red'>[更新]</span>"+s.getUpdateInfo());
-				BeanUtils.copyProperties(s, local_s);	//已经存在的,必须用原有的数据进行更新,不然会出错
+				BeanUtils.copyProperties(s, local_s, new String[]{"catalog"});	//已经存在的,必须用原有的数据进行更新,不然会出错
+				local_s.setCatalog(catalog);
 				add.add(local_s);
 				//add.add(local_s);
 			}
@@ -442,7 +459,6 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			Subject subject = this.subjectDao.load(Subject.class, info.getSubject().getCode());
 			if(subject==null) return null;
 			info.setSubject(subject);
-			info.setCatalog(subject.getCatalog());
 		}
 		return info;
 	}
@@ -487,10 +503,42 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			info.setSubjectId(data.getSubject().getCode());
 			info.setSubjectName(data.getSubject().getName());
 		}
-		if(data.getCatalog() != null){
-			info.setCatalogId(data.getCatalog().getCode());
-			info.setCatalogName(data.getCatalog().getName());
+		Catalog c = data.getCatalog();
+		if( c!= null){
+			info.setCatalogId(c.getCode());
+			info.setCatalogName(c.getName());	//这句代码为什么会出现no session的情况
 		}
 		return info;
+	}
+	/**
+	 * 页面上有的,但是实际没有的科目进行添加
+	 * @param info
+	 * @param ids
+	 */
+	private void addSubject(SubClass info,String ids)
+	{
+		if(info==null||StringUtils.isEmpty(ids)) return;
+		if(ids.contains(","+info.getCode()+",")){	//如果页面上包含这个班级
+			Subject s = this.subjectDao.load(Subject.class, info.getSubject().getCode());
+			if(s == null)	//实际数据库中找不到这个
+			{
+				//把这个科目加上
+				s = info.getSubject();
+				s.setAdd("1"); 	//表示是自己加上的
+				s.setCatalog(info.getCatalog());
+				subjectDao.save(s);
+				//实际数据库也加上
+				SubjectEntity entity = new SubjectEntity();
+				entity.setId(s.getCode());
+				entity.setName(s.getName());
+				entity.setCatalogEntity(this.catalogEntityDao.find(info.getCatalog().getCode()));
+				subjectEntityDao.save(entity);
+				//添加记录
+				info.setUpdateInfo(info.getUpdateInfo()+" !!![同时新增科目]!!!");
+			}
+		}else{
+			info.setStatus("页面无此ID");
+			info.setUpdateInfo("<span style='color:#777777'>[页面不存在此ID]</span><span style='color:blue'>[新增]</span>"+info.toString());
+		}
 	}
 }

@@ -45,8 +45,11 @@ $(function(){
 		},{
 			title:"环球CODE",
 			field:"code",
-			width:15,
-			editor:'text'
+			width:15
+		},{
+			title:"环球Page",
+			field:"pageUrl",
+			width:15
 		}]],
 		onLoadError:function(e){
 			<@error_dialog "e"/>
@@ -59,9 +62,10 @@ $(function(){
 	function edit_window(row)
 	{
 		var current_code = row.code;
+		var current_url = row.pageUrl;
 		var d = $("<div/>").dialog({
 			title:"设置环球的CODE",
-			width:300,
+			width:400,
 			height:200,
 			href:"<@s.url '/admin/local/catalog/edit'/>",
 			modal:true,
@@ -72,11 +76,13 @@ $(function(){
 				handler:function(){
 					$.messager.progress();
 					var real_code = $.trim($("#${module}_edit_form input[name='code']").val());
-					if((!current_code && real_code!="") ||(current_code && current_code!=real_code)){
+					var url = $.trim($("#${module}_edit_form input[name='pageUrl']").val());
+					if(((!current_code && real_code!="") ||(current_code && current_code!=real_code))||
+							(!current_url && url!="") ||(current_url && current_url!=url)){
 						$.ajax({
 							url:"<@s.url '/admin/local/catalog/update'/>",
 							type:"POST",
-							data:{id:row.id,code:real_code},
+							data:{id:row.id,code:real_code,pageUrl:url},
 							dataType:"json",
 							success:function(data)
 							{

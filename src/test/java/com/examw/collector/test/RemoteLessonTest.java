@@ -5,6 +5,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -24,6 +26,7 @@ import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.local.TeacherEntity;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IRemoteDataProxy;
+import com.examw.utils.HttpUtil;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -53,7 +56,7 @@ public class RemoteLessonTest {
 	}
 	//@Test
 	public void loadClasses(){
-		List<SubClass>  list = this.dataServer.loadClasses("1905", null);
+		List<SubClass>  list = this.dataServer.loadClasses("567", null);
 		for(SubClass s:list){
 			System.out.println(s.getSubject().getCode());
 		}
@@ -61,9 +64,9 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	@Test
+	//@Test
 	public void loadRelates(){
-		List<Relate> list = this.dataServer.loadRelates("608");
+		List<Relate> list = this.dataServer.loadRelates("7904");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
@@ -158,5 +161,48 @@ public class RemoteLessonTest {
 			System.out.println(t.getDescription());
 			System.out.println(t.getLessons());
 		}
+	}
+	@Test
+	public void loadClassIdsTest() throws Exception{
+		String url = "http://www.edu24ol.com/ClassList_hr.asp";
+		String html = HttpUtil.sendRequest(url, "GET", null,"GBK");
+//		String html = "sdfsdfsadfasdfasf <body><div class='wrap' style='margin-top:-6px;_margin-top:9px;'>  <div class='left'><img src='images/zf01.jpg' width='197' height='103' /></div>  <div class='right'>    <div class='htb'><div class='Process'><a href='/ClassresultList.asp' target='_blank'><p>当前购物车</p><p><span><script src='../js/cartItemCount.js' language='javascript'></script></span>个课程</p></a></div></div></body>";
+		System.out.println(html);
+		Pattern ids = Pattern.compile("([\\w\\W]+)<body>([\\w\\W]+)</body>([\\w\\W]+)");
+		Matcher m2 = ids.matcher(html);
+		String body = null;
+		while(m2.find()){  
+			body = (m2.group(2));
+			break;
+		}
+		body = html.replaceAll("<!--([\\w\\W](?<!-->))*-->", "");	//替换中间的注释标签<!-- -->
+		System.out.println(body);
+		body = body.toUpperCase();	//转大写
+		//String temp = "sdfsdfs<input id='DiscountIds' type='checkbox' value='21254' name='DiscountIds' />dsfsdf";
+		Pattern input = Pattern.compile("([\\w\\W&&[^<]&&[^>]]*)<INPUT([\\w\\W&&[^<]&&[^>]]+)value=\"([\\d]+)\"([\\w\\W&&[^<]&&[^>]]+)/>([\\w\\W&&[^<]]+)");
+		Pattern input2 = Pattern.compile("([\\w\\W&&[^<]&&[^>]]*)<INPUT([\\w\\W&&[^<]&&[^>]]+)/?>([\\w\\W&&[^<]]*)");
+		m2 = input2.matcher(body);
+		List<String> inputList = new ArrayList<String>(); 
+		List<String> gradeIds = new ArrayList<String>();
+		List<String> packIds = new ArrayList<String>();
+		while(m2.find()){
+			inputList.add(m2.group(2));
+		}
+		System.out.println(inputList);
+		for(String s:inputList){
+			if(s.contains("DISCOUNTIDS")){
+				packIds.add(s.replaceAll("([\\w\\W]+)VALUE\\s?=\\s?\"?([\\d]+)([\\w\\W]+)", "$2"));
+			}
+			else if(s.contains("IDS")){
+				gradeIds.add(s.replaceAll("([\\w\\W]+)VALUE\\s?=\\s?\"?([\\d]+)([\\w\\W]+)", "$2"));
+			}
+		}
+		System.out.println(packIds);
+		System.out.println("DiscountIds size = "+packIds.size());
+		System.out.println(gradeIds);
+		System.out.println("Ids size = "+gradeIds.size());
+		String[] arr = gradeIds.toArray(new String[]{});
+		Arrays.sort(arr);
+		System.out.println(Arrays.toString(arr));
 	}
 }

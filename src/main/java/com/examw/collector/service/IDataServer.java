@@ -1,6 +1,7 @@
 package com.examw.collector.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.Pack;
@@ -142,6 +143,28 @@ public interface IDataServer {
 	 * Error6 - 课程未授权.
 	 */
 	String loadVideo(String userName,Integer type,String videoId) throws Exception;
-	
+	/**
+	 * 采集老师页面
+	 * @param id 老师的代码(环球的代码) 
+	 * @return
+	 */
 	TeacherEntity loadTeacher(String id);
+	/**
+	 * 采集页面的班级ID,和套餐ID
+	 * @param url	页面的地址
+	 * @return
+	 */
+	Map<String,String> loadPageIds(String url);
+	/**
+	 * 采集页面的班级ID
+	 * @param url
+	 * @return
+	 */
+	String loadPageGradeIds(String url);
+	/**
+	 * 采集页面的套餐ID
+	 * @param url
+	 * @return
+	 */
+	String loadPagePackIds(String url);
 }

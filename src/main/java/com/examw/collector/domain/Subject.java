@@ -11,6 +11,7 @@ public class Subject extends BaseDomain implements Serializable {
 	private String code,name;
 	private Integer classTotal;
 	private Catalog catalog;
+	
 	/**
 	 * 获取所属课程。
 	 * @return 所属课程。
@@ -128,4 +129,24 @@ public class Subject extends BaseDomain implements Serializable {
 		if(catalog==null) return "";
 		return "所属类别:"+catalog.getName()+"("+catalog.getCode()+")";
 	}
+	
+	private String add;	//是否自己添加的科目
+
+	/**
+	 * 获取 是否自己添加的科目
+	 * @return add
+	 * 
+	 */
+	public String getAdd() {
+		return add;
+	}
+	/**
+	 * 设置 是否自己添加的科目
+	 * @param add
+	 * 
+	 */
+	public void setAdd(String add) {
+		this.add = add;
+	}
+	
 }

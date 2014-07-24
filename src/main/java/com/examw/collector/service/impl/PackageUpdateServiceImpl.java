@@ -304,6 +304,11 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				}
 				continue;
 			}
+			//如果页面中没有这个ID,不要进行操作
+			if(info.getStatus().equals("页面无此ID")){
+				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				continue;
+			}
 			Pack pack = this.judgeDataSafe(info);
 			PackageEntity p = changeModel(info);
 			if(pack!=null && p!=null)
@@ -316,7 +321,6 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			}
 		}
 		List<PackInfo> result = this.changeModel(packs);
-		System.out.println(result.size());
 		// 添加操作日志
 		OperateLog log = new OperateLog();
 		log.setId(UUID.randomUUID().toString());
@@ -338,17 +342,27 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		List<Pack> packList = new ArrayList<Pack>();
 		PackInfo info = new PackInfo();
 		for(CatalogEntity entity : needList){
-			info.setCatalogId(entity.getCode());
-			packList.addAll(this.findChangedPack(info));
+			String[] arr = entity.getCode().split(",");
+			String[] pages = null;
+			if(!StringUtils.isEmpty(entity.getPageUrl()))
+				 pages = entity.getPageUrl().split(",");
+			for(int i=0;i<arr.length;i++)
+			{
+				if(StringUtils.isEmpty(arr[i])) continue;
+				String page = pages==null?"":pages[i];
+				info.setCatalogId(arr[i]);
+				packList.addAll(this.findChangedPack(info,page));
+			}
 		}
 		return packList;
 	}
-	private List<Pack> findChangedPack(PackInfo info){
+	private List<Pack> findChangedPack(PackInfo info,String page){
 		Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
 		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(), null);
 		List<Pack> add = new ArrayList<Pack>();
 		if(data == null) return add;
 		StringBuffer existIds = new StringBuffer();
+		String ids = this.dataServer.loadPagePackIds(page);
 		for(Pack p:data){
 			if(p==null) continue;
 			p.setCatalog(catalog);
@@ -357,6 +371,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			if(local_p == null){
 				p.setStatus("新增");
 				p.setUpdateInfo("<span style='color:blue'>[新增]</span>"+p.toString());
+				addSubject(p,ids);
 				add.add(p);
 			}else if(p.equals(local_p)){
 				continue;
@@ -375,6 +390,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				//local_p.setStatus("旧的");
 				p.setUpdateInfo("<span style='color:red'>[更新]</span>"+p.getUpdateInfo());
 				BeanUtils.copyProperties(p, local_p);	//已经存在的,必须用原有的数据进行更新,不然会出错
+				local_p.setCatalog(catalog);
 				add.add(local_p);
 				//add.add(local_p);
 			}
@@ -414,7 +430,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				if (subject == null)
 					return null;
 				info.setSubject(subject);
-				info.setCatalog(subject.getCatalog());
+//				info.setCatalog(subject.getCatalog());
 			}
 		}
 		return info;
@@ -477,10 +493,43 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			info.setSubjectId(data.getSubject().getCode());
 			info.setSubjectName(data.getSubject().getName());
 		}
-		if (data.getCatalog() != null) {
-			info.setCatalogId(data.getCatalog().getCode());
-			info.setCatalogName(data.getCatalog().getName());
+		Catalog c = data.getCatalog();
+		if( c!= null){
+			info.setCatalogId(c.getCode());
+			info.setCatalogName(c.getName());
 		}
 		return info;
+	}
+	
+	/**
+	 * 页面上有的,但是实际没有的科目进行添加
+	 * @param info
+	 * @param ids
+	 */
+	private void addSubject(Pack info,String ids)
+	{
+		if(info==null||StringUtils.isEmpty(ids)) return;
+		if(ids.contains(","+info.getCode()+",")){	//如果页面上包含这个班级
+			Subject s = this.subjectDao.load(Subject.class, info.getSubject().getCode());
+			if(s == null)	//实际数据库中找不到这个
+			{
+				//把这个科目加上
+				s = info.getSubject();
+				s.setAdd("1"); 	//表示是自己加上的
+				s.setCatalog(info.getCatalog());
+				subjectDao.save(s);
+				//实际数据库也加上
+				SubjectEntity entity = new SubjectEntity();
+				entity.setId(s.getCode());
+				entity.setName(s.getName());
+				entity.setCatalogEntity(this.catalogEntityDao.find(info.getCatalog().getCode()));
+				subjectEntityDao.save(entity);
+				//添加记录
+				info.setUpdateInfo(info.getUpdateInfo()+" !!![同时新增科目]!!!");
+			}
+		}else{
+			info.setStatus("页面无此ID");
+			info.setUpdateInfo("<span style='color:#777777'>[页面不存在此ID]</span><span style='color:blue'>[新增]</span>"+info.toString());
+		}
 	}
 }

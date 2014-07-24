@@ -16,6 +16,7 @@ public class CatalogEntity implements Serializable {
 	private CatalogEntity parent;
 	private Set<CatalogEntity> children;
 	public static String SCHOOLID_EDU24 = ",1,2,";	//环球网校的学校代码
+	
 	/**
 	 * 获取 ID
 	 * @return id
@@ -143,6 +144,25 @@ public class CatalogEntity implements Serializable {
 	 */
 	public void setChildren(Set<CatalogEntity> children) {
 		this.children = children;
+	}
+	
+	private String pageUrl;	//环球课程页面的地址
+
+	/**
+	 * 获取 环球页面的地址
+	 * @return pageUrl
+	 * 
+	 */
+	public String getPageUrl() {
+		return pageUrl;
+	}
+	/**
+	 * 设置 环球课程页面的地址
+	 * @param pageUrl
+	 * 
+	 */
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
 	}
 	
 }
