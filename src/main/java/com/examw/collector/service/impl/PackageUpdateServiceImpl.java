@@ -10,15 +10,19 @@ import org.springframework.util.StringUtils;
 
 import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.ICatalogEntityDao;
+import com.examw.collector.dao.IErrorRecordDao;
 import com.examw.collector.dao.IOperateLogDao;
 import com.examw.collector.dao.IPackDao;
 import com.examw.collector.dao.IPackageEntityDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
+import com.examw.collector.dao.IUpdateRecordDao;
 import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.ErrorRecord;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Pack;
 import com.examw.collector.domain.Subject;
+import com.examw.collector.domain.UpdateRecord;
 import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.domain.local.PackageEntity;
 import com.examw.collector.domain.local.SubjectEntity;
@@ -43,7 +47,8 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 	private ICatalogEntityDao catalogEntityDao;
 	private IOperateLogDao operateLogDao;
 	private IDataServer dataServer;
-	
+	private IErrorRecordDao errorRecordDao;
+	private IUpdateRecordDao updateRecordDao;
 	/**
 	 * 设置 远程数据接口
 	 * @param dataServer
@@ -122,7 +127,24 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 	public void setCatalogEntityDao(ICatalogEntityDao catalogEntityDao) {
 		this.catalogEntityDao = catalogEntityDao;
 	}
-
+	
+	/**
+	 * 设置 错误记录数据接口
+	 * @param errorRecordDao
+	 * 
+	 */
+	public void setErrorRecordDao(IErrorRecordDao errorRecordDao) {
+		this.errorRecordDao = errorRecordDao;
+	}
+	/**
+	 * 设置 更新记录数据接口
+	 * @param updateRecordDao
+	 * 
+	 */
+	public void setUpdateRecordDao(IUpdateRecordDao updateRecordDao) {
+		this.updateRecordDao = updateRecordDao;
+	}
+	
 	@Override
 	public List<PackInfo> update(List<PackInfo> packs,String account) {
 		if (packs == null || packs.size() == 0)
@@ -282,9 +304,10 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		grid.setTotal((long) list.size());
 		return grid;
 	}
-	private List<PackInfo> update(String account) {
+	public List<PackInfo> update(String account) {
 		//找出需要查找并且有变化的科目集合
 		List<Pack> packs = this.findChangedPacks();
+		List<Pack> listForShow = new ArrayList<Pack>();
 		for (Pack info : packs) {
 			if (StringUtils.isEmpty(info.getStatus())
 					|| info.getStatus().equals("旧的")) {
@@ -299,6 +322,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				}
 				if (data2 != null) {
 					this.packageEntityDao.delete(data2);
+					listForShow.add(info);
 				}else{
 					info.setUpdateInfo("<span style='color:purple'>删除失败</span>"+info.getUpdateInfo());
 				}
@@ -307,6 +331,13 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			//如果页面中没有这个ID,不要进行操作
 			if(info.getStatus().equals("页面无此ID")){
 				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				ErrorRecord error = this.errorRecordDao.find(info.getCode(),ErrorRecord.TYPE_ERROR_PACK);
+				if(error == null){
+					listForShow.add(info);
+					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
+							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date());
+					this.errorRecordDao.save(error);
+				}
 				continue;
 			}
 			Pack pack = this.judgeDataSafe(info);
@@ -316,11 +347,21 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			if(p != null)
 			{
 				this.packageEntityDao.saveOrUpdate(p);
+				info.setStatus("更新成功");
+				listForShow.add(info);
 			}else{
 				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				ErrorRecord error = this.errorRecordDao.find(info.getCode(),ErrorRecord.TYPE_ERROR_PACK);
+				if(error == null){
+					listForShow.add(info);
+					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
+							"找不到科目",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date());
+					this.errorRecordDao.save(error);
+				}
 			}
 		}
-		List<PackInfo> result = this.changeModel(packs);
+		List<PackInfo> result = this.changeModel(listForShow);
+		addToUpdateRecord(listForShow);
 		// 添加操作日志
 		OperateLog log = new OperateLog();
 		log.setId(UUID.randomUUID().toString());
@@ -530,6 +571,16 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		}else{
 			info.setStatus("页面无此ID");
 			info.setUpdateInfo("<span style='color:#777777'>[页面不存在此ID]</span><span style='color:blue'>[新增]</span>"+info.toString());
+		}
+	}
+	
+	private void addToUpdateRecord(List<Pack> list){
+		if(list.size() == 0) return;
+		for(Pack info:list){
+			UpdateRecord data = new UpdateRecord();
+			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
+					info.getStatus(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_PACK,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date());
+			this.updateRecordDao.save(data);
 		}
 	}
 }

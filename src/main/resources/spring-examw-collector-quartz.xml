@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+									  http://www.springframework.org/schema/util  http://www.springframework.org/schema/util/spring-util.xsd">
+   <!-- 使用普通的类作为任务start -->
+   <!-- 要调用的工作类 -->
+  <!--  <bean id="quartzJob" class="com.examw.collector.quartz.QuartzJob"></bean> -->
+
+   <!-- 定义调用对象和调用对象的方法 -->
+  <!--  <bean id="jobtask" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"> -->
+        <!-- 调用的类 -->
+       <!--  <property name="targetObject">
+            <ref bean="quartzJob"/>
+       </property> -->
+       <!-- 调用类中的方法 -->
+      <!--  <property name="targetMethod">
+             <value>work</value>
+       </property> -->
+       <!--   指定最终封装出的任务是否有状态  -->
+       <!-- <property name="concurrent" value="false" />  
+   </bean>-->
+   <!-- 使用普通的类作为任务end  -->
+   
+   <!-- 不用Factory,直接创建一个JobDetail 使用JobDetailBean，任务类必须实现Job接口-->
+   <bean name="compareAndUpdateJob" class="org.springframework.scheduling.quartz.JobDetailBean">
+    	<property name="jobClass" value="com.examw.collector.quartz.QuartzJob" />
+    	<!-- jobDataMap -->
+    	<property name="jobDataAsMap">
+        	<map>
+            	<!-- 非spring管理的service放到这里，就可以注入进去 -->      
+                <description>jobDataAsMap</description>      
+                <!-- key 属性值，value 对应的bean -->      
+                <entry key="size" value="10" />     
+        	</map>
+    	</property>
+    	 <!-- 给ApplicationContext弄个名字 -->
+    	<property name="applicationContextJobDataKey" value="applicationContext"/>
+	</bean>
+   
+   <!-- 定义触发时间 配置触发器-->
+   <bean id="doTime" class="org.springframework.scheduling.quartz.CronTriggerBean">
+       <property name="jobDetail">
+            <ref bean="compareAndUpdateJob"/>
+       </property>
+       <!-- cron表达式 -->
+       <property name="cronExpression">
+            <!-- 秒    分   时  日   月   周   年 -->
+            <!-- Quartz使用类似于Linux下的Cron表达式定义时间规则，Cron表达式由6或7个由空格分隔的时间字段组成 -->
+            <value>0 31 17 * * ?</value> <!-- 每五秒执行一次 -->
+       </property>
+   </bean>
+   <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  --><!-- 配置任务工厂, 只能有一个这种bean -->
+   <bean id="startQuertz" lazy-init="false" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+       <property name="triggers">
+       <list>
+            <ref bean="doTime"/>
+       </list>
+       </property>
+        <property name="schedulerContextAsMap">      
+            <map>      
+                <!-- spring 管理的service需要放到这里，才能够注入成功  
+                	不能直接注入Dao,没有事务,取不到session
+                -->      
+                <description>schedulerContextAsMap</description>      
+                <entry key="subjectUpdateService" value-ref="subjectUpdateService"/>      
+                <entry key="gradeUpdateService" value-ref="gradeUpdateService"/>      
+                <entry key="packageUpdateService" value-ref="packageUpdateService"/>
+                <entry key="updateLogService" value-ref= "updateLogService"/>
+            </map>      
+        </property>
+   </bean>
+</beans>

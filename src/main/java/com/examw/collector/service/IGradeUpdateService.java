@@ -21,4 +21,10 @@ public interface IGradeUpdateService {
 	 * @return
 	 */
 	DataGrid<SubClassInfo> dataGridUpdate(String account);
+	/**
+	 * 用于定时器更新
+	 * @param account
+	 * @return
+	 */
+	List<SubClassInfo> update(String account);
 }

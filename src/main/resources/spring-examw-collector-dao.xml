@@ -68,4 +68,16 @@
 		<property name="sessionFactory"  ref="sessionFactory" />
 	</bean>
 	<!-- 本地数据接口end -->
+	
+	<!-- 定时器相关数据接口 start -->
+	<bean id="errorRecordDao" class="com.examw.collector.dao.impl.ErrorRecordDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<bean id="updateRecordDao" class="com.examw.collector.dao.impl.UpdateRecordDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<bean id="updateLogDao" class="com.examw.collector.dao.impl.UpdateLogDaoImpl">
+		<property name="sessionFactory"  ref="sessionFactory" />
+	</bean>
+	<!-- 定时器相关数据接口 end -->
 </beans>

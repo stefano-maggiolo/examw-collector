@@ -13,6 +13,7 @@ import org.springframework.beans.BeanUtils;
 import com.examw.collector.dao.IAdVideoDao;
 import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.ICatalogEntityDao;
+import com.examw.collector.dao.IErrorRecordDao;
 import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.dao.IListenEntityDao;
 import com.examw.collector.dao.IOperateLogDao;
@@ -21,12 +22,15 @@ import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
 import com.examw.collector.dao.ITeacherEntityDao;
+import com.examw.collector.dao.IUpdateRecordDao;
 import com.examw.collector.domain.AdVideo;
 import com.examw.collector.domain.Catalog;
+import com.examw.collector.domain.ErrorRecord;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Relate;
 import com.examw.collector.domain.SubClass;
 import com.examw.collector.domain.Subject;
+import com.examw.collector.domain.UpdateRecord;
 import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.ListenEntity;
@@ -56,6 +60,9 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	private IOperateLogDao operateLogDao;
 	private IAdVideoDao adVideoDao;
 	private ITeacherEntityDao teacherEntityDao;
+	private IErrorRecordDao errorRecordDao;
+	private IUpdateRecordDao updateRecordDao;
+	
 	
 	private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	/**
@@ -160,6 +167,24 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	 */
 	public void setTeacherEntityDao(ITeacherEntityDao teacherEntityDao) {
 		this.teacherEntityDao = teacherEntityDao;
+	}
+	
+	
+	/**
+	 * 设置 错误记录数据接口
+	 * @param errorRecordDao
+	 * 
+	 */
+	public void setErrorRecordDao(IErrorRecordDao errorRecordDao) {
+		this.errorRecordDao = errorRecordDao;
+	}
+	/**
+	 * 设置 更新记录数据接口
+	 * @param updateRecordDao
+	 * 
+	 */
+	public void setUpdateRecordDao(IUpdateRecordDao updateRecordDao) {
+		this.updateRecordDao = updateRecordDao;
 	}
 	@Override
 	public List<SubClassInfo> update(List<SubClassInfo> subClasses,String account) {
@@ -376,9 +401,10 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	 * @param account
 	 * @return
 	 */
-	private List<SubClassInfo> update(String account) {
+	public List<SubClassInfo> update(String account) {
 		//找出需要查找并且有变化的科目集合
 		List<SubClass> grades = this.findChangedSubClass();
+		List<SubClass> listForShow = new ArrayList<SubClass>();
 		if(grades == null ||grades.size()==0) return null;
 		for(SubClass info:grades){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
@@ -397,14 +423,23 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				{
 					this.listenEntityDao.delete(data2.getId());
 					this.gradeEntityDao.delete(data2);
+					listForShow.add(info);
 				}else{
 					info.setUpdateInfo("<span style='color:purple'>删除失败</span>"+info.getUpdateInfo());
+					
 				}
 				continue;
 			}
 			//如果页面中没有这个ID,不要进行操作
 			if(info.getStatus().equals("页面无此ID")){
 				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				ErrorRecord error = this.errorRecordDao.find(info.getCode(),ErrorRecord.TYPE_ERROR_GRADE);
+				if(error == null){
+					listForShow.add(info);
+					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
+							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date());
+					this.errorRecordDao.save(error);
+				}
 				continue;
 			}
 			//本地副本
@@ -420,11 +455,21 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				this.gradeEntityDao.saveOrUpdate(se);
 				//删除原来班级带的课节地址,重新插入新的
 				this.deleteOldAndInsertNewListen(info.getCode(),info.getDemo(),info.getAdVideo(),se);
+				info.setStatus("更新成功");
+				listForShow.add(info);
 			}else{
 				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				ErrorRecord error = this.errorRecordDao.find(info.getCode(),ErrorRecord.TYPE_ERROR_GRADE);
+				if(error == null){
+					listForShow.add(info);
+					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
+							"找不到科目",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date());
+					this.errorRecordDao.save(error);
+				}
 			}
 		}
-		List<SubClassInfo> result = this.changeModel(grades);
+		List<SubClassInfo> result = this.changeModel(listForShow);
+		addToUpdateRecord(listForShow);
 		//添加操作日志
 		OperateLog log = new OperateLog();
 		log.setId(UUID.randomUUID().toString());
@@ -610,6 +655,16 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		}else{
 			info.setStatus("页面无此ID");
 			info.setUpdateInfo("<span style='color:#777777'>[页面不存在此ID]</span><span style='color:blue'>[新增]</span>"+info.toString());
+		}
+	}
+	
+	private void addToUpdateRecord(List<SubClass> list){
+		if(list.size() == 0) return;
+		for(SubClass info:list){
+			UpdateRecord data = new UpdateRecord();
+			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
+					info.getStatus(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_GRADE,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date());
+			this.updateRecordDao.save(data);
 		}
 	}
 }

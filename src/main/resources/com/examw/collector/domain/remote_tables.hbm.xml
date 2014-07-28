@@ -161,4 +161,55 @@
 		<!-- 所属科目 -->
 		<many-to-one name="subclass"  column="class_id"  class="SubClass" />
 	</class>
+	
+	 <!-- 添加不进的记录[页面上没有,没有科目的] -->
+	 <class name="ErrorRecord"  table="tbl_Collector_Remote_ErrorRecord">
+		<!-- <cache usage="read-write"/> -->
+		<!-- ID -->
+		<id name="id" type="string" length="64"/>
+		<!-- 数据ID -->
+		<property name="dataId"  type="string"  length="128"  not-null="true" />
+		<!-- 类型 -->
+		<property name="type" type="integer" not-null="true" />
+		<!-- 名称 -->
+		<property name="name"  type="string"  length="128"  not-null="true" />
+		<!-- 状态 -->
+		<property name="status"  type="string"/>
+		<!-- 说明 -->
+		<property name="note"  type="string"  length="512"/>
+		<!-- time -->
+		<property name="updateTime" column="update_time" type="timestamp"  />
+	</class>
+	
+	 <!-- 更新数据记录[新增or更改or删除] -->
+	 <class name="UpdateRecord"  table="tbl_Collector_Remote_UpdateRecord">
+		<!-- <cache usage="read-write"/> -->
+		<!-- ID -->
+		<id name="id" type="string" length="64"/>
+		<!-- 数据ID -->
+		<property name="dataId"  type="string"  length="128"  not-null="true" />
+		<!-- 名称 -->
+		<property name="name"  type="string"  length="128"  not-null="true" />
+		<!-- 类型 -->
+		<property name="type" type="integer" not-null="true" />
+		<!-- 状态 -->
+		<property name="status"  type="string"/>
+		<!-- 说明 -->
+		<property name="note"  type="string"  length="1024"/>
+		<!-- time -->
+		<property name="updateTime" column="update_time" type="timestamp"  />
+	</class>
+	
+	 <!-- 更新记录[定时器是否进行了更新] -->
+	  <class name="UpdateLog"  table="tbl_Collector_Remote_UpdateLog">
+		<!-- <cache usage="read-write"/> -->
+		<!-- ID -->
+		<id name="id" type="string" length="64"/>
+		<!-- 类型 -->
+		<property name="type" type="integer" not-null="true" />
+		<!-- 说明 -->
+		<property name="name"  type="string"  length="64"/>
+		<!-- time -->
+		<property name="updateTime"  column="update_time" type="timestamp"  />
+	</class>
 </hibernate-mapping>

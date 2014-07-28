@@ -22,4 +22,11 @@ public interface IPackageUpdateService {
 	 * @return
 	 */
 	DataGrid<PackInfo> dataGridUpdate(String account);
+	
+	/**
+	 * 整体数据更新
+	 * @param account
+	 * @return
+	 */
+	List<PackInfo> update(String account);
 }

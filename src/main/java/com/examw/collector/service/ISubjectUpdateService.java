@@ -21,4 +21,11 @@ public interface ISubjectUpdateService {
 	 * @return
 	 */
 	DataGrid<SubjectInfo> dataGridUpdate(String account);
+	
+	/**
+	 * 整体数据更新
+	 * @param account
+	 * @return
+	 */
+	List<SubjectInfo> update(String account);
 }

@@ -19,9 +19,11 @@ import com.examw.collector.dao.IPackageEntityDao;
 import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
+import com.examw.collector.dao.IUpdateRecordDao;
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Subject;
+import com.examw.collector.domain.UpdateRecord;
 import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.SubjectEntity;
@@ -50,6 +52,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	private IListenEntityDao listenEntityDao;
 	private IPackageEntityDao packageEntityDao;
 	private IPackDao packDao;
+	private IUpdateRecordDao updateRecordDao;
 	/**
 	 * 设置操作日志数据接口
 	 * @param operateLogDao
@@ -140,6 +143,15 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	 */
 	public void setPackDao(IPackDao packDao) {
 		this.packDao = packDao;
+	}
+	
+	/**
+	 * 设置 更新记录数据接口
+	 * @param updateRecordDao
+	 * 
+	 */
+	public void setUpdateRecordDao(IUpdateRecordDao updateRecordDao) {
+		this.updateRecordDao = updateRecordDao;
 	}
 	@Override
 	public List<SubjectInfo> update(List<SubjectInfo> subjects,String account) {
@@ -329,7 +341,7 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	 * @param account
 	 * @return
 	 */
-	private List<SubjectInfo> update(String account) {
+	public List<SubjectInfo> update(String account) {
 		//找出需要查找并且有变化的科目集合
 		List<Subject> subjects = this.findChangedSubject();
 		if(subjects == null ||subjects.size()==0) return new ArrayList<SubjectInfo>();
@@ -366,11 +378,13 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			if(se !=null)
 			{
 				this.subjectEntityDao.saveOrUpdate(se);
+				info.setStatus("更新成功");
 			}else{
 				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
 			}
 		}
 		List<SubjectInfo> result = this.changeModel(subjects);
+		addToUpdateRecord(subjects);
 		//添加操作日志
 		OperateLog log = new OperateLog();
 		log.setId(UUID.randomUUID().toString());
@@ -467,5 +481,18 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			}
 		}
 		this.packageEntityDao.delete(info.getId());
+	}
+	/**
+	 * 加到更新记录中
+	 * @param list
+	 */
+	private void addToUpdateRecord(List<Subject> list){
+		if(list.size() == 0) return;
+		for(Subject info:list){
+			UpdateRecord data = new UpdateRecord();
+			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
+					info.getStatus(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_SUBJECT,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date());
+			this.updateRecordDao.save(data);
+		}
 	}
 }
