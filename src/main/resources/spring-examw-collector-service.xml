@@ -193,6 +193,8 @@
 	    <property name="operateLogDao" ref="operateLogDao"/>
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
 	    <property name="catalogDao" ref="catalogDao"/>
+	    <property name="teacherEntityDao" ref="teacherEntityDao"/>
+	    <property name="adVideoDao" ref="adVideoDao"/>
 	</bean>
 	<!-- 套餐更新 -->
 	<bean id="packageUpdateService" class="com.examw.collector.service.impl.PackageUpdateServiceImpl">

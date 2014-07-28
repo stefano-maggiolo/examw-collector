@@ -63,7 +63,7 @@ public class SubjectEntityDaoImpl extends	BaseDaoImpl<SubjectEntity> implements 
 		}
 		//考试类别
 		if(!StringUtils.isEmpty(info.getCatalogId())){
-			hql += " and (s.catalogEntity.code = :catalogId)";
+			hql += " and (s.catalogEntity.id = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		//考试名称查询

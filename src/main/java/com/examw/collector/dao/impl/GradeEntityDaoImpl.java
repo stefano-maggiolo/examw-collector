@@ -9,6 +9,7 @@ import org.springframework.util.StringUtils;
 import com.examw.collector.dao.IGradeEntityDao;
 import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.model.SubClassInfo;
+import com.examw.collector.service.impl.DataServerImpl;
 
 /**
  * 班级数据接口实现类
@@ -54,6 +55,10 @@ public class GradeEntityDaoImpl extends BaseDaoImpl<GradeEntity> implements IGra
 	 * HQL
 	 */
 	protected String addWhere(SubClassInfo info, String hql, Map<String, Object> parameters){
+		if(!StringUtils.isEmpty(DataServerImpl.ID_PREFIX)){
+			hql += "  and (sc.id like :prefix)";
+			parameters.put("prefix", "%" + DataServerImpl.ID_PREFIX + "%");
+		}
 		if(info.getName() != null && !info.getName().trim().isEmpty()){
 			hql += "  and (sc.name like :name)";
 			parameters.put("name", "%" + info.getName()+ "%");
@@ -64,7 +69,7 @@ public class GradeEntityDaoImpl extends BaseDaoImpl<GradeEntity> implements IGra
 		}
 		if(!StringUtils.isEmpty(info.getCatalogId()))
 		{
-			hql += "  and (sc.subjectEntity.catalogEntity.code = :catalogId)";
+			hql += "  and (sc.subjectEntity.catalogEntity.id = :catalogId)";
 			parameters.put("catalogId", info.getCatalogId());
 		}
 		return hql;

@@ -96,9 +96,9 @@
 		<!-- 是否可见 -->
 		<!-- <property name="isShow"  type="true_false" column="is_show"/> -->
 		<!-- 所属科目 -->
-		<many-to-one name="subjectEntity"  column="ClassID"  class="SubjectEntity" />
+		<many-to-one name="subjectEntity"  column="CourseID"  class="SubjectEntity" />
 		<!-- 所属小类 -->
-		<many-to-one name="catalogEntity"  column="edu24_code"  class="CatalogEntity"/>
+		<many-to-one name="catalogEntity"  column="ClassID"  class="CatalogEntity"/>
 		<!-- 包含班级代码 -->
 		<property name="classCodes" type="text" column="TC_NClassID"/>
 		<!-- 包含班级的集合 -->

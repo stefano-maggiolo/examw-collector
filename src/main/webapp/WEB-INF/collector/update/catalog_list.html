@@ -49,6 +49,12 @@ $(function(){
 			//级联选中
 			dg1.treegrid("cascadeCheck",{id:rowData.id,deepCascade:false});
 		},
+		onLoadSuccess:function(){
+			$.messager.progress("close"); 
+		},
+		onLoadError:function(){
+			$.messager.progress("close"); 
+		},
 		toolbar:[
 		{
 			iconCls:"icon-add",
@@ -56,6 +62,7 @@ $(function(){
 			handler:function(){
 				$.messager.confirm("确认","您是否确认检测课程类别数据更新?",function(r){
 					if(!r)return;
+					$.messager.progress();
 					dg1.treegrid({url:"<@s.url '/admin/update/catalog/datagrid'/>"});
 				});
 			}

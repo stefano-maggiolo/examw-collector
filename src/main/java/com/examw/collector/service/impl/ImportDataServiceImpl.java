@@ -1,6 +1,9 @@
 package com.examw.collector.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -56,6 +59,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 	private IAdVideoDao adVideoDao;
 	
 	private ICatalogEntityDao catalogEntityDao;
+	private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * 设置 科目副本数据接口
 	 * @param subjectDao
@@ -249,6 +253,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 		CatalogEntity catalog = this.catalogEntityDao.find(id);
 		// 获取页面上所有的班级ID
 		String gradeIds = this.dataServer.loadPageGradeIds(catalog.getPageUrl());
+		AdVideo adVideo = null;
 		for (SubClass s : list) {
 			if(!StringUtils.isEmpty(gradeIds)){ //能够获取到页面地址的ids
 				//如果没有卖的就不加
@@ -262,21 +267,36 @@ public class ImportDataServiceImpl implements IImportDataService {
 				Subject subject = this.subjectDao.load(Subject.class, s
 						.getSubject().getCode());
 				if (subject != null) {
-					
 					if(s.getAdVideo()!=null){
-						AdVideo adVideo = this.adVideoDao.load(AdVideo.class, s.getAdVideo().getCode());
-						if(adVideo==null)
-							this.adVideoDao.saveOrUpdate(s.getAdVideo());
+						adVideo = this.adVideoDao.load(AdVideo.class, s.getAdVideo().getCode());
+						if(adVideo==null){
+							adVideo = s.getAdVideo();
+							this.adVideoDao.saveOrUpdate(adVideo);
+						}
+					}else{
+						adVideo = null;
 					}
 					s.setSubject(subject);
 					this.subClassDao.saveOrUpdate(s);
 					GradeEntity grade = changeGradeModel(s);
 					if (grade != null) {
 						this.gradeEntityDao.saveOrUpdate(grade);
+						//加一个试听的地址
+						if(adVideo != null)
+						{
+							ListenEntity listen  = new ListenEntity();
+							listen.setAddress(adVideo.getAddress());
+							listen.setGrade(grade);
+							listen.setName(adVideo.getName()+"-宣讲试听");
+							listen.setId("k"+adVideo.getCode()+"_"+s.getCode());
+							listen.setUpdateDate(formatter.format(new Date()));
+							this.listenEntityDao.save(listen);
+						}
 						// 保存课节数据,只保存本地实际的课节数据,副本不再存了
 						List<Relate> relateList = this.dataServer
 								.loadRelates(grade.getId());
 						if (relateList != null && relateList.size() > 0) {
+							dealRelateList(relateList,s.getDemo());
 							for (Relate r : relateList) {
 								ListenEntity l = this.changeListenModel(r);
 								if (l != null)
@@ -290,13 +310,36 @@ public class ImportDataServiceImpl implements IImportDataService {
 		//导入老师数据
 		importTeacherData(id,list);
 	}
+	/**
+	 * 处理课节
+	 * @param relateList
+	 * @param demoNum
+	 */
+	private void dealRelateList(List<Relate> relateList,String demoNum){
+		if(StringUtils.isEmpty(demoNum)) return ;
+		if(demoNum.equals("0")) return;
+		try{
+			String[] arr = demoNum.split(",");
+			int m = 0;
+			Collections.sort(relateList);	//排序
+			for(Relate r:relateList){	//赋值
+				if(r == null) return;
+				if(!StringUtils.isEmpty(r.getAddress()) && m < arr.length){
+					r.setOrderNum(Integer.valueOf(arr[m]));
+					m++;
+				}
+			}
+		}catch(Exception e){ return;}
+		return;
+	}
 	private void importTeacherData(String calalogId,List<SubClass> subClassList)
 	{
 		Map<String,String> teacherMap = new HashMap<String,String>();
 		if(subClassList!=null && subClassList.size()>0){
 			for(SubClass sc: subClassList){
 				if(!StringUtils.isEmpty(sc.getTeacherId())){
-					teacherMap.put(sc.getTeacherId(), sc.getTeacherName());
+					if(!"0".equals(sc.getTeacherId()))
+						teacherMap.put(sc.getTeacherId(), sc.getTeacherName());
 				}
 			}
 		}
@@ -308,19 +351,22 @@ public class ImportDataServiceImpl implements IImportDataService {
 				if(t!=null){
 					if(StringUtils.isEmpty(t.getCatalogId())){
 						CatalogEntity c = this.catalogEntityDao.find(calalogId);
-						t.setCatalogId(c.getId());
+						if(c!=null)
+							t.setCatalogId(","+c.getId()+",");
 						list.add(t);
-					}else if(!t.getCatalogId().contains(calalogId)){
+					}else {
 						CatalogEntity c = this.catalogEntityDao.find(calalogId);
-						t.setCatalogId(t.getCatalogId()+","+c.getId());
+						if(c!=null && !t.getCatalogId().contains(","+c.getId()+","))	//包含去重复
+							t.setCatalogId(t.getCatalogId()+c.getId()+",");
 						list.add(t);
 					}
 				}else{
 					t = this.dataServer.loadTeacher(id);
 					if(t!=null)
 					{
-						CatalogEntity c = this.catalogEntityDao.find(t.getCatalogId());
-						t.setCatalogId(c.getId());
+						CatalogEntity c = this.catalogEntityDao.find(calalogId);
+						if(c!=null)
+							t.setCatalogId(","+c.getId()+",");
 						list.add(t);
 					}
 				}
@@ -394,7 +440,7 @@ public class ImportDataServiceImpl implements IImportDataService {
 			if(data!=null)
 				this.packageEntityDao.saveOrUpdate(data);
 		}
-	}
+	} 
 	
 	private PackageEntity changePackageModel(Pack info) {
 		if(info == null) return null;
@@ -427,5 +473,28 @@ public class ImportDataServiceImpl implements IImportDataService {
 		if(codes.length()>0)
 			return codes.substring(0,codes.length()-1);
 		return "";
+	}
+	
+	@Override
+	public void initAllTeacher() {
+		List<CatalogEntity> list = this.catalogEntityDao.findAllWithCode();
+		for(CatalogEntity c : list){
+			if(c==null) continue;
+			String[] arr = c.getCode().split(",");
+			for(int i=0;i<arr.length;i++)
+			{
+				if(StringUtils.isEmpty(arr[i])) continue;
+				initTeacher(arr[i]);
+			}
+		}
+	}
+	private void initTeacher(String code){
+		// 从远程获取数据
+		List<SubClass> list = this.dataServer.loadClasses(code, null);
+		// 整个科目下所有的数据	
+		if (list == null || list.size() == 0)
+			return;
+		//导入老师数据
+		importTeacherData(code,list);
 	}
 }

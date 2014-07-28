@@ -10,7 +10,15 @@ public interface IImportDataService {
 	 * @param catalogId 课程分类的集合
 	 */
 	void init(String[] catalogId);
-	
+	/**
+	 * 导入所有
+	 */
 	void initAll();
+	/**
+	 * 获取实际分类中所有的环球code,用","分割
+	 * @return
+	 */
 	String getIds();
+	
+	void initAllTeacher();
 }

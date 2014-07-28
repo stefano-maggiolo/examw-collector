@@ -7,7 +7,7 @@ import java.io.Serializable;
  * @author yangyong.
  * @since 2014-06-28.
  */
-public class Relate implements Serializable {
+public class Relate implements Serializable,Comparable<Relate> {
 	private static final long serialVersionUID = 1L;
 	private String name,updateDate,address;
 	private Integer num;
@@ -137,6 +137,33 @@ public class Relate implements Serializable {
 	 */
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	//比较顺序进行排序
+	@Override
+	public int compareTo(Relate o) {
+		try{
+			return o.num - this.num;	//倒序
+		}catch(Exception e){
+		}
+		return 0;
+	}
+	
+	private Integer orderNum;	//序号
+	/**
+	 * 获取 序号
+	 * @return orderNum
+	 * 
+	 */
+	public Integer getOrderNum() {
+		return orderNum;
+	}
+	/**
+	 * 设置 序号
+	 * @param orderNum
+	 * 
+	 */
+	public void setOrderNum(Integer orderNum) {
+		this.orderNum = orderNum;
 	}
 	
 }

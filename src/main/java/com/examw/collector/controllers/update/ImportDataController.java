@@ -48,4 +48,19 @@ public class ImportDataController {
 	public String getIds(){
 		return this.importDataService.getIds();
 	}
+	
+	@RequestMapping(value = "/initTeacher", method = RequestMethod.POST)
+	@ResponseBody
+	public Json initTeacher(){
+		Json result = new Json();
+		try {
+			this.importDataService.initAllTeacher();;
+			result.setSuccess(true);
+		} catch (Exception e) {
+			result.setSuccess(false);
+			result.setMsg(e.getMessage());
+			logger.error("导入老师时发生异常", e);
+		}
+		return result;
+	}
 }

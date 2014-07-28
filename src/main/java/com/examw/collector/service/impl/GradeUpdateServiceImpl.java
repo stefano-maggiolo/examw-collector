@@ -1,6 +1,8 @@
 package com.examw.collector.service.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -8,6 +10,7 @@ import java.util.UUID;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 
+import com.examw.collector.dao.IAdVideoDao;
 import com.examw.collector.dao.ICatalogDao;
 import com.examw.collector.dao.ICatalogEntityDao;
 import com.examw.collector.dao.IGradeEntityDao;
@@ -17,6 +20,8 @@ import com.examw.collector.dao.IRelateDao;
 import com.examw.collector.dao.ISubClassDao;
 import com.examw.collector.dao.ISubjectDao;
 import com.examw.collector.dao.ISubjectEntityDao;
+import com.examw.collector.dao.ITeacherEntityDao;
+import com.examw.collector.domain.AdVideo;
 import com.examw.collector.domain.Catalog;
 import com.examw.collector.domain.OperateLog;
 import com.examw.collector.domain.Relate;
@@ -26,6 +31,7 @@ import com.examw.collector.domain.local.CatalogEntity;
 import com.examw.collector.domain.local.GradeEntity;
 import com.examw.collector.domain.local.ListenEntity;
 import com.examw.collector.domain.local.SubjectEntity;
+import com.examw.collector.domain.local.TeacherEntity;
 import com.examw.collector.model.SubClassInfo;
 import com.examw.collector.service.IDataServer;
 import com.examw.collector.service.IGradeUpdateService;
@@ -48,6 +54,10 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	private IDataServer dataServer;
 	private IRelateDao relateDao;
 	private IOperateLogDao operateLogDao;
+	private IAdVideoDao adVideoDao;
+	private ITeacherEntityDao teacherEntityDao;
+	
+	private static SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 	/**
 	 * 设置操作日志数据接口
 	 * @param operateLogDao
@@ -134,6 +144,23 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	public void setCatalogDao(ICatalogDao catalogDao) {
 		this.catalogDao = catalogDao;
 	}
+	
+	/**
+	 * 设置 宣传视频数据接口
+	 * @param adVideoDao
+	 * 
+	 */
+	public void setAdVideoDao(IAdVideoDao adVideoDao) {
+		this.adVideoDao = adVideoDao;
+	}
+	/**
+	 * 设置 老师数据接口 
+	 * @param teacherEntityDao
+	 * 
+	 */
+	public void setTeacherEntityDao(ITeacherEntityDao teacherEntityDao) {
+		this.teacherEntityDao = teacherEntityDao;
+	}
 	@Override
 	public List<SubClassInfo> update(List<SubClassInfo> subClasses,String account) {
 		if(subClasses == null ||subClasses.size()==0) return new ArrayList<SubClassInfo>();
@@ -166,13 +193,13 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			GradeEntity g = changeLocalModel(info);
 			if(sc!=null && g!=null)
 			{
-				this.subClassDao.saveOrUpdate(changeRemoteModel(info));
+				this.subClassDao.saveOrUpdate(sc);
 			}
 			if(g!=null)
 			{
 				this.gradeEntityDao.saveOrUpdate(g);
 				//删除原来班级带的课节地址,重新插入新的
-				this.deleteOldAndInsertNewListen(info.getCode());
+				this.deleteOldAndInsertNewListen(info.getCode(),info.getDemo(),null,g);
 				list.add(info);
 			}
 		}
@@ -267,13 +294,14 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	 * 删除实际班级数据,然后插入新进数据
 	 * @param gradeId
 	 */
-	private void deleteOldAndInsertNewListen(String gradeId){
+	private void deleteOldAndInsertNewListen(String gradeId,String demoNum,AdVideo adVideo,GradeEntity g){
 		//删除
 		this.listenEntityDao.delete(gradeId);
 		//插入
 		List<Relate> list = this.dataServer.loadRelates(gradeId);
 		List<ListenEntity> data = new ArrayList<ListenEntity>();
 		if(list!=null && list.size()>0){
+			dealRelateList(list,demoNum);
 			for(Relate r:list){
 				ListenEntity l = this.changeListenModel(r);
 				if(l!=null)
@@ -283,6 +311,43 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		if(data.size()>0){
 			this.listenEntityDao.batchSave(data);
 		}
+		if(adVideo!=null){
+			ListenEntity listen  = new ListenEntity();
+			listen.setAddress(adVideo.getAddress());
+			listen.setGrade(g);
+			listen.setName(adVideo.getName()+"-宣讲试听");
+			listen.setId("k"+adVideo.getCode()+"_"+g.getId());
+			listen.setUpdateDate(formatter.format(new Date()));
+			this.listenEntityDao.save(listen);
+		}
+		if(!StringUtils.isEmpty(g.getTeacherId()) && !"0".equals(g.getTeacherId())){
+			TeacherEntity teacher = this.teacherEntityDao.load(TeacherEntity.class, g.getTeacherId());
+			if(teacher == null){
+				this.teacherEntityDao.save(this.dataServer.loadTeacher(g.getTeacherId()));
+			}
+		}
+	}
+	/**
+	 * 处理课节
+	 * @param relateList
+	 * @param demoNum
+	 */
+	private void dealRelateList(List<Relate> relateList,String demoNum){
+		if(StringUtils.isEmpty(demoNum)) return ;
+		if(demoNum.equals("0")) return;
+		try{
+			String[] arr = demoNum.split(",");
+			int m = 0;
+			Collections.sort(relateList);	//排序
+			for(Relate r:relateList){	//赋值
+				if(r == null) return;
+				if(!StringUtils.isEmpty(r.getAddress()) && m < arr.length){
+					r.setOrderNum(Integer.valueOf(arr[m]));
+					m++;
+				}
+			}
+		}catch(Exception e){ return;}
+		return;
 	}
 	private ListenEntity changeListenModel(Relate relate){
 		if(relate == null) return null;
@@ -354,7 +419,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			{
 				this.gradeEntityDao.saveOrUpdate(se);
 				//删除原来班级带的课节地址,重新插入新的
-				this.deleteOldAndInsertNewListen(info.getCode());
+				this.deleteOldAndInsertNewListen(info.getCode(),info.getDemo(),info.getAdVideo(),se);
 			}else{
 				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
 			}
@@ -387,7 +452,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			for(int i=0;i<arr.length;i++)
 			{
 				if(StringUtils.isEmpty(arr[i])) continue;
-				String page = pages==null?"":pages[i];
+				String page = pages==null?"":pages.length==1?pages[0]:pages[i];
 				gradeList.addAll(this.findChangedSubClass(arr[i],page));
 			}
 		}
@@ -459,6 +524,12 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			Subject subject = this.subjectDao.load(Subject.class, info.getSubject().getCode());
 			if(subject==null) return null;
 			info.setSubject(subject);
+		}
+		if(info.getAdVideo()!=null){
+			AdVideo adVideo = this.adVideoDao.load(AdVideo.class, info.getAdVideo());
+			if(adVideo==null)
+				this.adVideoDao.save(adVideo);
+			info.setAdVideo(adVideo);
 		}
 		return info;
 	}

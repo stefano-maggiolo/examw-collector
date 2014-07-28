@@ -20,14 +20,17 @@ $(function(){
 			{
 				if(node.attributes == undefined)
 				{
+					current_catalog_id = "";
 					return;
 				}else
 				{
 					if(node.attributes.code)
-						current_catalog_id = node.attributes.code;
+						current_catalog_id = node.id;
+					else
+						current_catalog_id = "";
 				}
 				if(s){
-					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.attributes.code});
+					s.tree({url:"<@s.url '/admin/local/subject/tree'/>?catalogId="+node.id});
 				}
 				//search;
 				${dg}_search();

@@ -349,7 +349,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			for(int i=0;i<arr.length;i++)
 			{
 				if(StringUtils.isEmpty(arr[i])) continue;
-				String page = pages==null?"":pages[i];
+				String page = pages==null?"":pages.length==1?pages[0]:pages[i];
 				info.setCatalogId(arr[i]);
 				packList.addAll(this.findChangedPack(info,page));
 			}

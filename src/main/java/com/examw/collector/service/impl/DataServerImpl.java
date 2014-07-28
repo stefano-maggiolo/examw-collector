@@ -873,7 +873,8 @@ public class DataServerImpl implements IDataServer {
 	
 	@Override
 	public TeacherEntity loadTeacher(String id) {
-		if(StringUtils.isEmpty(id) ||id.equals("0")||id.equals("e0") || id.equals(ID_PREFIX)||id.equals("enull")) return null;
+		if(StringUtils.isEmpty(id) || id.equals("0") || id.equals("e0") || id.equals(ID_PREFIX)||id.equals("enull")) 
+			return null;
 		TeacherEntity teacher = null;
 		try
 		{

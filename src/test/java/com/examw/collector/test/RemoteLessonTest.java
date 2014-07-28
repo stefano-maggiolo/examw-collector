@@ -49,14 +49,14 @@ public class RemoteLessonTest {
 	public void loadCataData() throws IOException{
 		System.out.print("开始获取课程类别：");
 		List<Catalog> list = this.dataServer.loadCatalogs();
-		
-		XStream xStream = new XStream();
-		String xml = xStream.toXML(list);
-		System.out.print(xml);
+		System.out.println(list.size());
+		//XStream xStream = new XStream();
+		//String xml = xStream.toXML(list);
+		//System.out.print(xml);
 	}
-	//@Test
+	@Test
 	public void loadClasses(){
-		List<SubClass>  list = this.dataServer.loadClasses("567", null);
+		List<SubClass>  list = this.dataServer.loadClasses("3511", null);
 		for(SubClass s:list){
 			System.out.println(s.getSubject().getCode());
 		}
@@ -66,7 +66,7 @@ public class RemoteLessonTest {
 	}
 	//@Test
 	public void loadRelates(){
-		List<Relate> list = this.dataServer.loadRelates("7904");
+		List<Relate> list = this.dataServer.loadRelates("4844");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
@@ -162,9 +162,9 @@ public class RemoteLessonTest {
 			System.out.println(t.getLessons());
 		}
 	}
-	@Test
+	//@Test
 	public void loadClassIdsTest() throws Exception{
-		String url = "http://www.edu24ol.com/ClassList_hr.asp";
+		String url = "http://www.edu24ol.com/classList_jzs1.asp";
 		String html = HttpUtil.sendRequest(url, "GET", null,"GBK");
 //		String html = "sdfsdfsadfasdfasf <body><div class='wrap' style='margin-top:-6px;_margin-top:9px;'>  <div class='left'><img src='images/zf01.jpg' width='197' height='103' /></div>  <div class='right'>    <div class='htb'><div class='Process'><a href='/ClassresultList.asp' target='_blank'><p>当前购物车</p><p><span><script src='../js/cartItemCount.js' language='javascript'></script></span>个课程</p></a></div></div></body>";
 		System.out.println(html);

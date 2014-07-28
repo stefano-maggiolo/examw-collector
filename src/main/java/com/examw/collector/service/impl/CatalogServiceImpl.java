@@ -145,6 +145,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 	
 	private List<Subject> getSubjects(List<Catalog> catalogs){
 		List<Subject> data = new ArrayList<Subject>();
+		if(catalogs == null || catalogs.size()==0) return data;
 		for(Catalog c:catalogs){
 			if(c.getChildren()!=null && c.getChildren().size()>0){
 				Set<Catalog> children = c.getChildren();

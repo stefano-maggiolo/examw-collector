@@ -21,10 +21,17 @@
 			<!-- easyui扩展 -->
 			<script type="text/javascript" src="<@s.url "/resources/easyui-ext.js"/>"></script>
 			<!-- uploadify 上传 -->
+			<style type="text/css">
+				.l-topmenu {
+    				background: #3A98D5;
+    				position: relative;
+    				color:white;
+				}
+			</style>
 		</head>
 		<body class="easyui-layout">
 			<#--top-->
-			<div data-options="region:'north'" style="height:80px;padding:5px;" href="<@s.url '/admin/top'/>"></div>
+			<div data-options="region:'north'" style="height:80px;padding:5px;" href="<@s.url '/admin/top'/>" class="l-topmenu"></div>
 			<#--left-->
 			<div data-options="region:'west',split:true" title="功能菜单" href="<@s.url '/admin/left'/>" style="width:200px;padding:1px;overflow:hidden;"></div>
 			<#--center-->
