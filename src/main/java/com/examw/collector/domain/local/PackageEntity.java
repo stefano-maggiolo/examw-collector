@@ -11,7 +11,7 @@ public class PackageEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String id,name;
 	private String classCodes;
-	private Integer source,discount;
+	private Integer source,discount,studentPrice;
 	/**
 	 * 获取套餐编码。
 	 * @return 套餐编码。
@@ -123,5 +123,20 @@ public class PackageEntity implements Serializable {
 	public void setCatalogEntity(CatalogEntity catalogEntity) {
 		this.catalogEntity = catalogEntity;
 	}
-	
+	/**
+	 * 获取 老学员价
+	 * @return studentPrice
+	 * 
+	 */
+	public Integer getStudentPrice() {
+		return studentPrice;
+	}
+	/**
+	 * 设置 老学员价
+	 * @param studentPrice
+	 * 
+	 */
+	public void setStudentPrice(Integer studentPrice) {
+		this.studentPrice = studentPrice;
+	}
 }

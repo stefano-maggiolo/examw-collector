@@ -181,4 +181,24 @@ public class Catalog extends BaseDomain implements Serializable {
 		}
 		return "上级类别:"+parent.name+"("+parent.code+")";
 	}
+	
+	//自己的分类ID
+	private String myId;
+	/**
+	 * 获取 自己的分类ID
+	 * @return myId
+	 * 
+	 */
+	public String getMyId() {
+		return myId;
+	}
+	/**
+	 * 设置 自己的分类ID
+	 * @param myId
+	 * 
+	 */
+	public void setMyId(String myId) {
+		this.myId = myId;
+	}
+	
 }

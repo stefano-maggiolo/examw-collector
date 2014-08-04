@@ -101,6 +101,9 @@ public class PackageEntityServiceImpl extends BaseDataServiceImpl<PackageEntity,
 		if(pack == null) return null;
 		PackageEntity data = new PackageEntity();
 		BeanUtils.copyProperties(pack, data);
+		if(pack.getStudentPrice()==null){
+			data.setStudentPrice((int) (pack.getDiscount()*0.9));
+		}
 		data.setId(pack.getCode());
 		if(pack.getCatalog()!=null){
 			CatalogEntity c = new CatalogEntity();

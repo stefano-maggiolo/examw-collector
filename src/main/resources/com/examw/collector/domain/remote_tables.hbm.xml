@@ -172,7 +172,9 @@
 		<!-- 类型 -->
 		<property name="type" type="integer" not-null="true" />
 		<!-- 名称 -->
-		<property name="name"  type="string"  length="128"  not-null="true" />
+		<property name="name"  type="string"  length="128"/>
+		<!-- ClassID -->
+		<property name="classId" column="ClassID"  type="string"  length="64" />
 		<!-- 状态 -->
 		<property name="status"  type="string"/>
 		<!-- 说明 -->
@@ -188,8 +190,10 @@
 		<id name="id" type="string" length="64"/>
 		<!-- 数据ID -->
 		<property name="dataId"  type="string"  length="128"  not-null="true" />
+		<!-- ClassID -->
+		<property name="classId" column="ClassID" type="string"  length="64" />
 		<!-- 名称 -->
-		<property name="name"  type="string"  length="128"  not-null="true" />
+		<property name="name"  type="string"  length="128"/>
 		<!-- 类型 -->
 		<property name="type" type="integer" not-null="true" />
 		<!-- 状态 -->

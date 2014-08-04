@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class ErrorRecord implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id, dataId, name , note, status;
+	private String id, dataId, name , note, status ,classId;
 	private Integer type;
 	private Date updateTime;
 	public static final int TYPE_ERROR_GRADE = 2,TYPE_ERROR_PACK = 3;
@@ -127,10 +127,27 @@ public class ErrorRecord implements Serializable {
 		this.updateTime = updateTime;
 	}
 	
+	/**
+	 * 获取 分类ID[非环球]
+	 * @return classId
+	 * 
+	 */
+	public String getClassId() {
+		return classId;
+	}
+	/**
+	 * 设置 分类ID
+	 * @param classId
+	 * 
+	 */
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
+	
 	public ErrorRecord() {
 	}
 	public ErrorRecord(String id, String dataId, String name, String note,
-			Integer type, String status, Date updateTime) {
+			Integer type, String status, Date updateTime,String classId) {
 		super();
 		this.id = id;
 		this.dataId = dataId;
@@ -139,6 +156,7 @@ public class ErrorRecord implements Serializable {
 		this.type = type;
 		this.status = status;
 		this.updateTime = updateTime;
+		this.classId = classId;
 	}
 	
 }

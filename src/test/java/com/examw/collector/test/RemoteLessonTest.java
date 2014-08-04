@@ -179,7 +179,7 @@ public class RemoteLessonTest {
 		System.out.println(body);
 		body = body.toUpperCase();	//转大写
 		//String temp = "sdfsdfs<input id='DiscountIds' type='checkbox' value='21254' name='DiscountIds' />dsfsdf";
-		Pattern input = Pattern.compile("([\\w\\W&&[^<]&&[^>]]*)<INPUT([\\w\\W&&[^<]&&[^>]]+)value=\"([\\d]+)\"([\\w\\W&&[^<]&&[^>]]+)/>([\\w\\W&&[^<]]+)");
+		//Pattern input = Pattern.compile("([\\w\\W&&[^<]&&[^>]]*)<INPUT([\\w\\W&&[^<]&&[^>]]+)value=\"([\\d]+)\"([\\w\\W&&[^<]&&[^>]]+)/>([\\w\\W&&[^<]]+)");
 		Pattern input2 = Pattern.compile("([\\w\\W&&[^<]&&[^>]]*)<INPUT([\\w\\W&&[^<]&&[^>]]+)/?>([\\w\\W&&[^<]]*)");
 		m2 = input2.matcher(body);
 		List<String> inputList = new ArrayList<String>(); 

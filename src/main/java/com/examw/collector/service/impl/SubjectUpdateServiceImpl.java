@@ -242,8 +242,14 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 			return null;
 		}else{
 			CatalogEntity catalog = this.catalogEntityDao.find(info.getCatalog().getCode());
-			if(catalog==null) return null;
+			if(catalog==null){
+				info.setUpdateInfo(info.getUpdateInfo()+" !!没有找到相应的分类!!");
+				return null;
+			}
 			data.setCatalogEntity(catalog);
+			if("新的".equals(info.getStatus())){
+				info.setUpdateInfo(info.getUpdateInfo()+"   所属类别:"+info.getCatalog().getName()+"("+info.getCatalog().getCode()+");");
+			}
 		}
 		return data;
 	}
@@ -344,7 +350,18 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	public List<SubjectInfo> update(String account) {
 		//找出需要查找并且有变化的科目集合
 		List<Subject> subjects = this.findChangedSubject();
-		if(subjects == null ||subjects.size()==0) return new ArrayList<SubjectInfo>();
+		if(subjects == null ||subjects.size()==0){
+			//添加操作日志
+			OperateLog log = new OperateLog();
+			log.setId(UUID.randomUUID().toString());
+			log.setType(OperateLog.TYPE_UPDATE_SUBJECT);
+			log.setName("更新科目数据");
+			log.setAddTime(new Date());
+			log.setAccount(account);
+			log.setContent("[ ]");
+			this.operateLogDao.save(log);
+			return new ArrayList<SubjectInfo>();
+		}
 		for(Subject info:subjects){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
@@ -489,10 +506,15 @@ public class SubjectUpdateServiceImpl implements ISubjectUpdateService{
 	private void addToUpdateRecord(List<Subject> list){
 		if(list.size() == 0) return;
 		for(Subject info:list){
-			UpdateRecord data = new UpdateRecord();
-			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
-					info.getStatus(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_SUBJECT,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date());
-			this.updateRecordDao.save(data);
+			if(StringUtils.isEmpty(info.getAdd()))	//如果不是自己加上的,没有就没有
+			{
+				UpdateRecord data = new UpdateRecord();
+				CatalogEntity entity = this.catalogEntityDao.find(info.getCatalog().getCode());
+				data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
+						info.getName(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_SUBJECT,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date(),
+								entity==null?"":entity.getId());
+				this.updateRecordDao.save(data);
+			}
 		}
 	}
 }

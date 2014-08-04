@@ -93,6 +93,8 @@
 		<property name="source"  type="integer" column="priceA"/>
 		<!-- 售价 -->
 		<property name="discount"  type="integer" column="priceB"/>
+		<!-- 老学员价 -->
+		<property name="studentPrice" type="integer" column="priceC"/>
 		<!-- 是否可见 -->
 		<!-- <property name="isShow"  type="true_false" column="is_show"/> -->
 		<!-- 所属科目 -->

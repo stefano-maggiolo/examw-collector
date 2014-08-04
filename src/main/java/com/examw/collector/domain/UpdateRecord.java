@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class UpdateRecord implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String id, dataId, name , note,status;
+	private String id, dataId, name , note,status ,classId;
 	private Integer type;
 	private Date updateTime;
 	public static final int TYPE_UPDATE_SUBJECT = 1,TYPE_UPDATE_GRADE = 2,TYPE_UPDATE_PACK = 3;
@@ -127,10 +127,26 @@ public class UpdateRecord implements Serializable {
 		this.updateTime = updateTime;
 	}
 	
+	/**
+	 * 获取 分类ID[非环球]
+	 * @return classId
+	 * 
+	 */
+	public String getClassId() {
+		return classId;
+	}
+	/**
+	 * 设置 分类ID
+	 * @param classId
+	 * 
+	 */
+	public void setClassId(String classId) {
+		this.classId = classId;
+	}
 	public UpdateRecord() {
 	}
 	public UpdateRecord(String id, String dataId, String name, String note,
-			Integer type, String status, Date updateTime) {
+			Integer type, String status, Date updateTime,String classId) {
 		super();
 		this.id = id;
 		this.dataId = dataId;
@@ -139,5 +155,6 @@ public class UpdateRecord implements Serializable {
 		this.type = type;
 		this.status = status;
 		this.updateTime = updateTime;
+		this.classId = classId;
 	}
 }

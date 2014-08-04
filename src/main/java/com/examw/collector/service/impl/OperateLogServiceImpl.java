@@ -101,6 +101,9 @@ public class OperateLogServiceImpl extends
 			return null;
 		OperateLogInfo info = new OperateLogInfo();
 		BeanUtils.copyProperties(data, info);
+		if(info.getContent()!=null&&info.getContent().length()>50){
+			info.setContent(info.getContent().substring(0, 50)+"...");
+		}
 		info.setTypeName(this.getTypeName(data.getType()));
 		return info;
 	}

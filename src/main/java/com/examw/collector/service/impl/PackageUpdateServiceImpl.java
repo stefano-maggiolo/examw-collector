@@ -308,6 +308,17 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		//找出需要查找并且有变化的科目集合
 		List<Pack> packs = this.findChangedPacks();
 		List<Pack> listForShow = new ArrayList<Pack>();
+		if(packs == null || packs.size()==0){
+			OperateLog log = new OperateLog();
+			log.setId(UUID.randomUUID().toString());
+			log.setType(OperateLog.TYPE_UPDATE_PACKAGE);
+			log.setName("更新套餐数据");
+			log.setAddTime(new Date());
+			log.setAccount(account);
+			log.setContent("[ ]");
+			this.operateLogDao.save(log);
+			return null;
+		}
 		for (Pack info : packs) {
 			if (StringUtils.isEmpty(info.getStatus())
 					|| info.getStatus().equals("旧的")) {
@@ -335,7 +346,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				if(error == null){
 					listForShow.add(info);
 					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
-							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date());
+							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date(),info.getCatalog().getMyId());
 					this.errorRecordDao.save(error);
 				}
 				continue;
@@ -355,7 +366,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				if(error == null){
 					listForShow.add(info);
 					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
-							"找不到科目",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date());
+							"找不到科目",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date(),info.getCatalog().getMyId());
 					this.errorRecordDao.save(error);
 				}
 			}
@@ -392,13 +403,14 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				if(StringUtils.isEmpty(arr[i])) continue;
 				String page = pages==null?"":pages.length==1?pages[0]:pages[i];
 				info.setCatalogId(arr[i]);
-				packList.addAll(this.findChangedPack(info,page));
+				packList.addAll(this.findChangedPack(entity.getId(),info,page));
 			}
 		}
 		return packList;
 	}
-	private List<Pack> findChangedPack(PackInfo info,String page){
+	private List<Pack> findChangedPack(String classId,PackInfo info,String page){
 		Catalog catalog = this.catalogDao.load(Catalog.class, info.getCatalogId());
+		catalog.setMyId(classId); //设置自己的分类
 		List<Pack> data = this.dataServer.loadPacks(info.getCatalogId(), null);
 		List<Pack> add = new ArrayList<Pack>();
 		if(data == null) return add;
@@ -496,16 +508,26 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			if (info.getSubject()==null) {
 				CatalogEntity catalog = this.catalogEntityDao.find(info
 						.getCatalog().getCode());
-				if (catalog == null)
+				if (catalog == null){
+					info.setUpdateInfo(info.getUpdateInfo()+" !!没有找到相应的分类!!");
 					return null;
+				}
 				data.setCatalogEntity(catalog);
+				if("新的".equals(info.getStatus())){
+					info.setUpdateInfo(info.getUpdateInfo()+"   所属类别:"+info.getCatalog().getName()+"("+info.getCatalog().getCode()+");");
+				}
 			} else {
 				SubjectEntity subject = this.subjectEntityDao.load(
 						SubjectEntity.class, info.getSubject().getCode());
-				if (subject == null)
+				if (subject == null){
+					info.setUpdateInfo(info.getUpdateInfo()+" !!没有找到相应的科目!!");
 					return null;
+				}
 				data.setSubjectEntity(subject);
 				data.setCatalogEntity(subject.getCatalogEntity());
+				if("新的".equals(info.getStatus())){
+					info.setUpdateInfo(info.getUpdateInfo()	+("所属科目:"+subject.getName()+"("+subject.getId()+");"));
+				}
 			}
 		}
 		return data;
@@ -551,6 +573,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 	{
 		if(info==null||StringUtils.isEmpty(ids)) return;
 		if(ids.contains(","+info.getCode()+",")){	//如果页面上包含这个班级
+			if(info.getSubject() == null) return;
 			Subject s = this.subjectDao.load(Subject.class, info.getSubject().getCode());
 			if(s == null)	//实际数据库中找不到这个
 			{
@@ -579,7 +602,7 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		for(Pack info:list){
 			UpdateRecord data = new UpdateRecord();
 			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
-					info.getStatus(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_PACK,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date());
+					info.getName(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_PACK,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date(),info.getCatalog().getMyId());
 			this.updateRecordDao.save(data);
 		}
 	}

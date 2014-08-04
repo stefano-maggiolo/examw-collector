@@ -12,7 +12,7 @@ public class Pack extends BaseDomain implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name;
 	private String classCodes;
-	private Integer source,discount;
+	private Integer source,discount,studentPrice;
 	private boolean isShow;
 	/**
 	 * 获取套餐编码。
@@ -104,7 +104,22 @@ public class Pack extends BaseDomain implements Serializable {
 	public void setClassCodes(String classCodes) {
 		this.classCodes = classCodes;
 	}
-	
+	/**
+	 * 获取 老学员价
+	 * @return studentPrice
+	 * 
+	 */
+	public Integer getStudentPrice() {
+		return studentPrice;
+	}
+	/**
+	 * 设置 老学员价
+	 * @param studentPrice
+	 * 
+	 */
+	public void setStudentPrice(Integer studentPrice) {
+		this.studentPrice = studentPrice;
+	}
 	//科目
 	private Subject subject;
 	/**

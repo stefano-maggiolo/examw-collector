@@ -405,7 +405,17 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		//找出需要查找并且有变化的科目集合
 		List<SubClass> grades = this.findChangedSubClass();
 		List<SubClass> listForShow = new ArrayList<SubClass>();
-		if(grades == null ||grades.size()==0) return null;
+		if(grades == null ||grades.size()==0){
+			OperateLog log = new OperateLog();
+			log.setId(UUID.randomUUID().toString());
+			log.setType(OperateLog.TYPE_UPDATE_GRADE);
+			log.setName("更新班级数据");
+			log.setAddTime(new Date());
+			log.setAccount(account);
+			log.setContent("[ ]");
+			this.operateLogDao.save(log);
+			return null;
+		}
 		for(SubClass info:grades){
 			if(StringUtils.isEmpty(info.getStatus())||info.getStatus().equals("旧的")){
 				continue;
@@ -437,7 +447,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				if(error == null){
 					listForShow.add(info);
 					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
-							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date());
+							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date(),info.getCatalog().getMyId());
 					this.errorRecordDao.save(error);
 				}
 				continue;
@@ -463,7 +473,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				if(error == null){
 					listForShow.add(info);
 					error = new ErrorRecord(UUID.randomUUID().toString(),info.getCode(),
-							"找不到科目",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date());
+							"找不到科目",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date(),info.getCatalog().getMyId());
 					this.errorRecordDao.save(error);
 				}
 			}
@@ -498,14 +508,15 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			{
 				if(StringUtils.isEmpty(arr[i])) continue;
 				String page = pages==null?"":pages.length==1?pages[0]:pages[i];
-				gradeList.addAll(this.findChangedSubClass(arr[i],page));
+				gradeList.addAll(this.findChangedSubClass(entity.getId(),arr[i],page));
 			}
 		}
 		return gradeList;
 	}
-	private List<SubClass> findChangedSubClass(String catalogId,String page)
+	private List<SubClass> findChangedSubClass(String classId,String catalogId,String page)
 	{
 		Catalog catalog = this.catalogDao.load(Catalog.class, catalogId);
+		catalog.setMyId(classId);
 		//Subject subject = this.subjectDao.load(Subject.class, info.getSubjectId());
 		List<SubClass> data = this.dataServer.loadClasses(catalogId, null);
 		List<SubClass> add = new ArrayList<SubClass>();
@@ -571,7 +582,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			info.setSubject(subject);
 		}
 		if(info.getAdVideo()!=null){
-			AdVideo adVideo = this.adVideoDao.load(AdVideo.class, info.getAdVideo());
+			AdVideo adVideo = this.adVideoDao.load(AdVideo.class, info.getAdVideo().getCode());
 			if(adVideo==null)
 				this.adVideoDao.save(adVideo);
 			info.setAdVideo(adVideo);
@@ -582,8 +593,11 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 	{
 		if(info == null) return null;
 		GradeEntity data = this.gradeEntityDao.load(GradeEntity.class, info.getCode());
-		if(data!=null){
+		if(data!=null){	//有变化的
 			BeanUtils.copyProperties(info, data);
+			SubjectEntity subject = data.getSubjectEntity();
+			info.setUpdateInfo(info.getUpdateInfo()+"   所属类别:"+info.getCatalog().getName()+"("+info.getCatalog().getCode()+");"
+					+("所属科目:"+subject.getName()+"("+subject.getId()+");"));
 			return data;
 		}
 		data = new GradeEntity();
@@ -593,7 +607,10 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			return null;
 		}else{
 			SubjectEntity subject = this.subjectEntityDao.load(SubjectEntity.class,info.getSubject().getCode());
-			if(subject==null) return null;
+			if(subject==null){
+				info.setUpdateInfo(info.getUpdateInfo()+" !!没有找到相应的科目!!");
+				return null;
+			}
 			data.setSubjectEntity(subject);
 		}
 		return data;
@@ -663,7 +680,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		for(SubClass info:list){
 			UpdateRecord data = new UpdateRecord();
 			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
-					info.getStatus(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_GRADE,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date());
+					info.getName(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_GRADE,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date(),info.getCatalog().getMyId());
 			this.updateRecordDao.save(data);
 		}
 	}

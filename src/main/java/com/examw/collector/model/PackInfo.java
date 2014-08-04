@@ -13,7 +13,7 @@ public class PackInfo extends Paging implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private String code,name,status;
 	private String classCodes;
-	private Integer source,discount;
+	private Integer source,discount,studentPrice;
 	private boolean isShow;
 	private String catalogId,catalogName,subjectId,subjectName;
 	/**
@@ -199,5 +199,20 @@ public class PackInfo extends Paging implements Serializable {
 	public void setUpdateInfo(String updateInfo) {
 		this.updateInfo = updateInfo;
 	}
-
+	/**
+	 * 获取 老学员价
+	 * @return studentPrice
+	 * 
+	 */
+	public Integer getStudentPrice() {
+		return studentPrice;
+	}
+	/**
+	 * 设置 老学员价
+	 * @param studentPrice
+	 * 
+	 */
+	public void setStudentPrice(Integer studentPrice) {
+		this.studentPrice = studentPrice;
+	}
 }
