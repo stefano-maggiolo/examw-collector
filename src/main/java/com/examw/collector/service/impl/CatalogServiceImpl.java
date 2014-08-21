@@ -394,7 +394,7 @@ public class CatalogServiceImpl extends BaseDataServiceImpl<Catalog, CatalogInfo
 				data.setChildren(children);
 			}
 		}
-		BeanUtils.copyProperties(info, data);
+		BeanUtils.copyProperties(info, data,new String[]{"children"});
 		if(!StringUtils.isEmpty(info.getPid())){
 			Catalog c = this.catalogDao.load(Catalog.class, info.getPid());
 			if(c != null){

@@ -56,7 +56,7 @@ public class RemoteLessonTest {
 	}
 	@Test
 	public void loadClasses(){
-		List<SubClass>  list = this.dataServer.loadClasses("3511", null);
+		List<SubClass>  list = this.dataServer.loadClasses("775", null);
 		for(SubClass s:list){
 			System.out.println(s.getSubject().getCode());
 		}
