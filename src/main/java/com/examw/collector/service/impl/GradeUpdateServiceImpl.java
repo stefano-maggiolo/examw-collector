@@ -435,7 +435,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 					this.gradeEntityDao.delete(data2);
 					listForShow.add(info);
 				}else{
-					info.setUpdateInfo("<span style='color:purple'>删除失败</span>"+info.getUpdateInfo());
+					info.setUpdateInfo("<span style='color:purple'>删除失败,数据不存在或已被删除</span>"+info.getUpdateInfo());
 					
 				}
 				continue;
@@ -450,6 +450,11 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_GRADE,"插入失败",new Date(),info.getCatalog().getMyId());
 					this.errorRecordDao.save(error);
 				}
+				continue;
+			}
+			if(info.getStatus().equals("页面有数据库没有")){
+				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				listForShow.add(info);
 				continue;
 			}
 			//本地副本
@@ -522,11 +527,15 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		List<SubClass> add = new ArrayList<SubClass>();
 		StringBuffer existIds = new StringBuffer();
 		String ids = this.dataServer.loadPageGradeIds(page);
+		if(!StringUtils.isEmpty(ids)){
+			existIds.append("'0'").append(ids.replaceAll("("+DataServerImpl.ID_PREFIX+"\\d+)", "'$1'"));	//如果不为空,页面上的ID就是应该存在的ID
+		}
 		if(data == null) return add;
+		findMissId(catalog,data,ids,add);
 		for(SubClass s:data){
 			if(s == null) continue;
 			s.setCatalog(catalog);
-			if(!StringUtils.isEmpty(s.getCode())) existIds.append("'"+s.getCode()+"'").append(",");
+			if(!StringUtils.isEmpty(s.getCode()) && StringUtils.isEmpty(ids)) existIds.append("'"+s.getCode()+"'").append(",");
 			SubClass local_s = this.subClassDao.load(SubClass.class, s.getCode());
 			if(local_s == null){
 				s.setStatus("新增");
@@ -549,6 +558,13 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				s.setUpdateInfo("<span style='color:red'>[更新]</span>"+s.getUpdateInfo());
 				BeanUtils.copyProperties(s, local_s, new String[]{"catalog"});	//已经存在的,必须用原有的数据进行更新,不然会出错
 				local_s.setCatalog(catalog);
+//				if(s.getAdVideo()!=null){
+//					AdVideo adVideo = this.adVideoDao.load(AdVideo.class, s.getAdVideo().getCode());
+//					if(adVideo==null)
+//						this.adVideoDao.save(adVideo);
+//					s.setAdVideo(adVideo);
+//				}
+//				local_s.setAdVideo(s.getAdVideo());
 				add.add(local_s);
 				//add.add(local_s);
 			}
@@ -584,8 +600,9 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 		if(info.getAdVideo()!=null){
 			AdVideo adVideo = this.adVideoDao.load(AdVideo.class, info.getAdVideo().getCode());
 			if(adVideo==null)
-				this.adVideoDao.save(adVideo);
-			info.setAdVideo(adVideo);
+				this.adVideoDao.save(info.getAdVideo());
+			else
+				info.setAdVideo(adVideo);
 		}
 		return info;
 	}
@@ -682,6 +699,33 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
 					info.getName(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_GRADE,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date(),info.getCatalog().getMyId());
 			this.updateRecordDao.save(data);
+		}
+	}
+	
+	private void findMissId(Catalog catalog,List<SubClass> data,String ids,List<SubClass> add){
+		if(StringUtils.isEmpty(ids)) return;
+		try{
+			String[] arr = ids.split(",");
+			for(int i=1;i<arr.length;i++){
+				boolean exist = false;
+				for(SubClass s:data){
+					if(arr[i].equals(s.getCode())){
+						exist = true;
+						break;
+					}
+				}
+				if(!exist){
+					SubClass sub = new SubClass();
+					sub.setCode(arr[i]);
+					sub.setStatus("页面有数据库没有");
+					sub.setCatalog(catalog);
+					sub.setUpdateInfo("[页面存在但没有数据]!!!需要手动操作!!! 所属考试:"+catalog.getName()+"("+catalog.getCode()+"),班级的ID号:"+arr[i]);
+					add.add(sub);
+				}
+			}
+		}catch(Exception e){
+			System.out.println(ids);
+			e.printStackTrace();
 		}
 	}
 }

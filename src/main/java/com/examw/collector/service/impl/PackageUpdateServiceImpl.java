@@ -328,15 +328,16 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 				Pack data1= this.packDao.load(Pack.class, info.getCode());
 				PackageEntity data2 = this.packageEntityDao.load(
 						PackageEntity.class, info.getCode());
-				if (data2!=null && data1 != null) {
+				if (data1 != null) {	//08.23修改了下
 					this.packDao.delete(data1);
 				}
 				if (data2 != null) {
 					this.packageEntityDao.delete(data2);
-					listForShow.add(info);
+					//listForShow.add(info);
 				}else{
-					info.setUpdateInfo("<span style='color:purple'>删除失败</span>"+info.getUpdateInfo());
+					info.setUpdateInfo("<span style='color:purple'>删除失败,数据不存在或已被删除</span>"+info.getUpdateInfo());
 				}
+				listForShow.add(info);
 				continue;
 			}
 			//如果页面中没有这个ID,不要进行操作
@@ -349,6 +350,11 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 							"页面无此ID",info.getUpdateInfo(),ErrorRecord.TYPE_ERROR_PACK,"插入失败",new Date(),info.getCatalog().getMyId());
 					this.errorRecordDao.save(error);
 				}
+				continue;
+			}
+			if(info.getStatus().equals("页面有数据库没有")){
+				info.setUpdateInfo("<span style='color:purple'>插入或更新失败</span>"+info.getUpdateInfo());
+				listForShow.add(info);
 				continue;
 			}
 			Pack pack = this.judgeDataSafe(info);
@@ -416,10 +422,14 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		if(data == null) return add;
 		StringBuffer existIds = new StringBuffer();
 		String ids = this.dataServer.loadPagePackIds(page);
+		findMissId(catalog,data,ids,add);	//查询页面上有,但是拿到的数据没有的情况
+		if(!StringUtils.isEmpty(ids)){
+			existIds.append("'0'").append(ids.replaceAll("("+DataServerImpl.ID_PREFIX+"\\d+)", "'$1'"));	//如果不为空,页面上的ID就是应该存在的ID
+		}
 		for(Pack p:data){
 			if(p==null) continue;
 			p.setCatalog(catalog);
-			if(!StringUtils.isEmpty(p.getCode())) existIds.append("'"+p.getCode()+"'").append(",");
+			if(!StringUtils.isEmpty(p.getCode())&& StringUtils.isEmpty(ids)) existIds.append("'"+p.getCode()+"'").append(",");
 			Pack local_p = this.packDao.load(Pack.class, p.getCode());
 			if(local_p == null){
 				p.setStatus("新增");
@@ -496,10 +506,10 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		if(data==null)
 			data = new PackageEntity();
 		//	套餐价格不同的情况,要酌情更新,售价高于环球的售价,改
-		else if(data.getDiscount() <= info.getDiscount())
-		{
-			info.setDiscount(data.getDiscount());	//售价比环球售价要低[这里没有进行价格修改]
-		}
+//		else if(data.getDiscount() <= info.getDiscount())
+//		{
+//			info.setDiscount(data.getDiscount());	//售价比环球售价要低[这里没有进行价格修改]
+//		}
 		BeanUtils.copyProperties(info, data);
 		data.setId(info.getCode());
 		if (StringUtils.isEmpty(info.getCode())) {
@@ -604,6 +614,38 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 			data = new UpdateRecord(UUID.randomUUID().toString(),info.getCode(),
 					info.getName(),info.getUpdateInfo(),UpdateRecord.TYPE_UPDATE_PACK,"更新成功".equals(info.getStatus())?"更新成功":"更新失败",new Date(),info.getCatalog().getMyId());
 			this.updateRecordDao.save(data);
+		}
+	}
+	/**
+	 * 查询页面上有但是拿到的数据没有对应的ID号
+	 * @param catalog	分类
+	 * @param data	拿到的数据
+	 * @param ids	采集的ID号
+	 * @param add	需要进行修改的数据集合
+	 */
+	private void findMissId(Catalog catalog,List<Pack> data,String ids,List<Pack> add){
+		if(StringUtils.isEmpty(ids)) return;
+		try{
+			String[] arr = ids.split(",");
+			for(int i =1;i<arr.length;i++){
+				boolean exist = false;
+				for(Pack s:data){
+					if(arr[i].equals(s.getCode())){
+						exist = true;
+						break;
+					}
+				}
+				if(!exist){
+					Pack sub = new Pack();
+					sub.setCode(arr[i]);
+					sub.setStatus("页面有数据库没有");
+					sub.setCatalog(catalog);
+					sub.setUpdateInfo("[页面存在但没有数据]!!!需要手动操作!!! 所属考试:"+catalog.getName()+"("+catalog.getCode()+"),套餐的ID号:"+arr[i]);
+					add.add(sub);
+				}
+			}
+		}catch(Exception e){
+			e.printStackTrace();
 		}
 	}
 }

@@ -14,6 +14,10 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Resource;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
@@ -54,9 +58,9 @@ public class RemoteLessonTest {
 		//String xml = xStream.toXML(list);
 		//System.out.print(xml);
 	}
-	@Test
+	//@Test
 	public void loadClasses(){
-		List<SubClass>  list = this.dataServer.loadClasses("775", null);
+		List<SubClass>  list = this.dataServer.loadClasses("2038", null);
 		for(SubClass s:list){
 			System.out.println(s.getSubject().getCode());
 		}
@@ -71,9 +75,9 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	//@Test
+	@Test
 	public void loadPacks(){
-		List<Pack> list = this.dataServer.loadPacks("700", "700");
+		List<Pack> list = this.dataServer.loadPacks("567", "700");
 		XStream xStream = new XStream();
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
@@ -164,7 +168,7 @@ public class RemoteLessonTest {
 	}
 	//@Test
 	public void loadClassIdsTest() throws Exception{
-		String url = "http://www.edu24ol.com/classList_jzs1.asp";
+		String url = "http://www.edu24ol.com/ClassList_jzs1.asp";
 		String html = HttpUtil.sendRequest(url, "GET", null,"GBK");
 //		String html = "sdfsdfsadfasdfasf <body><div class='wrap' style='margin-top:-6px;_margin-top:9px;'>  <div class='left'><img src='images/zf01.jpg' width='197' height='103' /></div>  <div class='right'>    <div class='htb'><div class='Process'><a href='/ClassresultList.asp' target='_blank'><p>当前购物车</p><p><span><script src='../js/cartItemCount.js' language='javascript'></script></span>个课程</p></a></div></div></body>";
 		System.out.println(html);
@@ -204,5 +208,50 @@ public class RemoteLessonTest {
 		String[] arr = gradeIds.toArray(new String[]{});
 		Arrays.sort(arr);
 		System.out.println(Arrays.toString(arr));
+	}
+	//@Test
+	public void loadClassIdsTestJsoup() throws Exception{
+		String url = "http://www.edu24ol.com/ClassList_zaojia.asp";
+		String html = HttpUtil.sendRequest(url, "GET", null,"GBK");
+//		String html = "sdfsdfsadfasdfasf <body><div class='wrap' style='margin-top:-6px;_margin-top:9px;'>  <div class='left'><img src='images/zf01.jpg' width='197' height='103' /></div>  <div class='right'>    <div class='htb'><div class='Process'><a href='/ClassresultList.asp' target='_blank'><p>当前购物车</p><p><span><script src='../js/cartItemCount.js' language='javascript'></script></span>个课程</p></a></div></div></body>";
+		System.out.println(html);
+		Pattern ids = Pattern.compile("([\\w\\W]+)<body>([\\w\\W]+)</body>([\\w\\W]+)");
+		Matcher m2 = ids.matcher(html);
+		String body = null;
+		while(m2.find()){  
+			body = (m2.group(2));
+			break;
+		}
+		body = html.replaceAll("<!--([\\w\\W](?<!-->))*-->", "");	//替换中间的注释标签<!-- -->
+		System.out.println(body);
+		body = body.toUpperCase();	//转大写
+		System.out.println(body);
+		Document dom = Jsoup.parse(body);
+		//Document dom = Jsoup.connect("http://www.edu24ol.com/classList_jzs1.asp").get();
+		Elements elements = dom.select("div[style~=((?i)display:none(?i))]");
+		System.out.println(elements.size());
+		for(Element e:elements){
+			System.out.println(e.attr("style"));
+			e.html("");
+		}
+		Elements  pkgs= dom.select("INPUT[NAME=DISCOUNTIDS],INPUT#DISCOUNTIDS");
+		//Elements  pkgs= dom.select("INPUT#DISCOUNTIDS");
+		Elements grades = dom.select("INPUT[NAME=IDS],INPUT#IDS");
+		List<String> gradeIds = new ArrayList<String>();
+		List<String> packIds = new ArrayList<String>();
+		for(Element g : grades){
+			gradeIds.add(g.attr("VALUE").trim());
+		}
+		for(Element p : pkgs){
+			packIds.add(p.attr("VALUE").trim());
+		}
+		System.out.println(packIds);
+		System.out.println("DiscountIds size = "+packIds.size());
+		System.out.println(gradeIds);
+		System.out.println("Ids size = "+gradeIds.size());
+		String[] arr = gradeIds.toArray(new String[]{});
+		Arrays.sort(arr);
+		System.out.println(Arrays.toString(arr));
+		//System.out.println(dom.outerHtml());
 	}
 }

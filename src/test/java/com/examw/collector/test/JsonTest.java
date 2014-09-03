@@ -32,5 +32,15 @@ public class JsonTest {
 		@SuppressWarnings("unchecked")
 		List<User> l = JSONUtil.JsonToCollection(listString, List.class,User.class);
 		System.out.println(l.get(0).getAccount());
+		
+		String s = ",eeee111,eeee2222,";
+		String[] arr = s.split(",");
+		System.out.println(arr[0]);
+		System.out.println(arr[1]);
+		System.out.println(arr[2]);
+		System.out.println(arr.length);
+		String a = "eeee";
+		String ss = s.replaceAll("("+a+"\\d+)", "'$1'");
+		System.out.println(ss);
 	}
 }

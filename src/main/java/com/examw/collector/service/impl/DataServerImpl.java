@@ -19,6 +19,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.xpath.XPathExpressionException;
 
 import org.apache.log4j.Logger;
+import org.jsoup.Jsoup;
 import org.springframework.util.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -193,7 +194,7 @@ public class DataServerImpl implements IDataServer {
 				return null;
 			if(StringUtils.isEmpty(lesson_code))
 				return loadClasses(lesson_type_code);
-			String xml = this.remoteDataProxy.loadLesson(2, lesson_type_code,
+			String xml = this.remoteDataProxy.loadLesson(20, lesson_type_code,
 					lesson_code, null);
 			if (StringUtils.isEmpty(xml))
 				return null;
@@ -273,7 +274,7 @@ public class DataServerImpl implements IDataServer {
 			logger.info("整个类别下的班级的信息集合...");
 			if (StringUtils.isEmpty(lesson_type_code))
 				return null;
-			String xml = this.remoteDataProxy.loadLesson(2, lesson_type_code,
+			String xml = this.remoteDataProxy.loadLesson(20, lesson_type_code,
 					null, null);
 			if (StringUtils.isEmpty(xml))
 				return null;
@@ -1028,7 +1029,7 @@ public class DataServerImpl implements IDataServer {
 			}
 			Map<String,String> map = new HashMap<String,String>();
 			if(packIds.length()>0)
-				map.put("PACKIDS", ","+packIds.toString());	//类似 111,112,这种形式
+				map.put("PACKIDS", ","+packIds.toString());	//类似 ,111,112,这种形式
 			if(gradeIds.length()>0)
 				map.put("GRADEIDS", ","+gradeIds.toString());
 			return map;
@@ -1039,14 +1040,49 @@ public class DataServerImpl implements IDataServer {
 	}
 	@Override
 	public String loadPageGradeIds(String url) {
-		Map<String, String> map = this.loadPageIds(url);
-		if(map == null)	return null;
-		return map.get("GRADEIDS");
+//		Map<String, String> map = this.loadPageIds(url);
+//		if(map == null)	return null;
+//		return map.get("GRADEIDS");
+		return this.loadPageIds(url, "GRADEIDS");
 	}
 	@Override
 	public String loadPagePackIds(String url) {
-		Map<String, String> map = this.loadPageIds(url);
-		if(map == null)	return null;
-		return map.get("PACKIDS");
+//		Map<String, String> map = this.loadPageIds(url);
+//		if(map == null)	return null;
+//		return map.get("PACKIDS");
+		return this.loadPageIds(url, "PACKIDS");
+	}
+	//使用JSOUP匹配
+	private String loadPageIds(String url,String flag){
+		if(StringUtils.isEmpty(url)) return null;
+		try{
+			String html = HttpUtil.sendRequest(url, "GET", null,"GBK");	//获取页面源代码
+			html = html.replaceAll("<!--([\\w\\W](?<!-->))*-->", "");	//替换中间的注释
+			html = html.toUpperCase();	//全部转大写
+			org.jsoup.nodes.Document dom = Jsoup.parse(html);
+			//Document dom = Jsoup.connect("http://www.edu24ol.com/classList_jzs1.asp").get();
+			//去掉display:none的情况
+			org.jsoup.select.Elements elements = dom.select("div[style~=((?i)display:none(?i))]");
+			for(org.jsoup.nodes.Element e:elements){
+				e.html("");
+			}
+			org.jsoup.select.Elements  list = null;
+			if("PACKIDS".equals(flag))
+			{
+				list = dom.select("INPUT[NAME=DISCOUNTIDS],INPUT#DISCOUNTIDS");
+			}else if("GRADEIDS".equals(flag))
+			{
+				list = dom.select("INPUT[NAME=IDS],INPUT#IDS");
+			}
+			if(list == null || list.size() == 0) return null;
+			StringBuffer ids = new StringBuffer();
+			for(org.jsoup.nodes.Element g : list){
+				ids.append(ID_PREFIX).append(g.attr("value").trim()).append(",");
+			}
+			return ","+ids.toString();
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

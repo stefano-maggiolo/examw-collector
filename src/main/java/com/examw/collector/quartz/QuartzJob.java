@@ -42,27 +42,37 @@ public class QuartzJob extends QuartzJobBean{
             updateLogService = (IUpdateLogService)skedCtx.get("updateLogService");    
             //获取 当前的trigger 名称，    
 //            Trigger trigger = context.getTrigger();
-//            String name = trigger.getName();     
-            logger.info("开始进行科目的比对更新................");
-            this.subjectUpdateService.update("quartz");	//定时器更新
-            //增加更新记录
-            UpdateLog log1 = new UpdateLog(UUID.randomUUID().toString(),"科目更新比对",UpdateLog.TYPE_UPDATE_SUBJECT,new Date());
-            this.updateLogService.save(log1);
-            logger.info("科目比对更新任务完成");
-            
-            logger.info("开始进行班级的比对更新................");
-            this.gradeUpdateService.update("quartz");	//定时器更新
-            //增加更新记录
-            UpdateLog log2 = new UpdateLog(UUID.randomUUID().toString(),"班级更新比对",UpdateLog.TYPE_UPDATE_GRADE,new Date());
-            this.updateLogService.save(log2);
-            logger.info("班级比对更新任务完成");
-            
-            logger.info("开始进行套餐的比对更新................");
-            this.packageUpdateService.update("quartz");	//定时器更新
-            //增加更新记录
-            UpdateLog log3 = new UpdateLog(UUID.randomUUID().toString(),"套餐更新比对",UpdateLog.TYPE_UPDATE_PACK,new Date());
-            this.updateLogService.save(log3);
-            logger.info("套餐比对更新任务完成");
+//            String name = trigger.getName();  
+            try{
+            	logger.info("开始进行科目的比对更新................");
+            	this.subjectUpdateService.update("quartz");	//定时器更新
+            	//增加更新记录
+            	UpdateLog log1 = new UpdateLog(UUID.randomUUID().toString(),"科目更新比对",UpdateLog.TYPE_UPDATE_SUBJECT,new Date());
+            	this.updateLogService.save(log1);
+            	logger.info("科目比对更新任务完成");
+            }catch(Exception e){
+            	e.printStackTrace();
+            }
+            try{
+            	logger.info("开始进行班级的比对更新................");
+            	this.gradeUpdateService.update("quartz");	//定时器更新
+            	//增加更新记录
+            	UpdateLog log2 = new UpdateLog(UUID.randomUUID().toString(),"班级更新比对",UpdateLog.TYPE_UPDATE_GRADE,new Date());
+            	this.updateLogService.save(log2);
+            	logger.info("班级比对更新任务完成");
+            }catch(Exception e){
+            	e.printStackTrace();
+            }
+            try{
+            	logger.info("开始进行套餐的比对更新................");
+            	this.packageUpdateService.update("quartz");	//定时器更新
+            	//增加更新记录
+            	UpdateLog log3 = new UpdateLog(UUID.randomUUID().toString(),"套餐更新比对",UpdateLog.TYPE_UPDATE_PACK,new Date());
+            	this.updateLogService.save(log3);
+            	logger.info("套餐比对更新任务完成");
+            }catch(Exception e){
+            	e.printStackTrace();
+            }
 		}catch(Exception e){
 			e.printStackTrace();
 		}
