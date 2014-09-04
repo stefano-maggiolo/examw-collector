@@ -558,13 +558,13 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 				s.setUpdateInfo("<span style='color:red'>[更新]</span>"+s.getUpdateInfo());
 				BeanUtils.copyProperties(s, local_s, new String[]{"catalog"});	//已经存在的,必须用原有的数据进行更新,不然会出错
 				local_s.setCatalog(catalog);
-//				if(s.getAdVideo()!=null){
-//					AdVideo adVideo = this.adVideoDao.load(AdVideo.class, s.getAdVideo().getCode());
-//					if(adVideo==null)
-//						this.adVideoDao.save(adVideo);
-//					s.setAdVideo(adVideo);
-//				}
-//				local_s.setAdVideo(s.getAdVideo());
+				if(s.getAdVideo()!=null){
+					AdVideo adVideo = this.adVideoDao.load(AdVideo.class, s.getAdVideo().getCode());
+					if(adVideo==null)
+						this.adVideoDao.save(adVideo);
+					s.setAdVideo(adVideo);
+				}
+				local_s.setAdVideo(s.getAdVideo());
 				add.add(local_s);
 				//add.add(local_s);
 			}
@@ -597,13 +597,13 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			if(subject==null) return null;
 			info.setSubject(subject);
 		}
-		if(info.getAdVideo()!=null){
-			AdVideo adVideo = this.adVideoDao.load(AdVideo.class, info.getAdVideo().getCode());
-			if(adVideo==null)
-				this.adVideoDao.save(info.getAdVideo());
-			else
-				info.setAdVideo(adVideo);
-		}
+//		if(info.getAdVideo()!=null){
+//			AdVideo adVideo = this.adVideoDao.load(AdVideo.class, info.getAdVideo().getCode());
+//			if(adVideo==null)
+//				this.adVideoDao.save(info.getAdVideo());
+//			else
+//				info.setAdVideo(adVideo);
+//		}
 		return info;
 	}
 	private GradeEntity changeModel(SubClass info)
