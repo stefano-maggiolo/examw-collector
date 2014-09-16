@@ -23,6 +23,7 @@ public interface IRemoteDataProxy {
 	 * 2-班别
 	 * 3-讲义
 	 * 4-套餐
+	 * 20=包含直播班
 	 * @param lesson_type_code
 	 * 课程小类的编码。
 	 * @param lesson_code
@@ -93,4 +94,22 @@ public interface IRemoteDataProxy {
 	 * @return
 	 */
 	String loadTeacher(String id) throws IOException;
+	/**
+	 * 获取课程数据的是URL地址
+	 * @param cataId
+	 * 获取内容：
+	 * 1－课程类别
+	 * 2-班别
+	 * 3-讲义
+	 * 4-套餐
+	 * 20=包含直播班
+	 * @param lesson_type_code
+	 * 课程小类的编码。
+	 * @param lesson_code
+	 * 科目的编码。
+	 * @param class_code
+	 * 班别编码。
+	 * @return
+	 */
+	String loadLessonUrl(Integer cataId,String lesson_type_code, String lesson_code,String class_code) throws IOException;
 }

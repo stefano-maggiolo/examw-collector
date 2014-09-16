@@ -194,4 +194,15 @@ public class RemoteDataProxyImpl implements IRemoteDataProxy {
 		String url = String.format(this.teacherUrl, id);
 		return com.examw.utils.HttpUtil.sendRequest(url, "GET", null,"GBK");
 	}
+	@Override
+	public String loadLessonUrl(Integer cataId, String lesson_type_code,
+			String lesson_code, String class_code) throws IOException {
+		String post = this.buildPostUrl(new String[]{(cataId == null ? "" : cataId.toString()), 
+				 lesson_type_code, 
+				 lesson_code, 
+				 class_code, 
+				 this.builderTime(new Date())});
+		String url = String.format(this.lessonUrl,post);
+		return url;
+	}
 }

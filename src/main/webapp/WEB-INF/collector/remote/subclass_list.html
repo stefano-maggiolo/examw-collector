@@ -122,7 +122,8 @@ $(function(){
 			width:10,
 			align:"center",
 			formatter:function(value,data,index){
-				return "<a class='role-list-dg-opt-right' onclick='${dg}_init_relate(\""+data.code +"\")' href='javascript:void(0)'>导入课节信息</a>"
+				//return "<a class='role-list-dg-opt-right' onclick='${dg}_init_relate(\""+data.code +"\")' href='javascript:void(0)'>导入课节信息</a>"
+				return "<a class='role-list-dg-opt-right' onclick='${dg}_show_relate(\""+data.code +"\")' href='javascript:void(0)'>查询课节信息</a>";
 			}
 		}]],
 		toolbar:"#${dg}_toobar",
@@ -172,6 +173,35 @@ $(function(){
 			});
 		});
 	};
+	//打开环球数据链接
+	${dg}_showdata = function(){
+		if(!current_catalog_id){
+			$.messager.show({
+				title:'提示',
+				msg:'请先选择课程分类的子类',
+				showType:'show'
+			});
+			return;
+		}
+		$.ajax({
+			url:"<@s.url '/admin/edu24/url/subclass/'/>"+current_catalog_id,
+			type:"POST",
+			dataType:"text",
+			error:function(e){
+				<@error_dialog "e"/>
+			},
+			success:function(data,textStatus){
+				if(data){
+					window.open(data);
+				}else{
+					$.messager.show({
+						title:"提示",
+						msg:"获取链接失败"
+					});
+				}
+			}
+		});
+	}
 	//导入课节数据
 	${dg}_init_relate = function(classId)
 	{
@@ -207,6 +237,28 @@ $(function(){
 			});
 		});
 	}
+	//显示课节的链接
+	${dg}_show_relate = function(classId)
+	{
+		$.ajax({
+			url:"<@s.url '/admin/edu24/url/relate/'/>"+classId,
+			type:"POST",
+			dataType:"text",
+			error:function(e){
+				<@error_dialog "e"/>
+			},
+			success:function(data,textStatus){
+				if(data){
+					window.open(data);
+				}else{
+					$.messager.show({
+						title:"提示",
+						msg:"获取链接失败"
+					});
+				}
+			}
+		});
+	}
 });
 //-->
 </script>
@@ -228,8 +280,9 @@ $(function(){
 	 		<div data-options="region:'center',title:'班级列表'">
 				<table id="${dg}"></table>
 				<div id="${dg}_toobar">
-					<a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">导入数据</a>
-					<label>班级名称:</label>
+					<!-- <a href="#" class="easyui-linkbutton" onclick="${dg}_add()" data-options="iconCls:'icon-add',plain:true" style="float:left;">导入数据</a>-->
+					<a href="#" class="easyui-linkbutton" onclick="${dg}_showdata()" data-options="iconCls:'icon-search',plain:true" style="float:left;">打开环球班级数据链接</a>
+					<label style="margin-left:10px">班级名称:</label>
 					<input name="name" type="text" style="width:198px;"/>
 
 					<a href="#" class="easyui-linkbutton" style="margin-left:10px;"  onclick="${dg}_search()" data-options="iconCls:'icon-search',plain:true">查询</a>

@@ -75,7 +75,33 @@ $(function(){
 					});
 				});
 			}
-		}]
+		},{
+			iconCls:"icon-search",
+			text:"获取环球分类数据",
+			handler:function(){
+				$.ajax({
+					async:false,
+					url:"<@s.url '/admin/edu24/url/catalog'/>",
+					type:"POST",
+					dataType:"text", //必须是text
+					error:function(e){
+						<@error_dialog "e"/>
+					},
+					success:function(data,textStatus){
+						$.messager.progress("close");
+						if(data){
+							window.open(data);
+						}else{
+							$.messager.show({
+								title:"提示",
+								msg:"获取地址出错"
+							});
+						}
+					}
+				}); 
+			}
+		}
+		]
 	});
 });
 //-->

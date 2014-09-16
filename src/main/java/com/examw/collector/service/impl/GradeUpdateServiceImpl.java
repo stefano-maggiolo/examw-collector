@@ -469,7 +469,7 @@ public class GradeUpdateServiceImpl implements IGradeUpdateService{
 			{
 				this.gradeEntityDao.saveOrUpdate(se);
 				//删除原来班级带的课节地址,重新插入新的
-				this.deleteOldAndInsertNewListen(info.getCode(),info.getDemo(),info.getAdVideo(),se);
+				//this.deleteOldAndInsertNewListen(info.getCode(),info.getDemo(),info.getAdVideo(),se);
 				info.setStatus("更新成功");
 				listForShow.add(info);
 			}else{

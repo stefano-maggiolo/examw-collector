@@ -20,7 +20,37 @@
 			<property name="securityManager"  ref="securityManager" />
 		</bean>
 		<!--  mvc 注解驱动 -->
-		<mvc:annotation-driven/>
+		<!-- <mvc:annotation-driven/> -->
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping" />
+		<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+			<property name="webBindingInitializer">
+				<bean class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+					<property name="conversionService">
+						<bean class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
+					</property>
+				</bean>
+			</property>
+			<property name="messageConverters">
+				<list>
+					<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+						<property name="supportedMediaTypes">
+						    <list>
+						        <value>text/html;charset=UTF-8</value><!-- 兼容IE下application/json解析为下载的问题 -->
+								<value>application/json;charset=UTF-8</value>
+						    </list>
+						</property>
+					</bean>
+					<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter">
+						<property name="supportedMediaTypes">
+							<list>
+								<value>text/html;charset=UTF-8</value><!-- 兼容IE下application/json解析为下载的问题 -->
+								<value>application/json;charset=UTF-8</value>
+							</list>
+						</property>
+					</bean>
+				</list>
+			</property>
+		</bean>
 		<!-- mvc 资源处理 -->
 		<mvc:resources location="/resources/" mapping="/resources/**"/>
 		<mvc:resources location="/uploadfiles/" mapping="/uploadfiles/**"/>

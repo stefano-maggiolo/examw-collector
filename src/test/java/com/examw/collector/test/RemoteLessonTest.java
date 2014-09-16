@@ -75,7 +75,7 @@ public class RemoteLessonTest {
 		String xml = xStream.toXML(list);
 		System.out.print(xml);
 	}
-	@Test
+	//@Test
 	public void loadPacks(){
 		List<Pack> list = this.dataServer.loadPacks("567", "700");
 		XStream xStream = new XStream();
@@ -253,5 +253,13 @@ public class RemoteLessonTest {
 		Arrays.sort(arr);
 		System.out.println(Arrays.toString(arr));
 		//System.out.println(dom.outerHtml());
+	}
+	@Test
+	public void loadPackIds(){
+		String url = "http://www.edu24ol.com/ClassList_cklkbg.asp";
+		String ids = this.dataServer.loadPagePackIds(url);
+		System.out.println("DiscountIds" + ids);
+		ids = this.dataServer.loadPageGradeIds(url);
+		System.out.println("ids" + ids);
 	}
 }
