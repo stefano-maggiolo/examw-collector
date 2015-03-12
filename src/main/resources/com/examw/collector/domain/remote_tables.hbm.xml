@@ -119,6 +119,8 @@
 		<property name="source"  type="integer" />
 		<!-- 售价 -->
 		<property name="discount"  type="integer" />
+		<!-- 老学员价 -->
+		<property name="studentPrice" column="old_user_price" type="integer"/>
 		<!-- 是否可见 -->
 		<property name="isShow"  type="true_false" column="is_show"/>
 		<!-- 所属科目 -->

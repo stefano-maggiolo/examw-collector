@@ -131,6 +131,8 @@
 	<!-- 本地数据服务Start -->
 	<bean id="catalogEntityService" class="com.examw.collector.service.impl.CatalogEntityServiceImpl">
 	    <property name="catalogEntityDao" ref="catalogEntityDao"/>
+	    <property name="subjectEntityDao" ref="subjectEntityDao"/>
+	    <property name="catalogDao" ref="catalogDao"/>
 	    <property name="operateLogDao" ref="operateLogDao"/>
 	</bean>
 	<bean id="subjectEntityService" class="com.examw.collector.service.impl.SubjectEntityServiceImpl">

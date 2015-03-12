@@ -65,7 +65,7 @@ public class PackageEntityDaoImpl extends BaseDaoImpl<PackageEntity> implements 
 	}
 	@Override
 	public void delete(String subjectId) {
-		String hql = "delete from PackageEntity p where p.subject.id = :subjectId";
+		String hql = "delete from PackageEntity p where p.subjectEntity.id = :subjectId";
 		Query query = this.getCurrentSession().createQuery(hql);
 		query.setParameter("subjectId", subjectId);
 		query.executeUpdate();

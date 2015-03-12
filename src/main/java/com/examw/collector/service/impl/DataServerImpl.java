@@ -464,7 +464,8 @@ public class DataServerImpl implements IDataServer {
 						list.item(i), "./source_amount"))));
 				data.setDiscount((int)(Double.parseDouble(XmlUtil.getNodeStringValue(
 						list.item(i), "./discount_amount"))));
-				data.setStudentPrice((int)(data.getDiscount()*0.9));	//设置老学员价
+				data.setStudentPrice((int)(Double.parseDouble(XmlUtil.getNodeStringValue(
+						list.item(i), "./old_user_price"))));	//设置老学员价
 				data.setIsShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(
 						list.item(i), "./is_show")));
 				// data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),
@@ -533,7 +534,8 @@ public class DataServerImpl implements IDataServer {
 							list.item(i), "./source_amount"))));
 					data.setDiscount((int)(Double.parseDouble(XmlUtil.getNodeStringValue(
 							list.item(i), "./discount_amount"))));
-					data.setStudentPrice((int)(data.getDiscount()*0.9));	//设置老学员价
+					data.setStudentPrice((int)(Double.parseDouble(XmlUtil.getNodeStringValue(
+							list.item(i), "./old_user_price"))));	//设置老学员价
 					data.setIsShow(Boolean.parseBoolean(XmlUtil.getNodeStringValue(
 							list.item(i), "./is_show")));
 					// data.setClassCodes(XmlUtil.getNodeStringValue(list.item(i),

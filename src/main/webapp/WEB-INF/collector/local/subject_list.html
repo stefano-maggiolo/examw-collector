@@ -18,7 +18,7 @@ $(function(){
 		},
 		onClick:function(node){
 			if(node.attributes && node.attributes.code)
-				current_catalog_id = node.attributes.code;
+				current_catalog_id = node.id;
 			//search;
 			${dg}_search();
 		}

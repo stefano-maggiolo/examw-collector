@@ -48,7 +48,7 @@
        <property name="cronExpression">
             <!-- 秒    分   时  日   月   周   年 -->
             <!-- Quartz使用类似于Linux下的Cron表达式定义时间规则，Cron表达式由6或7个由空格分隔的时间字段组成 -->
-            <value>0 13 9 * * ?</value> <!-- 每五秒执行一次 -->
+            <value>0 13 3 * * ?</value> <!-- 每五秒执行一次 -->
        </property>
    </bean>
    <!-- 总管理类 如果将lazy-init='false'那么容器启动就会执行调度程序  --><!-- 配置任务工厂, 只能有一个这种bean -->

@@ -421,7 +421,10 @@ public class PackageUpdateServiceImpl implements IPackageUpdateService {
 		List<Pack> add = new ArrayList<Pack>();
 		if(data == null) return add;
 		StringBuffer existIds = new StringBuffer();
-		String ids = this.dataServer.loadPagePackIds(page);
+		//*******取消页面的数据的采集比对	2014.09.23***************************************
+		//String ids = this.dataServer.loadPagePackIds(page);
+		String ids = "";
+		//*******取消页面的数据的采集比对 2014.09.23***************************************
 		findMissId(catalog,data,ids,add);	//查询页面上有,但是拿到的数据没有的情况
 		if(!StringUtils.isEmpty(ids)){
 			existIds.append("'0'").append(ids.replaceAll("("+DataServerImpl.ID_PREFIX+"\\d+)", "'$1'"));	//如果不为空,页面上的ID就是应该存在的ID

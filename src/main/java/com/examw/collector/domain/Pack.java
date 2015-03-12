@@ -254,6 +254,14 @@ public class Pack extends BaseDomain implements Serializable {
 			updateInfo += (" 原价变更:"+other.source+"-->"+source);
 			flag = false;
 		}
+		if (studentPrice == null) {
+			if (other.studentPrice != null)
+				flag = false;
+		} else if (!studentPrice.equals(other.studentPrice))
+		{
+			updateInfo += (" 老学员价变更:"+other.studentPrice+"-->"+studentPrice);
+			flag = false;
+		}
 		if (isShow != other.isShow)
 		{
 			updateInfo += (" 是否显示变更:"+other.isShow+"-->"+isShow);
@@ -262,9 +270,11 @@ public class Pack extends BaseDomain implements Serializable {
 		if (subject == null) {
 			if (other.subject != null)
 				flag = false;
-		} else if (!subject.getCode().equals(other.subject.getCode()))
+		} else if (other.subject!=null && !subject.getCode().equals(other.subject.getCode()))
 		{
 			updateInfo += (" 所属科目变更:"+other.subject.getName()+other.subject.getCode()+"-->"+subject.getName()+subject.getCode());
+			flag = false;
+		} else if(other.subject == null){
 			flag = false;
 		}
 		return flag;
